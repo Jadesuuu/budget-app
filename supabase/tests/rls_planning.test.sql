@@ -2,6 +2,8 @@
 -- and cross-user isolation.
 begin;
 create extension if not exists pgtap with schema extensions;
+-- Hosted projects do not put the extensions schema on the search path by default.
+set local search_path = public, extensions;
 select plan(32);
 
 -- ---------------------------------------------------------------------------
