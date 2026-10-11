@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { refresh } from "next/cache";
+import { userDataChanged } from "@/lib/user-data";
 import { z } from "zod";
 import { requireUser } from "@/lib/auth";
 import { MODE_COOKIE, THEME_COOKIE, modeSchema, themeIdSchema } from "@/lib/themes";
@@ -41,7 +41,7 @@ export async function saveDisplayName(_prev: NameState, formData: FormData): Pro
     .update({ display_name: parsed.data.displayName || null })
     .eq("user_id", userId);
   if (error) return { status: "error", message: "Couldn't save your name. Try again." };
-  refresh();
+  userDataChanged();
   return { status: "saved" };
 }
 

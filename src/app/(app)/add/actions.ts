@@ -1,5 +1,6 @@
 "use server";
 
+import { userDataChanged } from "@/lib/user-data";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { requireUser } from "@/lib/auth";
@@ -77,5 +78,6 @@ export async function addEntry(_prev: AddState, formData: FormData): Promise<Add
     if (error) return { status: "error", message: "Couldn't save it. Try again." };
   }
 
+  userDataChanged();
   redirect(formData.get("again") ? "/add?saved=1" : "/");
 }

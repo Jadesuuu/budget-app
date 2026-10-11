@@ -1,5 +1,6 @@
 "use server";
 
+import { userDataChanged } from "@/lib/user-data";
 import { z } from "zod";
 import { requireUser } from "@/lib/auth";
 
@@ -7,6 +8,13 @@ export type ActionResult = { ok: true } | { ok: false; message: string };
 
 const id = z.uuid();
 const failed = (message: string): ActionResult => ({ ok: false, message });
+
+/** On success, expires every cached page so balances and counts elsewhere are current. */
+function settled(error: unknown, message: string): ActionResult {
+  if (error) return failed(message);
+  userDataChanged();
+  return { ok: true };
+}
 
 export async function confirmTransaction(input: { id: string; categoryId: string | null }): Promise<ActionResult> {
   const parsed = z.object({ id, categoryId: id.nullable() }).safeParse(input);
@@ -16,7 +24,7 @@ export async function confirmTransaction(input: { id: string; categoryId: string
     p_id: parsed.data.id,
     p_category_id: parsed.data.categoryId ?? undefined,
   });
-  return error ? failed("Couldn't confirm. It may have been reviewed already.") : { ok: true };
+  return settled(error, "Couldn't confirm. It may have been reviewed already.");
 }
 
 export async function ignoreTransaction(input: { id: string }): Promise<ActionResult> {
@@ -24,7 +32,7 @@ export async function ignoreTransaction(input: { id: string }): Promise<ActionRe
   if (!parsed.success) return failed("That transaction couldn't be found.");
   const { supabase } = await requireUser();
   const { error } = await supabase.rpc("ignore_transaction", { p_id: parsed.data.id });
-  return error ? failed("Couldn't ignore. It may have been reviewed already.") : { ok: true };
+  return settled(error, "Couldn't ignore. It may have been reviewed already.");
 }
 
 export async function reopenTransaction(input: { id: string }): Promise<ActionResult> {
@@ -32,7 +40,7 @@ export async function reopenTransaction(input: { id: string }): Promise<ActionRe
   if (!parsed.success) return failed("That transaction couldn't be found.");
   const { supabase } = await requireUser();
   const { error } = await supabase.rpc("reopen_transaction", { p_id: parsed.data.id });
-  return error ? failed("Couldn't undo that one.") : { ok: true };
+  return settled(error, "Couldn't undo that one.");
 }
 
 export async function markNotDuplicate(input: { id: string }): Promise<ActionResult> {
@@ -40,7 +48,7 @@ export async function markNotDuplicate(input: { id: string }): Promise<ActionRes
   if (!parsed.success) return failed("That transaction couldn't be found.");
   const { supabase } = await requireUser();
   const { error } = await supabase.rpc("mark_not_duplicate", { p_id: parsed.data.id });
-  return error ? failed("Couldn't update the duplicate warning.") : { ok: true };
+  return settled(error, "Couldn't update the duplicate warning.");
 }
 
 export async function confirmAsTransfer(input: { outId: string; inId: string }): Promise<ActionResult> {
@@ -48,7 +56,7 @@ export async function confirmAsTransfer(input: { outId: string; inId: string }):
   if (!parsed.success) return failed("Those transactions couldn't be found.");
   const { supabase } = await requireUser();
   const { error } = await supabase.rpc("confirm_as_transfer", { p_out_id: parsed.data.outId, p_in_id: parsed.data.inId });
-  return error ? failed("Couldn't record the transfer. Review them one at a time instead.") : { ok: true };
+  return settled(error, "Couldn't record the transfer. Review them one at a time instead.");
 }
 
 export async function confirmOneSidedTransfer(input: { id: string; otherAccountId: string }): Promise<ActionResult> {
@@ -59,5 +67,5 @@ export async function confirmOneSidedTransfer(input: { id: string; otherAccountI
     p_id: parsed.data.id,
     p_other_account: parsed.data.otherAccountId,
   });
-  return error ? failed("Couldn't record the transfer.") : { ok: true };
+  return settled(error, "Couldn't record the transfer.");
 }

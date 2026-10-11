@@ -1,5 +1,5 @@
 import "server-only";
-import { requireUser } from "@/lib/auth";
+import { getSession } from "@/lib/auth";
 import { addDays, todayInManila } from "@/lib/dates";
 import { mergeDueItems, type DueItem } from "./due-items";
 
@@ -8,7 +8,7 @@ const OVERDUE_LOOKBACK_DAYS = 90;
 
 /** Unpaid statements, loan and installment payments due in the next 30 days, plus recent overdue ones. */
 export async function getDueSoon(): Promise<{ today: string; items: DueItem[] }> {
-  const { supabase } = await requireUser();
+  const { supabase } = await getSession();
   const today = todayInManila();
   const until = addDays(today, WINDOW_DAYS);
   const from = addDays(today, -OVERDUE_LOOKBACK_DAYS);

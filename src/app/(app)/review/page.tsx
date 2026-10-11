@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { cachedUserData } from "@/lib/user-data";
 import { Suspense } from "react";
 import { PageHeader } from "@/components/page-header";
 import { ReviewInbox } from "@/components/review-inbox";
@@ -18,6 +19,8 @@ export default function ReviewPage() {
 }
 
 async function Inbox() {
+  "use cache: private";
+  cachedUserData();
   const inbox = await getInbox();
   return (
     <section aria-label="Transactions to review">

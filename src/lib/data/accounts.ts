@@ -1,5 +1,5 @@
 import "server-only";
-import { requireUser } from "@/lib/auth";
+import { getSession } from "@/lib/auth";
 import type { InstitutionOption } from "@/app/(app)/accounts/account-form";
 
 export const OWED_TYPES = new Set(["credit", "bnpl", "loan"]);
@@ -14,14 +14,14 @@ export const TYPE_LABEL: Record<string, string> = {
 };
 
 export async function getInstitutionOptions(): Promise<InstitutionOption[]> {
-  const { supabase, userId } = await requireUser();
+  const { supabase, userId } = await getSession();
   const { data, error } = await supabase.from("institutions").select("id, name, kind, user_id").order("name");
   if (error) throw error;
   return data.map((i) => ({ id: i.id, name: i.name, kind: i.kind, own: i.user_id === userId }));
 }
 
 export async function getAccountsWithBalances() {
-  const { supabase } = await requireUser();
+  const { supabase } = await getSession();
   const [accounts, balances] = await Promise.all([
     supabase.from("accounts").select("id, name, type, last4, institutions(name)").is("archived_at", null).order("name"),
     supabase.from("account_balances").select("account_id, balance_centavos, pending_count"),

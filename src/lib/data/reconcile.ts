@@ -1,5 +1,5 @@
 import "server-only";
-import { requireUser } from "@/lib/auth";
+import { getSession } from "@/lib/auth";
 
 export type BalanceCheck = {
   accountId: string;
@@ -40,7 +40,7 @@ export function toCheck(row: {
 
 /** Latest balance check per account. */
 export async function getBalanceChecks(): Promise<Map<string, BalanceCheck>> {
-  const { supabase } = await requireUser();
+  const { supabase } = await getSession();
   const { data, error } = await supabase
     .from("account_reconciliation")
     .select("account_id, reported_centavos, confirmed_centavos, pending_centavos, as_of, source");

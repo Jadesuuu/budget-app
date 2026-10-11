@@ -1,6 +1,6 @@
 "use server";
 
-import { refresh } from "next/cache";
+import { userDataChanged } from "@/lib/user-data";
 import { z } from "zod";
 import { requireUser } from "@/lib/auth";
 import { processPendingEmails } from "@/lib/email/run";
@@ -16,7 +16,7 @@ export async function addForwardingSource(_prev: SourceState, formData: FormData
   if (error) {
     return { status: "error", message: error.code === "23505" ? "That address is already on your list." : "Couldn't add that address." };
   }
-  refresh();
+  userDataChanged();
   return { status: "saved" };
 }
 
@@ -25,7 +25,7 @@ export async function removeForwardingSource(formData: FormData) {
   const { supabase } = await requireUser();
   const { error } = await supabase.from("forwarding_sources").delete().eq("id", id).neq("added_by", "account");
   if (error) throw error;
-  refresh();
+  userDataChanged();
 }
 
 /** Re-queue one of the user's own emails (after adding an account or address) and parse it now. */
@@ -44,5 +44,5 @@ export async function retryEmail(formData: FormData) {
     .eq("user_id", userId);
   if (updateError) throw updateError;
   await processPendingEmails({ userId, limit: 10 });
-  refresh();
+  userDataChanged();
 }

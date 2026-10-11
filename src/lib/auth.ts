@@ -5,12 +5,11 @@ import { connection } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
 /**
- * Data access layer entry point: verifies the session or redirects to /login.
- * Wrapped in React cache so a page, its header and its data helpers share one check per request.
+ * Data access layer entry point for pages: verifies the session or redirects to /login.
+ * Call it only inside a `"use cache: private"` component or function, which runs at request time and
+ * lets the router prefetch the result per user. Wrapped in React cache: one check per render.
  */
-export const requireUser = cache(async () => {
-  // The session check reads the clock (token expiry), so it must run at request time, never in a prerender.
-  await connection();
+export const getSession = cache(async () => {
   const supabase = await createClient();
   const { data, error } = await supabase.auth.getClaims();
   if (error || !data?.claims?.sub) redirect("/login");
@@ -19,8 +18,15 @@ export const requireUser = cache(async () => {
   return { supabase, userId, email };
 });
 
+/** Same check for Server Actions and Route Handlers, which always run at request time. */
+export async function requireUser() {
+  // The session check reads the clock (token expiry), so it must never run in a prerender.
+  await connection();
+  return getSession();
+}
+
 export const getProfile = cache(async () => {
-  const { supabase, userId, email } = await requireUser();
+  const { supabase, userId, email } = await getSession();
   const { data, error } = await supabase
     .from("profiles")
     .select("display_name, theme, mode, inbound_alias")

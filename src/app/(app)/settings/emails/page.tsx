@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import { cachedUserData } from "@/lib/user-data";
 import Link from "next/link";
 import { Suspense } from "react";
 import { CircleAlert, CircleCheck, Clock, Info, KeyRound, ShieldAlert } from "lucide-react";
 import { PageHeader } from "@/components/page-header";
-import { requireUser } from "@/lib/auth";
+import { getSession } from "@/lib/auth";
 import { addDays, todayInManila } from "@/lib/dates";
 import { describeWhen } from "@/lib/inbox";
 import { retryEmail } from "../email-actions";
@@ -34,7 +35,9 @@ export default function EmailsPage() {
 }
 
 async function EmailList() {
-  const { supabase } = await requireUser();
+  "use cache: private";
+  cachedUserData();
+  const { supabase } = await getSession();
   const since = addDays(todayInManila(), -30);
   const { data, error } = await supabase
     .from("raw_emails")

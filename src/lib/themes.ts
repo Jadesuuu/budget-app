@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { HIDE_ATTR, HIDE_COOKIE } from "./privacy";
 
 export const THEME_IDS = ["sakura", "strawberry", "bubblegum", "barako", "courtside", "denim", "mono", "coal"] as const;
 export const MODES = ["light", "dark", "system"] as const;
@@ -35,6 +36,7 @@ function read(n){var m=document.cookie.match(new RegExp("(?:^|; )"+n+"=([a-z]+)"
 var t=read("${THEME_COOKIE}"),p=read("${MODE_COOKIE}");if(ids.indexOf(t)<0)t="${DEFAULT_THEME}";if(p!=="light"&&p!=="dark")p="system";
 var mq=window.matchMedia("(prefers-color-scheme: dark)");
 d.dataset.theme=t;d.dataset.modePref=p;d.dataset.mode=p==="system"?(mq.matches?"dark":"light"):p;
+if(read("${HIDE_COOKIE}")==="on")d.setAttribute("${HIDE_ATTR}","");
 mq.addEventListener("change",function(){if(d.dataset.modePref==="system")d.dataset.mode=mq.matches?"dark":"light"});
 }catch(e){}})();`;
 

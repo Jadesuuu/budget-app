@@ -1,15 +1,17 @@
 import Link from "next/link";
-import { connection } from "next/server";
+import { cachedUserData } from "@/lib/user-data";
 import { Suspense } from "react";
 import { ChevronRight } from "lucide-react";
 import { DueList } from "@/components/due-list";
 import { PageHeader } from "@/components/page-header";
-import { requireUser } from "@/lib/auth";
+import { cacheLife } from "next/cache";
+import { getSession } from "@/lib/auth";
 import { getDueSoon } from "@/lib/data/due";
 import { getInbox } from "@/lib/data/inbox";
 import { getAccountsWithBalances } from "@/lib/data/accounts";
 import { getBalanceChecks } from "@/lib/data/reconcile";
 import { formatPeso } from "@/lib/money";
+import { Private } from "@/components/private-amount";
 import { CircleAlert } from "lucide-react";
 import { ReviewInbox } from "@/components/review-inbox";
 import { monthName, todayInManila } from "@/lib/dates";
@@ -18,6 +20,7 @@ export default function HomePage() {
   return (
     <>
       <PageHeader
+        balances
         title={
           <Suspense fallback="Home">
             <MonthTitle />
@@ -32,7 +35,9 @@ export default function HomePage() {
 }
 
 async function HomeContent() {
-  const { supabase } = await requireUser();
+  "use cache: private";
+  cachedUserData();
+  const { supabase } = await getSession();
   const [inbox, accounts, due, checks, accountList] = await Promise.all([
     getInbox(),
     supabase.from("accounts").select("id", { count: "exact", head: true }).is("archived_at", null),
@@ -82,7 +87,7 @@ async function HomeContent() {
                 <Link href={`/accounts/${a.id}`}>
                   <CircleAlert aria-hidden />
                   <span>
-                    <b>{a.name}</b>: {formatPeso(Math.abs(a.gap))} unaccounted for
+                    <b>{a.name}</b>: <Private>{formatPeso(Math.abs(a.gap))}</Private> unaccounted for
                   </span>
                   <ChevronRight aria-hidden />
                 </Link>
@@ -118,7 +123,8 @@ async function HomeContent() {
 }
 
 async function MonthTitle() {
-  await connection();
+  "use cache";
+  cacheLife("hours");
   return monthName(todayInManila());
 }
 

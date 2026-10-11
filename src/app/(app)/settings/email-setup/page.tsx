@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { cachedUserData } from "@/lib/user-data";
 import { Suspense } from "react";
 import { PageHeader } from "@/components/page-header";
 import { getProfile } from "@/lib/auth";
@@ -24,6 +25,8 @@ export default function EmailSetupPage() {
 }
 
 async function Wizard() {
+  "use cache: private";
+  cachedUserData();
   const [profile, status, coverage] = await Promise.all([getProfile(), getEmailSetupStatus(), getFilterCoverage()]);
   return (
     <EmailSetupWizard

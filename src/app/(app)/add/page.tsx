@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { cachedUserData } from "@/lib/user-data";
 import Link from "next/link";
 import { Suspense } from "react";
 import { PageHeader } from "@/components/page-header";
-import { requireUser } from "@/lib/auth";
+import { getSession } from "@/lib/auth";
 import { todayInManila } from "@/lib/dates";
 import type { CategoryOption } from "@/lib/data/inbox";
 import { AddForm } from "./add-form";
@@ -22,7 +23,13 @@ export default function AddPage({ searchParams }: PageProps<"/add">) {
 
 async function Form({ searchParams }: { searchParams: PageProps<"/add">["searchParams"] }) {
   const { saved } = await searchParams;
-  const { supabase } = await requireUser();
+  return <FormView saved={saved} />;
+}
+
+async function FormView({ saved }: { saved: string | string[] | undefined }) {
+  "use cache: private";
+  cachedUserData();
+  const { supabase } = await getSession();
   const [accounts, categories] = await Promise.all([
     supabase.from("accounts").select("id, name, last4").is("archived_at", null).order("name"),
     supabase.from("categories").select("id, name, kind").order("name"),

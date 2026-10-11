@@ -24,7 +24,7 @@ svg.lucide { width: 1.1em; height: 1.1em; stroke-width: 2; flex: none; }
    APP SHELL
    ============================================================ */
 .app { container-type: inline-size; container-name: app; min-height: 100dvh; display: flex; flex-direction: column; }
-.shell { display: grid; grid-template-columns: minmax(0, 1fr); flex: 1; }
+.shell { display: grid; grid-template-columns: minmax(0, 1fr); flex: 1; padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
 .rail { display: none; }
 .main { padding: 0 var(--space) 24px; display: flex; flex-direction: column; gap: 28px; min-width: 0; }
 .aside { display: contents; }
@@ -197,8 +197,9 @@ svg.lucide { width: 1.1em; height: 1.1em; stroke-width: 2; flex: none; }
 .sample-note svg { width: 14px; height: 14px; }
 
 /* ---------- Tab bar (phone) ---------- */
+/* Fixed, not sticky: sticky shifts on Android as the address bar collapses. .shell reserves its height. */
 .tabbar {
-  position: sticky; bottom: 0; z-index: 5;
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 5;
   display: grid; grid-template-columns: repeat(5, 1fr); align-items: end;
   padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
   background: color-mix(in oklab, var(--surface) 92%, transparent);
@@ -234,7 +235,7 @@ svg.lucide { width: 1.1em; height: 1.1em; stroke-width: 2; flex: none; }
    DESKTOP LAYOUT (container width)
    ============================================================ */
 @container app (min-width: 760px) {
-  .shell { grid-template-columns: 220px minmax(0, 1fr) 400px; }
+  .shell { grid-template-columns: 220px minmax(0, 1fr) 400px; padding-bottom: 0; }
   .rail {
     display: flex; flex-direction: column; gap: 4px; padding: 22px 14px; border-right: 1px solid var(--line);
     background: var(--surface); position: sticky; top: 0; align-self: start; min-height: 100vh;

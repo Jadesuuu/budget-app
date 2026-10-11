@@ -1,6 +1,6 @@
 "use server";
 
-import { refresh } from "next/cache";
+import { userDataChanged } from "@/lib/user-data";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { requireUser } from "@/lib/auth";
@@ -85,6 +85,7 @@ export async function createAccount(_prev: FormState, formData: FormData): Promi
     if (createdInstitution) await supabase.from("institutions").delete().eq("id", createdInstitution);
     return { status: "error", message: "Couldn't add the account. Check the details and try again." };
   }
+  userDataChanged();
   redirect(`/accounts/${data.id}`);
 }
 
@@ -108,6 +109,7 @@ export async function updateAccount(_prev: FormState, formData: FormData): Promi
     .update({ name: parsed.data.name, last4: parsed.data.last4, opening_balance_centavos: balance, opening_balance_at: balanceAt })
     .eq("id", id.data);
   if (error) return { status: "error", message: "Couldn't save the changes. Try again." };
+  userDataChanged();
   redirect(`/accounts/${id.data}`);
 }
 
@@ -116,6 +118,7 @@ export async function archiveAccount(formData: FormData) {
   const { supabase } = await requireUser();
   const { error } = await supabase.from("accounts").update({ archived_at: new Date().toISOString() }).eq("id", id);
   if (error) throw error;
+  userDataChanged();
   redirect("/accounts");
 }
 
@@ -139,6 +142,6 @@ export async function recordBankBalance(_prev: CheckState, formData: FormData): 
     source: "manual",
   });
   if (error) return { status: "error", message: "Couldn't save the balance. Try again." };
-  refresh();
+  userDataChanged();
   return { status: "saved" };
 }

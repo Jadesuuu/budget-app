@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { cachedUserData } from "@/lib/user-data";
 import Link from "next/link";
 import { Suspense } from "react";
 import { ChevronRight, Plus } from "lucide-react";
@@ -8,6 +9,7 @@ import { getAccountsWithBalances, OWED_TYPES, TYPE_LABEL } from "@/lib/data/acco
 import { getBalanceChecks } from "@/lib/data/reconcile";
 import { badgeFor } from "@/lib/inbox";
 import { formatPeso } from "@/lib/money";
+import { Private } from "@/components/private-amount";
 
 export const metadata: Metadata = { title: "Accounts" };
 
@@ -19,7 +21,7 @@ const GROUPS = [
 export default function AccountsPage() {
   return (
     <>
-      <PageHeader title="Accounts" />
+      <PageHeader title="Accounts" balances />
       <Suspense fallback={<div className="skeleton" style={{ height: 160 }} aria-busy="true" />}>
         <AccountGroups />
       </Suspense>
@@ -28,6 +30,8 @@ export default function AccountsPage() {
 }
 
 async function AccountGroups() {
+  "use cache: private";
+  cachedUserData();
   const [accounts, checks] = await Promise.all([getAccountsWithBalances(), getBalanceChecks()]);
 
   if (accounts.length === 0) {
@@ -51,7 +55,7 @@ async function AccountGroups() {
           <section key={group.title} className="acct-group" aria-label={group.title}>
             <div className="group-head">
               <h2 className="group-title">{group.title}</h2>
-              <p className="group-total">{owed ? `${formatPeso(-total)} owed` : formatPeso(total)}</p>
+              <p className="group-total"><Private>{formatPeso(owed ? -total : total)}</Private>{owed && " owed"}</p>
             </div>
             <ul className="acct-list">
               {list.map((a) => (
@@ -66,7 +70,7 @@ async function AccountGroups() {
                       <BalanceCheckChip check={checks.get(a.id)} bank={a.institutionName ?? a.name} />
                     </span>
                     <span className="acct-bal">
-                      {OWED_TYPES.has(a.type) ? formatPeso(-a.balance) : formatPeso(a.balance)}
+                      <Private>{OWED_TYPES.has(a.type) ? formatPeso(-a.balance) : formatPeso(a.balance)}</Private>
                       {OWED_TYPES.has(a.type) && <small>owed</small>}
                     </span>
                     <ChevronRight aria-hidden className="chev" />

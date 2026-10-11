@@ -1,16 +1,18 @@
 import type { Metadata } from "next";
+import { cachedUserData } from "@/lib/user-data";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { FileUp } from "lucide-react";
 import { BalanceCheckChip, describeCheck } from "@/components/balance-check";
 import { PageHeader } from "@/components/page-header";
-import { requireUser } from "@/lib/auth";
+import { getSession } from "@/lib/auth";
 import { getInstitutionOptions, OWED_TYPES, TYPE_LABEL } from "@/lib/data/accounts";
 import { toCheck } from "@/lib/data/reconcile";
 import { dayAndMonth, todayInManila } from "@/lib/dates";
 import { describeWhen } from "@/lib/inbox";
 import { formatPeso } from "@/lib/money";
+import { Private } from "@/components/private-amount";
 import { centavosToInput } from "@/lib/money-input";
 import { AccountForm } from "../account-form";
 import { archiveAccount } from "../actions";
@@ -28,7 +30,13 @@ export default function AccountPage({ params }: PageProps<"/accounts/[id]">) {
 
 async function Account({ params }: { params: PageProps<"/accounts/[id]">["params"] }) {
   const { id } = await params;
-  const { supabase } = await requireUser();
+  return <AccountView id={id} />;
+}
+
+async function AccountView({ id }: { id: string }) {
+  "use cache: private";
+  cachedUserData();
+  const { supabase } = await getSession();
   const [account, balance, check, history, statements, institutions] = await Promise.all([
     supabase
       .from("accounts")
@@ -71,10 +79,10 @@ async function Account({ params }: { params: PageProps<"/accounts/[id]">["params
 
   return (
     <>
-      <PageHeader title={a.name} />
+      <PageHeader title={a.name} balances />
       <section className="balance-card" aria-label="Balance">
         <p className="balance-label">{owed ? "You owe" : "Balance"}</p>
-        <p className="balance-value">{formatPeso(owed ? -bal : bal)}</p>
+        <p className="balance-value"><Private>{formatPeso(owed ? -bal : bal)}</Private></p>
         <p className="balance-meta">{[a.institutions?.name, TYPE_LABEL[a.type], a.last4 && `••${a.last4}`].filter(Boolean).join(", ")}</p>
       </section>
 
@@ -114,7 +122,7 @@ async function Account({ params }: { params: PageProps<"/accounts/[id]">["params
                     </p>
                   </div>
                   <div className="due-amt">
-                    <p className="v">{formatPeso(s.statement_balance_centavos)}</p>
+                    <p className="v"><Private>{formatPeso(s.statement_balance_centavos)}</Private></p>
                     <p className="l">{s.amount_paid_centavos >= s.statement_balance_centavos ? "Paid" : "Statement"}</p>
                   </div>
                 </li>

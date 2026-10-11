@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { cachedUserData } from "@/lib/user-data";
 import { Suspense } from "react";
 import { CircleAlert, CircleCheck, Clock, Info, MessageSquareText, ShieldAlert } from "lucide-react";
 import { PageHeader } from "@/components/page-header";
-import { requireUser } from "@/lib/auth";
+import { getSession } from "@/lib/auth";
 import { addDays, todayInManila } from "@/lib/dates";
 import { describeWhen } from "@/lib/inbox";
 import { revokeCaptureLink } from "./actions";
@@ -74,7 +75,9 @@ export default function PhoneCapturePage() {
 }
 
 async function Links() {
-  const { supabase } = await requireUser();
+  "use cache: private";
+  cachedUserData();
+  const { supabase } = await getSession();
   const { data, error } = await supabase
     .from("capture_links")
     .select("id, label, created_at, last_used_at, revoked_at")
@@ -109,7 +112,9 @@ async function Links() {
 }
 
 async function RecentMessages() {
-  const { supabase } = await requireUser();
+  "use cache: private";
+  cachedUserData();
+  const { supabase } = await getSession();
   const { data, error } = await supabase
     .from("raw_messages")
     .select("id, channel, sender, title, body, received_at, status, note")

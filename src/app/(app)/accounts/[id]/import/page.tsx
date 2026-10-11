@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import { cachedUserData } from "@/lib/user-data";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { PageHeader } from "@/components/page-header";
-import { requireUser } from "@/lib/auth";
+import { getSession } from "@/lib/auth";
 import { describeWhen } from "@/lib/inbox";
 import { undoImport } from "./actions";
 import { ImportForm } from "./import-form";
@@ -28,7 +29,13 @@ export default function ImportPage({ params }: PageProps<"/accounts/[id]/import"
 
 async function Content({ params }: { params: PageProps<"/accounts/[id]/import">["params"] }) {
   const { id } = await params;
-  const { supabase } = await requireUser();
+  return <ContentView id={id} />;
+}
+
+async function ContentView({ id }: { id: string }) {
+  "use cache: private";
+  cachedUserData();
+  const { supabase } = await getSession();
   const [account, imports] = await Promise.all([
     supabase.from("accounts").select("id, name, institutions(slug, name)").eq("id", id).maybeSingle(),
     supabase.from("imports").select("id, file_name, created_at, rows_added, rows_matched").eq("account_id", id).order("created_at", { ascending: false }).limit(10),

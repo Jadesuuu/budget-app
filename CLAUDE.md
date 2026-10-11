@@ -41,8 +41,13 @@ in a review inbox.
 - Magic-link sign-in (Supabase OTP, PKCE) -> `/auth/callback`. Invite-only: `ALLOWED_SIGNUP_EMAILS`;
   the login reply is identical for unknown addresses (no account enumeration).
 - `src/proxy.ts` refreshes the session and redirects signed-out visitors to `/login`.
-- `cacheComponents` is on: anything reading the session sits inside `<Suspense>`; `requireUser()` in
-  `src/lib/auth.ts` is the only entry point and calls `connection()` first.
+- `cacheComponents` is on: anything reading the session sits inside `<Suspense>`.
+- Instant navigation: each page's data component is `"use cache: private"` + `cachedUserData()` and reads the session
+  via `getSession()` (kept in that browser only, prefetched by the router). Server Actions and Route Handlers use
+  `requireUser()` (adds `connection()`), and every write calls `userDataChanged()` (`src/lib/user-data.ts`) or
+  other pages show stale data. `RefreshOnReturn` refetches after a minute away (texts arrive in the background).
+- Hide balances: wrap balance figures in `<Private>`; the eye toggle sets `data-hide-balances` on <html>
+  (cookie `bp-hide`, applied by the pre-paint script). Transaction amounts stay visible.
 - Theme/mode live on `profiles` and are mirrored in `bp-theme`/`bp-mode` cookies so the pre-paint
   script in the root layout applies them without a flash. Tokens: `src/app/themes.css`.
 

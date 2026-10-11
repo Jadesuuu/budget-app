@@ -1,6 +1,6 @@
 "use server";
 
-import { refresh } from "next/cache";
+import { userDataChanged } from "@/lib/user-data";
 import { z } from "zod";
 import { requireUser } from "@/lib/auth";
 import { readImportFile } from "@/lib/import/read";
@@ -123,7 +123,7 @@ export async function importFile(_prev: ImportState, formData: FormData): Promis
       source: "import",
     });
   }
-  refresh();
+  userDataChanged();
   return { status: "done", added: match.missing.length, matched: match.matched.length };
 }
 
@@ -133,5 +133,5 @@ export async function undoImport(formData: FormData) {
   // Cascades to the transactions this import added; nothing else is touched.
   const { error } = await supabase.from("imports").delete().eq("id", id);
   if (error) throw error;
-  refresh();
+  userDataChanged();
 }

@@ -16,7 +16,7 @@ import type { AccountOption, CategoryOption } from "@/lib/data/inbox";
 import { badgeFor, describeSource, describeWhen, type InboxItem, type TransferPair } from "@/lib/inbox";
 import { formatPeso } from "@/lib/money";
 
-type Toast = { message: string; undoIds: string[] | null; error?: boolean };
+type Toast = { message: string; undoIds: string[] | null; undoItems?: InboxItem[]; error?: boolean };
 
 type Props = {
   items: InboxItem[];
@@ -31,6 +31,17 @@ const SWIPE_THRESHOLD = 100;
 export function ReviewInbox({ items, pairs, categories, accounts, variant }: Props) {
   const [queue, setQueue] = useState(items);
   const [pairList, setPairList] = useState(pairs);
+  // Reviewed here but maybe not yet gone from the server's list, so a refreshed list doesn't bring them back.
+  const [handled, setHandled] = useState<ReadonlySet<string>>(new Set());
+  const [lastItems, setLastItems] = useState(items);
+  if (items !== lastItems) {
+    // The page was refreshed (after an action, or on returning to the app): add anything new that arrived.
+    setLastItems(items);
+    const shown = new Set(queue.map((t) => t.id));
+    const fresh = items.filter((t) => !shown.has(t.id) && !handled.has(t.id));
+    if (fresh.length > 0) setQueue([...queue, ...fresh]);
+    setPairList(pairs.filter((p) => !handled.has(p.outId) && !handled.has(p.inId)));
+  }
   const [categoryChoice, setCategoryChoice] = useState<Record<string, string>>({});
   const [exiting, setExiting] = useState<"left" | "right" | null>(null);
   const [toast, setToast] = useState<Toast | null>(null);
@@ -51,6 +62,7 @@ export function ReviewInbox({ items, pairs, categories, accounts, variant }: Pro
   const run = useCallback(
     (ids: string[], action: () => Promise<ActionResult>, success: Toast, direction: "left" | "right") => {
       const removed = queue.filter((t) => ids.includes(t.id));
+      setHandled((h) => new Set([...h, ...ids]));
       setExiting(direction);
       setTimeout(() => {
         setExiting(null);
@@ -61,8 +73,9 @@ export function ReviewInbox({ items, pairs, categories, accounts, variant }: Pro
       startTransition(async () => {
         const result = await action();
         if (result.ok) {
-          showToast(success);
+          showToast({ ...success, undoItems: removed });
         } else {
+          setHandled((h) => new Set([...h].filter((x) => !ids.includes(x))));
           setQueue((q) => [...removed, ...q.filter((t) => !ids.includes(t.id))]);
           showToast({ message: result.message, undoIds: null, error: true });
         }
@@ -92,8 +105,9 @@ export function ReviewInbox({ items, pairs, categories, accounts, variant }: Pro
   const undo = useCallback(() => {
     const ids = toast?.undoIds;
     if (!ids) return;
-    const restored = items.filter((t) => ids.includes(t.id));
+    const restored = toast?.undoItems ?? [];
     setToast(null);
+    setHandled((h) => new Set([...h].filter((x) => !ids.includes(x))));
     setQueue((q) => [...restored, ...q]);
     startTransition(async () => {
       const results = await Promise.all(ids.map((id) => reopenTransaction({ id })));
@@ -103,7 +117,7 @@ export function ReviewInbox({ items, pairs, categories, accounts, variant }: Pro
         showToast({ message: failure.message, undoIds: null, error: true });
       }
     });
-  }, [toast, items, showToast]);
+  }, [toast, showToast]);
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {

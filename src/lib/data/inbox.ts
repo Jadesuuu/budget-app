@@ -1,5 +1,5 @@
 import "server-only";
-import { requireUser } from "@/lib/auth";
+import { getSession } from "@/lib/auth";
 import { findTransferPairs, type InboxItem, type InboxSource, type TransferPair } from "@/lib/inbox";
 
 export type CategoryOption = { id: string; name: string; kind: "expense" | "income" | "transfer" };
@@ -13,7 +13,7 @@ export type Inbox = {
 };
 
 export async function getInbox(): Promise<Inbox> {
-  const { supabase } = await requireUser();
+  const { supabase } = await getSession();
   const [pending, categories, accounts] = await Promise.all([
     supabase
       .from("transactions")

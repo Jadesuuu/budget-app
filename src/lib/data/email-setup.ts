@@ -1,5 +1,5 @@
 import "server-only";
-import { requireUser } from "@/lib/auth";
+import { getSession } from "@/lib/auth";
 
 export type EmailSetupStatus = {
   /** Mailboxes that sent a Gmail confirmation code, newest first. */
@@ -9,7 +9,7 @@ export type EmailSetupStatus = {
 };
 
 export async function getEmailSetupStatus(): Promise<EmailSetupStatus> {
-  const { supabase } = await requireUser();
+  const { supabase } = await getSession();
   const [sources, emails] = await Promise.all([
     supabase
       .from("forwarding_sources")
@@ -33,7 +33,7 @@ export async function getEmailSetupStatus(): Promise<EmailSetupStatus> {
 
 /** Banks and e-wallets whose sender domains are known, so the Gmail filter can include them. */
 export async function getFilterCoverage(): Promise<{ names: string[]; domains: string[] }> {
-  const { supabase } = await requireUser();
+  const { supabase } = await getSession();
   const { data, error } = await supabase.from("institutions").select("name, email_domains").is("user_id", null).order("name");
   if (error) throw error;
   const covered = data.filter((i) => i.email_domains.length > 0);

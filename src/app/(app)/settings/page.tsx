@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import { cachedUserData } from "@/lib/user-data";
 import Link from "next/link";
 import { Suspense } from "react";
 import { CopyButton } from "@/components/copy-button";
 import { PageHeader } from "@/components/page-header";
-import { getProfile, requireUser } from "@/lib/auth";
+import { getProfile, getSession } from "@/lib/auth";
 import { env } from "@/lib/env";
 import { modeSchema, themeIdSchema, DEFAULT_MODE, DEFAULT_THEME } from "@/lib/themes";
 import { signOut } from "./actions";
@@ -26,8 +27,10 @@ export default function SettingsPage() {
 }
 
 async function SettingsContent() {
+  "use cache: private";
+  cachedUserData();
   const profile = await getProfile();
-  const { supabase } = await requireUser();
+  const { supabase } = await getSession();
   const { data: sources, error } = await supabase
     .from("forwarding_sources")
     .select("id, email, added_by, confirmation_code")
