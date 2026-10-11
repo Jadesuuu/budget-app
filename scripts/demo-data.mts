@@ -44,6 +44,7 @@ const uid = user.id;
 for (const table of ["accounts", "income_sources", "institutions", "categories", "raw_emails"] as const) {
   must(await db.from(table).delete().eq("user_id", uid).select("user_id"), `clear ${table}`);
 }
+must(await db.from("forwarding_sources").delete().eq("user_id", uid).neq("added_by", "account").select("user_id"), "clear forwarding sources");
 
 const institutions = must(await db.from("institutions").select("id, slug").is("user_id", null), "institutions");
 const inst = (slug: string) => {

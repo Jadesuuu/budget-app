@@ -3,7 +3,8 @@ import { NextResponse, type NextRequest } from "next/server";
 import type { Database } from "@/lib/database.types";
 import { env } from "@/lib/env";
 
-const PUBLIC_PATHS = ["/login", "/auth/"];
+// /api/jobs/ authenticates with its own shared secret, not a user session.
+const PUBLIC_PATHS = ["/login", "/auth/", "/api/jobs/"];
 
 /** Refreshes the auth session cookie and redirects signed-out visitors to /login. */
 export async function updateSession(request: NextRequest) {

@@ -101,3 +101,20 @@ select.input { appearance: auto; }
 /* Cards behind the front card match its height, so the "Next" strip peeks out below it. */
 .stack > .txn-card[data-depth="1"],
 .stack > .txn-card[data-depth="2"] { align-self: stretch; }
+
+/* email forwarding (phase 4) */
+.settings-sub { font-size: 15px; font-weight: 700; margin-top: 8px; }
+.source-list .row { align-items: center; }
+.source-list .row-title { word-break: break-all; }
+.source-code { display: grid; justify-items: end; gap: 0; }
+.source-code .code-value { font-size: 17px; }
+.source-form { margin-top: 4px; }
+.email-row { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: start; padding: 12px 14px; }
+.email-row + .email-row { border-top: 1px solid var(--line); }
+.email-icon { width: 20px; height: 20px; margin-top: 2px; }
+.email-icon.ok, .email-status.ok { color: var(--income); }
+.email-icon.warn, .email-status.warn { color: var(--danger); }
+.email-icon.muted, .email-status.muted { color: var(--muted); }
+.email-main { min-width: 0; display: grid; gap: 2px; }
+.email-main .row-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.email-status { font-size: 13px; font-weight: 500; }

@@ -19,7 +19,7 @@ export async function getProfile() {
   const { supabase, userId, email } = await requireUser();
   const { data, error } = await supabase
     .from("profiles")
-    .select("display_name, theme, mode, inbound_alias, gmail_forward_code, gmail_forward_code_at")
+    .select("display_name, theme, mode, inbound_alias")
     .eq("user_id", userId)
     .single();
   if (error) throw error;

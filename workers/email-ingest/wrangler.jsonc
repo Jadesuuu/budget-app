@@ -1,0 +1,7 @@
+{
+  // Inbound bank emails -> raw_emails. Secrets come from .dev.vars locally and `wrangler secret put` in production.
+  "name": "budget-email-ingest",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-01",
+  "observability": { "enabled": true }
+}

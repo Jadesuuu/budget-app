@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "typecheck": "next typegen && tsc --noEmit",
+    "typecheck": "next typegen && tsc --noEmit && tsc --noEmit -p workers/email-ingest",
     "test": "vitest run",
     "test:watch": "vitest",
     "db:start": "supabase start",
@@ -16,19 +16,23 @@
     "db:test": "supabase test db",
     "db:types": "supabase gen types typescript --local > src/lib/database.types.ts",
     "test:e2e": "playwright test",
-    "demo": "node scripts/demo-data.mts"
+    "demo": "node scripts/demo-data.mts",
+    "worker:dev": "wrangler dev -c workers/email-ingest/wrangler.jsonc --port 8787",
+    "email:send": "node scripts/send-test-email.mts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.117.3",
     "lucide-react": "^1.54.0",
     "next": "16.4.0",
+    "postal-mime": "^4.0.5",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "server-only": "^0.0.1",
     "zod": "^4.6.5"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261010.1",
     "@playwright/test": "^1.64.0",
     "@tailwindcss/turbopack": "^4",
     "@types/node": "^20",
@@ -41,7 +45,8 @@
     "tailwindcss": "^4",
     "typescript": "^5",
     "vite-tsconfig-paths": "^6.1.1",
-    "vitest": "^5.0.3"
+    "vitest": "^5.0.3",
+    "wrangler": "^4.149.0"
   },
   "packageManager": "pnpm@12.11.2"
 }

@@ -51,3 +51,7 @@ supabase/.branches/
 # playwright
 /test-results/
 /playwright-report/
+
+# wrangler
+.dev.vars
+.wrangler/

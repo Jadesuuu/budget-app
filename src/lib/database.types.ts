@@ -83,6 +83,20 @@ isOneToOne: true
       referencedColumns: ["id","user_id"]
     }
                   ]
+                },"forwarding_sources": {
+                  Row: {
+                    "added_by": string,"confirmation_code": string | null,"confirmation_received_at": string | null,"created_at": string,"email": string,"id": string,"updated_at": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "added_by"?: string,"confirmation_code"?: string | null,"confirmation_received_at"?: string | null,"created_at"?: string,"email": string,"id"?: string,"updated_at"?: string,"user_id"?: string
+                  }
+                  Update: {
+                    "added_by"?: string,"confirmation_code"?: string | null,"confirmation_received_at"?: string | null,"created_at"?: string,"email"?: string,"id"?: string,"updated_at"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    
+                  ]
                 },"income_sources": {
                   Row: {
                     "account_id": string | null,"active": boolean,"amount_centavos": number,"created_at": string,"frequency": Database["public"]['Enums']["pay_frequency"],"id": string,"name": string,"updated_at": string,"user_id": string
@@ -243,14 +257,14 @@ isOneToOne: false
                   ]
                 },"raw_emails": {
                   Row: {
-                    "created_at": string,"error": string | null,"from_address": string,"from_domain": string,"id": string,"inbound_alias": string,"message_id": string | null,"parsed_at": string | null,"parser": string | null,"parser_version": number | null,"raw_mime": string,"received_at": string,"sender_allowed": boolean,"status": Database["public"]['Enums']["raw_email_status"],"subject": string | null,"updated_at": string,"user_id": string
+                    "created_at": string,"envelope_to": string | null,"error": string | null,"forwarded_by": string | null,"from_address": string,"from_domain": string,"id": string,"inbound_alias": string,"kind": string | null,"message_id": string | null,"note": string | null,"original_from": string | null,"parsed_at": string | null,"parser": string | null,"parser_version": number | null,"raw_mime": string,"received_at": string,"sender_allowed": boolean,"status": Database["public"]['Enums']["raw_email_status"],"subject": string | null,"updated_at": string,"user_id": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "created_at"?: string,"error"?: string | null,"from_address": string,"from_domain": string,"id"?: string,"inbound_alias": string,"message_id"?: string | null,"parsed_at"?: string | null,"parser"?: string | null,"parser_version"?: number | null,"raw_mime": string,"received_at"?: string,"sender_allowed"?: boolean,"status"?: Database["public"]['Enums']["raw_email_status"],"subject"?: string | null,"updated_at"?: string,"user_id": string
+                    "created_at"?: string,"envelope_to"?: string | null,"error"?: string | null,"forwarded_by"?: string | null,"from_address": string,"from_domain": string,"id"?: string,"inbound_alias": string,"kind"?: string | null,"message_id"?: string | null,"note"?: string | null,"original_from"?: string | null,"parsed_at"?: string | null,"parser"?: string | null,"parser_version"?: number | null,"raw_mime": string,"received_at"?: string,"sender_allowed"?: boolean,"status"?: Database["public"]['Enums']["raw_email_status"],"subject"?: string | null,"updated_at"?: string,"user_id": string
                   }
                   Update: {
-                    "created_at"?: string,"error"?: string | null,"from_address"?: string,"from_domain"?: string,"id"?: string,"inbound_alias"?: string,"message_id"?: string | null,"parsed_at"?: string | null,"parser"?: string | null,"parser_version"?: number | null,"raw_mime"?: string,"received_at"?: string,"sender_allowed"?: boolean,"status"?: Database["public"]['Enums']["raw_email_status"],"subject"?: string | null,"updated_at"?: string,"user_id"?: string
+                    "created_at"?: string,"envelope_to"?: string | null,"error"?: string | null,"forwarded_by"?: string | null,"from_address"?: string,"from_domain"?: string,"id"?: string,"inbound_alias"?: string,"kind"?: string | null,"message_id"?: string | null,"note"?: string | null,"original_from"?: string | null,"parsed_at"?: string | null,"parser"?: string | null,"parser_version"?: number | null,"raw_mime"?: string,"received_at"?: string,"sender_allowed"?: boolean,"status"?: Database["public"]['Enums']["raw_email_status"],"subject"?: string | null,"updated_at"?: string,"user_id"?: string
                   }
                   Relationships: [
                     
@@ -441,6 +455,9 @@ isOneToOne: false
         isOneToOne: true
         isSetofReturn: false
       } },
+"ingest_raw_email":
+{ Args: { "p_alias": string,"p_envelope_from": string,"p_envelope_to": string,"p_message_id": string,"p_raw_mime": string,"p_subject": string }; Returns: string
+                           },
 "mark_not_duplicate":
 { Args: { "p_id": string }; Returns: {
               "account_id": string,

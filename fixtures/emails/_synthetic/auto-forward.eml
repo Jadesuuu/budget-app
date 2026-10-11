@@ -1,0 +1,14 @@
+From: Test Bank Alerts <alerts@testbank.example>
+To: someone.example@gmail.com
+Subject: Card transaction alert
+Message-ID: <synthetic-auto-1@testbank.example>
+Date: Sun, 11 Oct 2026 12:42:00 +0000
+X-Forwarded-For: someone.example@gmail.com u_test000000@in.jadebonifacio.dev
+X-Forwarded-To: u_test000000@in.jadebonifacio.dev
+Authentication-Results: mx.example; dkim=pass header.d=testbank.example; spf=pass
+Content-Type: text/html; charset=UTF-8
+
+<html><body><table><tr><td>Card ending</td><td>4417</td></tr>
+<tr><td>Merchant</td><td>JOLLIBEE KATIPUNAN</td></tr>
+<tr><td>Amount</td><td>PHP 289.00</td></tr></table>
+<p>This is a synthetic test email.</p></body></html>

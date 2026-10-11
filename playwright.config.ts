@@ -18,10 +18,8 @@ export default defineConfig({
     { name: "phone", use: { ...devices["Pixel 7"], channel: "chrome" } },
     { name: "desktop", use: { viewport: { width: 1440, height: 1000 }, channel: "chrome" } },
   ],
-  webServer: {
-    command: "pnpm dev",
-    url: "http://localhost:3000/login",
-    reuseExistingServer: true,
-    timeout: 120_000,
-  },
+  webServer: [
+    { command: "pnpm dev", url: "http://localhost:3000/login", reuseExistingServer: true, timeout: 120_000 },
+    { command: "pnpm worker:dev", url: "http://localhost:8787/health", reuseExistingServer: true, timeout: 120_000 },
+  ],
 });
