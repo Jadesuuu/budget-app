@@ -38,12 +38,27 @@ function forwardBankEmails() {
       if (message.getDate().getTime() <= since) continue;
       const from = message.getFrom().toLowerCase();
       if (!BANK_SENDERS.some((domain) => from.includes("@" + domain) || from.includes("." + domain))) continue;
-      message.forward(BUDGET_ADDRESS);
+      forwardToBudget(message);
       forwarded = true;
     }
     if (forwarded) thread.addLabel(label);
   }
   props.setProperty("lastRun", String(startedAt));
+}
+
+// Same layout as Gmail's own Forward, so Budget can tell which bank the email came from.
+function forwardToBudget(message) {
+  const header = [
+    "---------- Forwarded message ---------",
+    "From: " + message.getFrom(),
+    "Date: " + Utilities.formatDate(message.getDate(), "UTC", "EEE, d MMM yyyy HH:mm:ss Z"),
+    "Subject: " + message.getSubject(),
+    "To: " + message.getTo(),
+  ];
+  const escape = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  GmailApp.sendEmail(BUDGET_ADDRESS, "Fwd: " + message.getSubject(), header.join("\\n") + "\\n\\n" + message.getPlainBody(), {
+    htmlBody: "<div>" + header.map(escape).join("<br>") + "</div><br>" + message.getBody(),
+  });
 }
 `;
 }
