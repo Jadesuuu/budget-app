@@ -21,6 +21,19 @@ export default {
     return new URL(request.url).pathname === "/health" ? new Response("ok") : new Response("Not found", { status: 404 });
   },
 
+  /** Every 15 minutes: parse anything still pending, and keep the free Supabase project from pausing. */
+  async scheduled(_event: ScheduledController, env: Env, ctx: ExecutionContext): Promise<void> {
+    const jobs: Promise<unknown>[] = [
+      fetch(`${env.SUPABASE_URL}/rest/v1/institutions?select=id&limit=1`, {
+        headers: { apikey: env.SUPABASE_SECRET_KEY, Authorization: `Bearer ${env.SUPABASE_SECRET_KEY}` },
+      }),
+    ];
+    if (env.PARSE_HOOK_URL && env.PARSE_HOOK_SECRET) {
+      jobs.push(fetch(env.PARSE_HOOK_URL, { method: "POST", headers: { Authorization: `Bearer ${env.PARSE_HOOK_SECRET}` } }));
+    }
+    ctx.waitUntil(Promise.allSettled(jobs));
+  },
+
   async email(message: ForwardableEmailMessage, env: Env, ctx: ExecutionContext): Promise<void> {
     const recipient = message.to.toLowerCase();
     const alias = recipient.split("@")[0] ?? "";

@@ -3,5 +3,7 @@
   "name": "budget-email-ingest",
   "main": "src/index.ts",
   "compatibility_date": "2026-09-01",
-  "observability": { "enabled": true }
+  "observability": { "enabled": true },
+  // Safety net + keep-alive: re-runs the parse job and touches Supabase (free projects pause after a week idle).
+  "triggers": { "crons": ["*/15 * * * *"] }
 }
