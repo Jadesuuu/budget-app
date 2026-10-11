@@ -3,6 +3,8 @@ import { expect, test, type Page } from "@playwright/test";
 import { resetDemoData, signIn } from "./helpers";
 
 test.describe.configure({ mode: "serial" });
+// Multi-step server flows; the dev server also compiles each page on first visit.
+test.setTimeout(120_000);
 test.skip(({ isMobile }) => isMobile, "Server-side flow; one viewport is enough.");
 
 async function openAccount(page: Page, name: string) {
@@ -25,7 +27,7 @@ test("a GCash text with a balance exposes a gap, and typing the app's balance up
   await page.goto("/settings/phone-capture");
   await page.getByLabel("Name this phone").fill("Recon test");
   await page.getByRole("button", { name: "Create capture link" }).click();
-  const url = (await page.locator(".new-link code").textContent())?.trim() ?? "";
+  const url = (await page.locator(".new-link code.full-link").textContent())?.trim() ?? "";
   // Demo GCash starts at PHP 4,820.50 a month ago; GCash says PHP 864.55 right after this payment.
   await page.request.post(url, {
     data: { from: "GCash", text: "You have paid P130.83 GCash to FFT*PINDUOD on 10-09-26 11:30:30 AM. Your new balance is P864.55. Ref. No. 4000000000001." },

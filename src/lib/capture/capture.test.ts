@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { classifyCapture, normalizeSmsSender, type CaptureContext } from "./classify";
-import { dedupeKey, readCapturePayload, type CapturedMessage } from "./payload";
+import { dedupeKey, readCaptureMessage, readCapturePayload, type CapturedMessage } from "./payload";
 import type { MessageParser } from "./parsers";
 import { generateCaptureToken, hashCaptureToken, isCaptureToken } from "./token";
 
@@ -25,6 +25,22 @@ describe("readCapturePayload", () => {
   it("treats an Android package name as an app notification", () => {
     const msg = readCapturePayload("application/json", JSON.stringify({ package: "com.globe.gcash.android", title: "GCash", text: "Received" }));
     expect(msg).toMatchObject({ channel: "notification", sender: "com.globe.gcash.android", title: "GCash" });
+  });
+
+  it("reads Message487 SMS events (sender + source=android)", () => {
+    const msg = readCapturePayload(
+      "application/json",
+      JSON.stringify({ schema_version: 1, event_id: "e1", message_type: "sms", source: "android", source_name: "Android", sender: "GCash", text: "Paid", occurred_at: "2026-10-11T04:00:00Z" }),
+    );
+    expect(msg).toEqual({ channel: "sms", sender: "GCash", title: null, body: "Paid", receivedAt: "2026-10-11T04:00:00.000Z" });
+  });
+
+  it("reads Message487 notification events (source = app package)", () => {
+    const msg = readCapturePayload(
+      "application/json",
+      JSON.stringify({ message_type: "notification", source: "com.viber.voip", source_name: "Viber", title: "Atome", text: "Your bill is due", occurred_at: "2026-10-11T04:00:00Z" }),
+    );
+    expect(msg).toMatchObject({ channel: "notification", sender: "com.viber.voip", title: "Atome" });
   });
 
   it("reads the iPhone shortcut's JSON, which names the channel", () => {
@@ -119,5 +135,15 @@ describe("classifyCapture", () => {
       kind: "failed",
       note: "No reader for this Test Bank message yet.",
     });
+  });
+});
+
+describe("timestamps that look like card numbers", () => {
+  it("reads 13-digit millisecond timestamps that happen to pass the card checksum", () => {
+    // 1791720001000 passes the Luhn check, like roughly 1 in 10 real timestamps.
+    const raw = JSON.stringify({ from: "BPI", text: "Card 4111111111111111 used", receivedStamp: 1791720001000 });
+    const msg = readCaptureMessage("application/json", raw);
+    expect(msg?.receivedAt).toBe("2026-10-11T12:00:01.000Z");
+    expect(msg?.body).toBe("Card ************1111 used");
   });
 });

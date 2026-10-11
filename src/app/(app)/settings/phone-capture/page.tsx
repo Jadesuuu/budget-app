@@ -38,12 +38,16 @@ export default function PhoneCapturePage() {
         <h2 id="android-h" className="settings-h">On Android</h2>
         <p className="settings-p">Captures bank texts and notifications from apps like GCash, Maya, Shopee, TikTok and Viber.</p>
         <ol className="steps">
-          <li>Install <b>Message487</b> from F-Droid. (For texts only, <b>SMS to URL Forwarder</b> also works.)</li>
-          <li>Add a webhook: paste your capture link as the URL and choose POST.</li>
-          <li>Choose what to forward: texts from your banks, and notifications from your bank and e-wallet apps. For Viber, Budget keeps only chats whose name is a known bank.</li>
-          <li>Allow notification and SMS access when Android asks.</li>
+          <li>Create a capture link above and keep this page open.</li>
+          <li>Install <b>Message487</b> from F-Droid. It forwards texts and app notifications.</li>
+          <li>In its <b>Connection</b> screen, paste the URL and the token shown above, then save.</li>
+          <li>Turn on <b>Incoming SMS</b>, and pick the apps whose notifications to forward: GCash, Maya, your bank apps, Shopee, TikTok and Viber. For Viber, Budget keeps only chats named after a known bank.</li>
+          <li>Allow SMS and notification access when Android asks, and let it run in the background (no battery restriction), or forwarding can be delayed.</li>
         </ol>
-        <p className="hint">Menu names can differ a little between app versions.</p>
+        <p className="hint">
+          Texts only? <b>SMS to URL Forwarder</b> (F-Droid) also works: paste the one-line link as the URL and set the
+          sender filter to your banks. Menu names can differ a little between app versions.
+        </p>
       </section>
 
       <section className="settings-sec" aria-labelledby="iphone-h">

@@ -4,7 +4,7 @@ import type { Database } from "@/lib/database.types";
 import { env } from "@/lib/env";
 
 // /api/jobs/ uses a shared secret and /api/capture/ a per-phone secret link, not a user session.
-const PUBLIC_PATHS = ["/login", "/auth/", "/api/jobs/", "/api/capture/"];
+const PUBLIC_PATHS = ["/login", "/auth/", "/api/jobs/", "/api/capture"];
 
 /** Refreshes the auth session cookie and redirects signed-out visitors to /login. */
 export async function updateSession(request: NextRequest) {

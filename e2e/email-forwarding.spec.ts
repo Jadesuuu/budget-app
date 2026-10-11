@@ -4,6 +4,8 @@ import { resetDemoData, signIn } from "./helpers";
 
 // The whole path: local email Worker -> raw_emails -> parse job (called by the Worker) -> Settings.
 test.describe.configure({ mode: "serial" });
+// Multi-step server flows; the dev server also compiles each page on first visit.
+test.setTimeout(120_000);
 test.skip(({ isMobile }) => isMobile, "Server-side flow; one viewport is enough.");
 
 function sendEmail(file: string) {

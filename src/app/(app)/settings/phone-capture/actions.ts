@@ -7,7 +7,10 @@ import { requireUser } from "@/lib/auth";
 import { captureLinkLabelSchema } from "@/lib/capture/payload";
 import { generateCaptureToken, hashCaptureToken } from "@/lib/capture/token";
 
-export type CreateLinkState = { status: "idle" } | { status: "created"; url: string; label: string } | { status: "error"; message: string };
+export type CreateLinkState =
+  | { status: "idle" }
+  | { status: "created"; url: string; endpoint: string; token: string; label: string }
+  | { status: "error"; message: string };
 
 export async function createCaptureLink(_prev: CreateLinkState, formData: FormData): Promise<CreateLinkState> {
   const label = captureLinkLabelSchema.safeParse(formData.get("label"));
@@ -19,7 +22,7 @@ export async function createCaptureLink(_prev: CreateLinkState, formData: FormDa
   const origin = (await headers()).get("origin") ?? "http://localhost:3000";
   refresh();
   // The only time the secret leaves the server: it is not stored, only its hash is.
-  return { status: "created", url: `${origin}/api/capture/${token}`, label: label.data };
+  return { status: "created", url: `${origin}/api/capture/${token}`, endpoint: `${origin}/api/capture`, token, label: label.data };
 }
 
 export async function revokeCaptureLink(formData: FormData) {

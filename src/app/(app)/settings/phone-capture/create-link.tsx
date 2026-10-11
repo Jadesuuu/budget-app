@@ -14,8 +14,18 @@ export function CreateLinkForm() {
         <p>
           Your link for <b>{state.label}</b>. Copy it into your phone now: for your safety it won&apos;t be shown again.
         </p>
+        <p className="settings-sub">Message487 (Android): URL and token</p>
         <div className="alias-box">
-          <code>{state.url}</code>
+          <code>{state.endpoint}</code>
+          <CopyButton value={state.endpoint} label="Copy URL" />
+        </div>
+        <div className="alias-box">
+          <code className="token-code">{state.token}</code>
+          <CopyButton value={state.token} label="Copy token" />
+        </div>
+        <p className="settings-sub">SMS to URL Forwarder or iPhone: one link</p>
+        <div className="alias-box">
+          <code className="full-link">{state.url}</code>
           <CopyButton value={state.url} label="Copy link" />
         </div>
         <div className="warning-box" role="note">

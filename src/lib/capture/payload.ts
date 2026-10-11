@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { redactCardNumbers } from "../../../shared/redact";
 import { sha256Hex } from "./token";
 
 /** A captured SMS or app notification, whatever app or shortcut sent it. */
@@ -13,11 +14,12 @@ export type CapturedMessage = {
 
 const MAX_BODY = 4000;
 
-// Field names used by common forwarder apps and by our iPhone shortcut.
+// Field names used by common forwarder apps (SMS to URL Forwarder, Message487) and by our iPhone shortcut.
+// Message487: SMS has "sender" (source is "android"); notifications have "source" = the app package.
 const SENDER_KEYS = ["from", "sender", "address", "app", "package", "packageName", "appName", "source"];
 const BODY_KEYS = ["text", "body", "message", "content", "msg"];
 const TITLE_KEYS = ["title", "subject"];
-const TIME_KEYS = ["receivedStamp", "receivedAt", "received_at", "timestamp", "time", "date", "sentStamp"];
+const TIME_KEYS = ["receivedStamp", "receivedAt", "received_at", "occurred_at", "occurredAt", "timestamp", "time", "date", "sentStamp"];
 
 const pick = (obj: Record<string, unknown>, keys: string[]) => {
   for (const key of keys) {
@@ -48,7 +50,8 @@ export function readCapturePayload(contentType: string, raw: string): CapturedMe
   const body = pick(fields, BODY_KEYS);
   if (!body) return null;
   const sender = pick(fields, SENDER_KEYS) ?? "unknown";
-  const explicitChannel = typeof fields.channel === "string" ? fields.channel.toLowerCase() : null;
+  const declared = fields.channel ?? fields.message_type ?? fields.messageType;
+  const explicitChannel = typeof declared === "string" ? declared.toLowerCase() : null;
   const looksLikeApp = /^[a-z][a-z0-9_]*(\.[a-z0-9_]+)+$/i.test(sender); // e.g. com.globe.gcash.android
   const channel = explicitChannel === "notification" || (explicitChannel !== "sms" && looksLikeApp) ? "notification" : "sms";
 
@@ -80,3 +83,18 @@ export function dedupeKey(msg: CapturedMessage, now: Date = new Date()): string 
 }
 
 export const captureLinkLabelSchema = z.string().trim().min(1, "Give this link a name, like My Android.").max(60);
+
+/**
+ * Reads a capture request and masks full card numbers in its text fields. Parsing comes first: masking the raw
+ * request would corrupt numeric fields such as 13-digit timestamps that happen to pass the card checksum.
+ */
+export function readCaptureMessage(contentType: string, raw: string): CapturedMessage | null {
+  const msg = readCapturePayload(contentType, raw);
+  if (!msg) return null;
+  return {
+    ...msg,
+    sender: redactCardNumbers(msg.sender),
+    title: msg.title === null ? null : redactCardNumbers(msg.title),
+    body: redactCardNumbers(msg.body),
+  };
+}

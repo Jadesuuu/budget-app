@@ -176,3 +176,4 @@ select.input { appearance: auto; }
 .import-done { display: grid; gap: 12px; justify-items: start; padding: 18px; border-radius: var(--radius-card); background: var(--surface); border: var(--card-border); }
 .import-done > svg { width: 28px; height: 28px; color: var(--income); }
 .settings-sec > .btn { justify-self: start; }
+.token-code, .full-link { font-size: 12.5px; word-break: break-all; }
