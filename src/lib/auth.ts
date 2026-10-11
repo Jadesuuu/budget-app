@@ -1,10 +1,14 @@
 import "server-only";
 import { redirect } from "next/navigation";
+import { cache } from "react";
 import { connection } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
-/** Data access layer entry point: verifies the session or redirects to /login. */
-export async function requireUser() {
+/**
+ * Data access layer entry point: verifies the session or redirects to /login.
+ * Wrapped in React cache so a page, its header and its data helpers share one check per request.
+ */
+export const requireUser = cache(async () => {
   // The session check reads the clock (token expiry), so it must run at request time, never in a prerender.
   await connection();
   const supabase = await createClient();
@@ -13,9 +17,9 @@ export async function requireUser() {
   const userId = data.claims.sub;
   const email = typeof data.claims.email === "string" ? data.claims.email : null;
   return { supabase, userId, email };
-}
+});
 
-export async function getProfile() {
+export const getProfile = cache(async () => {
   const { supabase, userId, email } = await requireUser();
   const { data, error } = await supabase
     .from("profiles")
@@ -24,7 +28,7 @@ export async function getProfile() {
     .single();
   if (error) throw error;
   return { ...data, userId, email };
-}
+});
 
 export function initialsOf(name: string | null, email: string | null) {
   const source = (name ?? "").trim() || (email ?? "").split("@")[0] || "?";
