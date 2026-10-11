@@ -89,6 +89,17 @@ in a review inbox.
   - Each user gets an unguessable inbound alias (e.g. u_8f3k2@domain); unknown aliases are rejected.
   - Allowlist known sender domains; everything else is stored but flagged, never auto-imported.
   - Detect the Gmail forwarding-confirmation email and surface its code in the user's settings page.
+- Phone capture (SMS + app notifications, incl. Viber business chats) is the main capture path; most PH
+  banks/e-wallets notify by SMS or in-app, not email (GCash sends no transaction emails):
+  - Per-phone secret link `/api/capture/cap_...`; only its SHA-256 is stored; revocable.
+  - Stored raw in `raw_messages`, parsed separately (`src/lib/capture/`), same zod output contract as email.
+  - Senders are matched via `institutions.sms_senders` / `app_packages` (Viber: chat name vs sms_senders).
+    Messages from unknown senders are recorded WITHOUT their content (personal texts/chats are never kept).
+  - Android: forwarder app (Message487 / SMS to URL Forwarder). iPhone: Shortcuts message automation (SMS only).
+- Full card numbers are masked (Luhn check, `shared/redact.ts`) before ANY storage: the email Worker
+  rebuilds the MIME without them (GCash GBills receipts contain full card numbers); the capture route
+  redacts the payload. Fixtures are made with `pnpm fixture:make` (also scrambles refs, names via --replace)
+  and must pass a manual leak check before committing. Real samples never enter the repo.
 - Parsers: one per email template per institution, each tested against redacted fixtures in
   `/fixtures/emails/<institution>/`. LLM extraction is a fallback only when no template matches,
   and its output must pass the same zod schema.

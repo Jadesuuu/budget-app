@@ -150,3 +150,5 @@ select.input { appearance: auto; }
   background: var(--danger-soft); color: var(--ink); font-size: 14px;
 }
 .warning-box svg { color: var(--danger); width: 20px; height: 20px; flex: none; margin-top: 1px; }
+.new-link { display: grid; gap: 12px; }
+.new-link .alias-box code { font-size: 13px; }

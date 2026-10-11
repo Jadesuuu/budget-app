@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
-import { CircleAlert, CircleCheck, Clock, KeyRound, ShieldAlert } from "lucide-react";
+import { CircleAlert, CircleCheck, Clock, Info, KeyRound, ShieldAlert } from "lucide-react";
 import { PageHeader } from "@/components/page-header";
 import { requireUser } from "@/lib/auth";
 import { addDays, todayInManila } from "@/lib/dates";
@@ -56,7 +56,9 @@ async function EmailList() {
   return (
     <ul className="row-list email-list">
       {data.map((e) => {
-        const status = STATUS[e.status];
+        // Parsed but not a transaction (statements, reminders) reads as "Noted", not "Added to Review".
+        const noted = e.status === "parsed" && e.kind === "other";
+        const status = noted ? { label: "Noted", icon: Info, tone: "muted" as const } : STATUS[e.status];
         const Icon = e.kind === "gmail_confirmation" ? KeyRound : status.icon;
         return (
           <li key={e.id} className="email-row">

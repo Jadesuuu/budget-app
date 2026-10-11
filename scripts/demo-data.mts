@@ -41,7 +41,7 @@ if (!user) {
 const uid = user.id;
 
 // 2. Clear this user's data (accounts cascade to transactions, cards, statements, loans, plans).
-for (const table of ["accounts", "income_sources", "institutions", "categories", "raw_emails"] as const) {
+for (const table of ["accounts", "income_sources", "institutions", "categories", "raw_emails", "raw_messages", "capture_links"] as const) {
   must(await db.from(table).delete().eq("user_id", uid).select("user_id"), `clear ${table}`);
 }
 must(await db.from("forwarding_sources").delete().eq("user_id", uid).neq("added_by", "account").select("user_id"), "clear forwarding sources");
@@ -60,13 +60,13 @@ const accountRows = must(
   await db
     .from("accounts")
     .insert([
-      { user_id: uid, institution_id: inst("bpi"), type: "savings", name: "BPI Savings", last4: "7712", opening_balance_centavos: 4250000 },
+      { user_id: uid, institution_id: inst("bpi"), type: "savings", name: "BPI Savings", last4: "5678", opening_balance_centavos: 4250000 },
       { user_id: uid, institution_id: inst("gcash"), type: "ewallet", name: "GCash", opening_balance_centavos: 482050 },
       { user_id: uid, institution_id: inst("maya"), type: "ewallet", name: "Maya Wallet", opening_balance_centavos: 125000 },
       { user_id: uid, institution_id: inst("bdo"), type: "savings", name: "BDO Savings", last4: "0921", opening_balance_centavos: 3840215 },
       { user_id: uid, institution_id: inst("bpi"), type: "credit", name: "BPI Credit", last4: "4417", opening_balance_centavos: -1845020 },
       { user_id: uid, institution_id: inst("eastwest"), type: "credit", name: "EastWest", last4: "8830", opening_balance_centavos: -620475 },
-      { user_id: uid, institution_id: inst("atome"), type: "bnpl", name: "Atome", opening_balance_centavos: -199800 },
+      { user_id: uid, institution_id: inst("atome"), type: "bnpl", name: "Atome", last4: "4321", opening_balance_centavos: -199800 },
       { user_id: uid, institution_id: inst("bdo"), type: "loan", name: "BDO Personal Loan", opening_balance_centavos: -10000000 },
     ])
     .select("id, name"),

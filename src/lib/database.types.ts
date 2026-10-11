@@ -43,6 +43,20 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"capture_links": {
+                  Row: {
+                    "created_at": string,"id": string,"label": string,"last_used_at": string | null,"revoked_at": string | null,"token_hash": string,"updated_at": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"id"?: string,"label": string,"last_used_at"?: string | null,"revoked_at"?: string | null,"token_hash": string,"updated_at"?: string,"user_id"?: string
+                  }
+                  Update: {
+                    "created_at"?: string,"id"?: string,"label"?: string,"last_used_at"?: string | null,"revoked_at"?: string | null,"token_hash"?: string,"updated_at"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    
+                  ]
                 },"categories": {
                   Row: {
                     "created_at": string,"icon": string | null,"id": string,"kind": Database["public"]['Enums']["category_kind"],"name": string,"updated_at": string,"user_id": string | null
@@ -177,14 +191,14 @@ isOneToOne: false
                   ]
                 },"institutions": {
                   Row: {
-                    "created_at": string,"email_domains": (string)[],"id": string,"kind": Database["public"]['Enums']["institution_kind"],"name": string,"slug": string | null,"updated_at": string,"user_id": string | null
+                    "app_packages": (string)[],"created_at": string,"email_domains": (string)[],"id": string,"kind": Database["public"]['Enums']["institution_kind"],"name": string,"slug": string | null,"sms_senders": (string)[],"updated_at": string,"user_id": string | null
                   }
                   ComputedFields: never
                   Insert: {
-                    "created_at"?: string,"email_domains"?: (string)[],"id"?: string,"kind"?: Database["public"]['Enums']["institution_kind"],"name": string,"slug"?: string | null,"updated_at"?: string,"user_id"?: string | null
+                    "app_packages"?: (string)[],"created_at"?: string,"email_domains"?: (string)[],"id"?: string,"kind"?: Database["public"]['Enums']["institution_kind"],"name": string,"slug"?: string | null,"sms_senders"?: (string)[],"updated_at"?: string,"user_id"?: string | null
                   }
                   Update: {
-                    "created_at"?: string,"email_domains"?: (string)[],"id"?: string,"kind"?: Database["public"]['Enums']["institution_kind"],"name"?: string,"slug"?: string | null,"updated_at"?: string,"user_id"?: string | null
+                    "app_packages"?: (string)[],"created_at"?: string,"email_domains"?: (string)[],"id"?: string,"kind"?: Database["public"]['Enums']["institution_kind"],"name"?: string,"slug"?: string | null,"sms_senders"?: (string)[],"updated_at"?: string,"user_id"?: string | null
                   }
                   Relationships: [
                     
@@ -269,6 +283,26 @@ isOneToOne: false
                   Relationships: [
                     
                   ]
+                },"raw_messages": {
+                  Row: {
+                    "body": string | null,"capture_link_id": string | null,"channel": string,"created_at": string,"dedupe_key": string,"id": string,"note": string | null,"parsed_at": string | null,"parser": string | null,"parser_version": number | null,"received_at": string,"sender": string,"status": Database["public"]['Enums']["raw_email_status"],"title": string | null,"updated_at": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "body"?: string | null,"capture_link_id"?: string | null,"channel": string,"created_at"?: string,"dedupe_key": string,"id"?: string,"note"?: string | null,"parsed_at"?: string | null,"parser"?: string | null,"parser_version"?: number | null,"received_at": string,"sender": string,"status"?: Database["public"]['Enums']["raw_email_status"],"title"?: string | null,"updated_at"?: string,"user_id": string
+                  }
+                  Update: {
+                    "body"?: string | null,"capture_link_id"?: string | null,"channel"?: string,"created_at"?: string,"dedupe_key"?: string,"id"?: string,"note"?: string | null,"parsed_at"?: string | null,"parser"?: string | null,"parser_version"?: number | null,"received_at"?: string,"sender"?: string,"status"?: Database["public"]['Enums']["raw_email_status"],"title"?: string | null,"updated_at"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "raw_messages_capture_link_id_user_id_fkey"
+      columns: ["capture_link_id","user_id"]
+isOneToOne: false
+      referencedRelation: "capture_links"
+      referencedColumns: ["id","user_id"]
+    }
+                  ]
                 },"recurring_rules": {
                   Row: {
                     "account_id": string,"active": boolean,"amount_centavos": number,"category_id": string | null,"created_at": string,"day_of_month": number | null,"ends_on": string | null,"frequency": Database["public"]['Enums']["pay_frequency"],"id": string,"income_source_id": string | null,"name": string,"next_due_on": string,"updated_at": string,"user_id": string
@@ -329,14 +363,14 @@ isOneToOne: false
                   ]
                 },"transactions": {
                   Row: {
-                    "account_id": string,"amount_centavos": number,"category_id": string | null,"confirmed_at": string | null,"created_at": string,"duplicate_of": string | null,"id": string,"merchant": string | null,"note": string | null,"occurred_at": string,"raw_email_id": string | null,"recurring_rule_id": string | null,"source": Database["public"]['Enums']["txn_source"],"status": Database["public"]['Enums']["txn_status"],"transfer_id": string | null,"updated_at": string,"user_id": string
+                    "account_id": string,"amount_centavos": number,"category_id": string | null,"confirmed_at": string | null,"created_at": string,"duplicate_of": string | null,"id": string,"merchant": string | null,"note": string | null,"occurred_at": string,"raw_email_id": string | null,"raw_message_id": string | null,"recurring_rule_id": string | null,"source": Database["public"]['Enums']["txn_source"],"status": Database["public"]['Enums']["txn_status"],"transfer_id": string | null,"updated_at": string,"user_id": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "account_id": string,"amount_centavos": number,"category_id"?: string | null,"confirmed_at"?: string | null,"created_at"?: string,"duplicate_of"?: string | null,"id"?: string,"merchant"?: string | null,"note"?: string | null,"occurred_at": string,"raw_email_id"?: string | null,"recurring_rule_id"?: string | null,"source"?: Database["public"]['Enums']["txn_source"],"status"?: Database["public"]['Enums']["txn_status"],"transfer_id"?: string | null,"updated_at"?: string,"user_id"?: string
+                    "account_id": string,"amount_centavos": number,"category_id"?: string | null,"confirmed_at"?: string | null,"created_at"?: string,"duplicate_of"?: string | null,"id"?: string,"merchant"?: string | null,"note"?: string | null,"occurred_at": string,"raw_email_id"?: string | null,"raw_message_id"?: string | null,"recurring_rule_id"?: string | null,"source"?: Database["public"]['Enums']["txn_source"],"status"?: Database["public"]['Enums']["txn_status"],"transfer_id"?: string | null,"updated_at"?: string,"user_id"?: string
                   }
                   Update: {
-                    "account_id"?: string,"amount_centavos"?: number,"category_id"?: string | null,"confirmed_at"?: string | null,"created_at"?: string,"duplicate_of"?: string | null,"id"?: string,"merchant"?: string | null,"note"?: string | null,"occurred_at"?: string,"raw_email_id"?: string | null,"recurring_rule_id"?: string | null,"source"?: Database["public"]['Enums']["txn_source"],"status"?: Database["public"]['Enums']["txn_status"],"transfer_id"?: string | null,"updated_at"?: string,"user_id"?: string
+                    "account_id"?: string,"amount_centavos"?: number,"category_id"?: string | null,"confirmed_at"?: string | null,"created_at"?: string,"duplicate_of"?: string | null,"id"?: string,"merchant"?: string | null,"note"?: string | null,"occurred_at"?: string,"raw_email_id"?: string | null,"raw_message_id"?: string | null,"recurring_rule_id"?: string | null,"source"?: Database["public"]['Enums']["txn_source"],"status"?: Database["public"]['Enums']["txn_status"],"transfer_id"?: string | null,"updated_at"?: string,"user_id"?: string
                   }
                   Relationships: [
                     {
@@ -370,6 +404,12 @@ isOneToOne: false
       referencedRelation: "raw_emails"
       referencedColumns: ["id","user_id"]
     },{
+      foreignKeyName: "transactions_raw_message_id_user_id_fkey"
+      columns: ["raw_message_id","user_id"]
+isOneToOne: false
+      referencedRelation: "raw_messages"
+      referencedColumns: ["id","user_id"]
+    },{
       foreignKeyName: "transactions_recurring_rule_id_user_id_fkey"
       columns: ["recurring_rule_id","user_id"]
 isOneToOne: false
@@ -391,7 +431,12 @@ isOneToOne: false
                 }
           }
           Functions: {
-            "confirm_as_transfer":
+            "capture_message":
+{ Args: { "p_body": string,"p_channel": string,"p_dedupe_key": string,"p_flag_note"?: string,"p_received_at": string,"p_sender": string,"p_title": string,"p_token_hash": string }; Returns: {
+              "result": string,"user_id": string
+            }[]
+                           },
+"confirm_as_transfer":
 { Args: { "p_in_id": string,"p_out_id": string }; Returns: string
                            },
 "confirm_one_sided_transfer":
@@ -410,6 +455,7 @@ isOneToOne: false
 "note": string | null,
 "occurred_at": string,
 "raw_email_id": string | null,
+"raw_message_id": string | null,
 "recurring_rule_id": string | null,
 "source": Database["public"]['Enums']["txn_source"],
 "status": Database["public"]['Enums']["txn_status"],
@@ -442,6 +488,7 @@ isOneToOne: false
 "note": string | null,
 "occurred_at": string,
 "raw_email_id": string | null,
+"raw_message_id": string | null,
 "recurring_rule_id": string | null,
 "source": Database["public"]['Enums']["txn_source"],
 "status": Database["public"]['Enums']["txn_status"],
@@ -471,6 +518,7 @@ isOneToOne: false
 "note": string | null,
 "occurred_at": string,
 "raw_email_id": string | null,
+"raw_message_id": string | null,
 "recurring_rule_id": string | null,
 "source": Database["public"]['Enums']["txn_source"],
 "status": Database["public"]['Enums']["txn_status"],
@@ -497,6 +545,7 @@ isOneToOne: false
 "note": string | null,
 "occurred_at": string,
 "raw_email_id": string | null,
+"raw_message_id": string | null,
 "recurring_rule_id": string | null,
 "source": Database["public"]['Enums']["txn_source"],
 "status": Database["public"]['Enums']["txn_status"],

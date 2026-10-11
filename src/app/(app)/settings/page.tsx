@@ -44,6 +44,16 @@ async function SettingsContent() {
         <AppearanceForm initialTheme={theme} initialMode={mode} />
       </section>
 
+      <section className="settings-sec" aria-labelledby="phone-h">
+        <h2 id="phone-h" className="settings-h">Phone capture</h2>
+        <p className="settings-p">
+          Most banks and e-wallets notify you by text or app notification, not email. Let your phone send those to Budget.
+        </p>
+        <Link href="/settings/phone-capture" className="btn primary">
+          Set up phone capture
+        </Link>
+      </section>
+
       <section className="settings-sec" id="forwarding" aria-labelledby="forwarding-h">
         <h2 id="forwarding-h" className="settings-h">Email forwarding</h2>
         <p className="settings-p">

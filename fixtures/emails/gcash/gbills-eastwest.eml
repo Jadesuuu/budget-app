@@ -1,0 +1,1350 @@
+From: GCash Bills Payment <no-reply@gcash.com>
+To: u_test000000@in.jadebonifacio.dev
+Subject: Your GBills Receipt for EastWest Bank
+Date: Thu, 20 Aug 2026 12:11:15 +0000
+Message-ID: <fixture-fixtures-emails-gcash-gbills-eastwest-eml@budget.test>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="fixture-boundary"
+
+--fixture-boundary
+Content-Type: text/html; charset=utf-8
+
+<!DOCTYPE html>
+<html xmlns="https://example.com/redacted">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{@$params['subject']}}</title>
+    <!--[if mso]>
+    <noscript>
+        <xml>
+            <o:OfficeDocumentSettings>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+    </noscript>
+    <![endif]-->
+    <style type="text/css">
+        /* Reset styles for email clients */
+        body, table, td, p, a, li, blockquote {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        table, td {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+        img {
+            -ms-interpolation-mode: bicubic;
+            border: 0;
+            outline: none;
+            text-decoration: none;
+        }
+
+        /* Fallback font for email clients that don't support web fonts */
+        .proxima-soft {
+            font-family: 'Proxima Soft', Arial, Helvetica, sans-serif;
+        }
+
+        /* Keep amount values right-aligned on narrow clients */
+        .details-table {
+            width: 100% !important;
+            border-collapse: collapse;
+        }
+        .details-table--fixed {
+            table-layout: fixed;
+        }
+        .td-label {
+            text-align: left;
+            word-break: normal;
+            overflow-wrap: normal;
+        }
+        .td-value {
+            text-align: right !important;
+            white-space: nowrap;
+        }
+
+        /* Page background wrapper */
+        .outer-bg {
+            width: 100% !important;
+            margin: 0 auto !important;
+            background-color: #ffffff;
+        }
+
+        /* Centered stage so the blue area isn't full-bleed */
+        .stage {
+            width: 100% !important;
+            max-width: 640px;
+            margin: 0 auto !important;
+            background-color: #ffffff;
+        }
+
+        /* The actual blue panel */
+        .blue-panel {
+            width: 100% !important;
+            background-color: #0057E4;
+        }
+
+        /* Mobile-safe max-width wrapper pattern: width:100% + max-width */
+        .outer-max {
+            width: 100% !important;
+            max-width: 500px;
+            margin: 0 auto !important;
+        }
+        .outer-inner {
+            width: 100% !important;
+            max-width: 500px;
+            margin: 0 auto !important;
+        }
+
+        /* Footer "GCash is a + logo" row */
+        .partner-line {
+            margin: 0 auto !important;
+            width: auto !important;
+        }
+        .partner-text {
+            color: #90A8D0;
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 12px;
+            font-family: 'Proxima Soft', Arial, sans-serif;
+            white-space: normal !important;
+        }
+        .partner-cell {
+            vertical-align: middle;
+            white-space: normal !important;
+        }
+
+        /* Responsive styles */
+        /* Mobile-first padding for the blue background area */
+        .outer-pad {
+            padding: 32px 16px 24px 16px;
+        }
+
+        @media only screen and (max-width: 480px) {
+            .outer-max {
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+            .outer-inner {
+                max-width: 100% !important;
+            }
+            .outer-pad {
+                padding: 32px 16px 24px 16px !important;
+            }
+            .email-container {
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+            .partner-line {
+                width: auto !important;
+                max-width: none !important;
+            }
+            .partner-cell {
+                text-align: center !important;
+                white-space: normal !important;
+            }
+
+            img {
+                max-width: 100% !important;
+                height: auto !important;
+            }
+
+            /* Utility: hide on mobile */
+            .hide-mobile {
+                display: none !important;
+                mso-hide: all !important;
+                max-height: 0 !important;
+                overflow: hidden !important;
+                font-size: 0 !important;
+                line-height: 0 !important;
+            }
+        }
+
+        /* Desktop: apply the requested blue background padding */
+        @media only screen and (min-width: 481px) {
+            .outer-pad {
+                padding: 72px 64px 48px 64px !important;
+            }
+        }
+
+        .zigzag-bottom{
+	            /* width: 80% !important; */
+	            background: url(https://example.com/redacted);
+	            /*background: linear-gradient(-135deg, #ffffff 14px, transparent 0), linear-gradient(135deg, #ffffff 14px, transparent 0);*/
+	            background-repeat: repeat-x;
+	            background-size: 70px 10px;
+	            /* transform: rotate(180deg); */
+	            background-position:left top;
+                background-color: #0057E4;
+	        }
+
+        /* Footer/partner logo safety for email clients */
+        .footer-logo {
+            display: block;
+            border: 0;
+            outline: none;
+            text-decoration: none;
+            max-width: 86px;
+            height: auto;
+        }
+
+        /* Reusable reference row styles */
+        .ref-label {
+            padding: 6px 0;
+            color: #0A2757;
+            font-size: 14px;
+            font-weight: 600;
+            opacity: 0.60;
+            font-family: 'Proxima Soft', Arial, sans-serif;
+        }
+        .ref-value {
+            padding: 6px 0;
+            color: #0A2757;
+            font-size: 14px;
+            font-weight: 600;
+            opacity: 0.80;
+            font-family: 'Proxima Soft', Arial, sans-serif;
+        }
+
+        /* Fallback text logo styles */
+        .gcash-text {
+            color: #0033B8;
+            font-family: 'Proxima Soft', Arial, sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 16px;
+            letter-spacing: 0.25px;
+        }
+        .gbills-text {
+            color: #0A2757;
+            font-family: 'Proxima Soft', Arial, sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 14px;
+            letter-spacing: 0.25px;
+        }
+
+        /* Figma-aligned overrides (keep near end so it wins specificity) */
+        .email-container {
+            width: 100% !important;
+            max-width: 366px !important;
+        }
+        .title-text {
+            color: #0033B8;
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 26px;
+            font-family: 'Proxima Soft', Arial, sans-serif;
+        }
+        .subtitle-text {
+            color: #0A2757;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 14px;
+            opacity: 0.40;
+            font-family: 'Proxima Soft', Arial, sans-serif;
+        }
+    </style>
+</head>
+<body style="margin: 0; padding: 0; background-color: #ffffff; font-family: Arial, Helvetica, sans-serif;">
+<!--
+    ==========================================
+    CENTRALIZED IMAGE URL CONFIGURATION
+    ==========================================
+    When adding a new partner image, simply add a new variable here.
+    These variables are used throughout the template.
+-->
+
+
+<center style="background-color: #ffffff;">
+    <!-- Outlook and Windows Mail Wrapper -->
+    <!--[if mso | IE]>
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+            <td style="background-color: #ffffff;">
+    <![endif]-->
+
+    <!-- Full-width page wrapper -->
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" class="outer-bg" style="background-color: #ffffff; width: 100%;">
+        <tr>
+            <td align="center" style="padding:0;">
+
+                <!--[if mso | IE]>
+                <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="640" align="center">
+                    <tr>
+                        <td>
+                <![endif]-->
+
+                <!-- Centered stage -->
+                <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" class="stage" align="center" style="width:100%; max-width:640px; margin:0 auto; background-color:#ffffff;">
+                    <tr>
+                        <td>
+
+                            <!-- Constrained blue panel -->
+                            <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" class="blue-panel" style="background-color:#0057E4; width:100%;">
+                                <tr>
+                                    <td align="center" class="outer-pad">
+
+                                        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" class="outer-max" align="center" style="width: 100%; max-width: 500px; margin: 0 auto;">
+                                            <tr>
+                                                <td align="center">
+                                                    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" class="outer-inner" align="center" style="width: 100%; max-width: 500px; margin: 0 auto;">
+                                                        <tr>
+                                                            <td align="center">
+
+                                                                <!-- Email Content Card -->
+                                                                <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="366" class="email-container" style="width: 366px; max-width: 366px; background-color: #ffffff; border-radius: 12px; box-shadow: 0px 0px 8px rgba(114, 129, 154, 0.10);">
+
+                                                                    <!-- Header Section with Icon and Title -->
+                                                                    <tr>
+                                                                        <td style="padding: 24px 24px 16px 24px; text-align: center; background-color: #ffffff; border-radius: 12px 12px 0 0;">
+                                                                            <!-- Success Icon -->
+                                                                            <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                                                                                <tr>
+                                                                                    <td align="center" style="padding: 8px;">
+                                                                                        
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+
+                                                                            <!-- Spacer -->
+                                                                            <div style="height: 24px; line-height: 24px; font-size: 1px;">&nbsp;</div>
+
+                                                                            <!-- Title Biller Name -->
+                                                                            <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                                                                                <tr>
+                                                                                    <td align="center" class="title-text" style="color: #0033B8; font-size: 22px; font-weight: 700; line-height: 26px; font-family: 'Proxima Soft', Arial, sans-serif;">
+                                                                                       <span class="field-name">EastWest Bank</span>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                </tr>
+                                                                            </table>
+
+                                                                            <!-- Subtitle Payment Method -->
+                                                                            <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                                                                                <tr>
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td align="center" style="padding: 8px 0 16px 0; border-bottom: 1px solid rgba(16, 52, 111, 0.10);">
+                                                                                        <span class="subtitle-text" style="color: #0A2757; font-size: 14px; font-weight: 700; line-height: 14px; opacity: 0.40; font-family: 'Proxima Soft', Arial, sans-serif;">Paid via GCASH</span>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <!-- Transaction Details Section -->
+                                                                    <tr>
+                                                                        <td style="padding: 0 24px;">
+                                                                            <!-- Details Table -->
+                                                                            <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+
+                                                                                <!-- Dynamic Field Rows -->
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td style="color: #0A2757; padding: 6px 0; font-size: 14px; font-weight: 400; opacity: 0.60; font-family: 'Proxima Soft', Arial, sans-serif;">
+                                                                                        <span class="field-name">Credit Card Number</span>
+                                                                                    </td>
+                                                                                    <td align="right" style=" color: #0A2757; padding: 6px 0; font-size: 14px; font-weight: 600; opacity: 0.80; font-family: 'Proxima Soft', Arial, sans-serif;">
+                                                                                        <span class="field-value">************1234</span>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td style="color: #0A2757; padding: 6px 0; font-size: 14px; font-weight: 400; opacity: 0.60; font-family: 'Proxima Soft', Arial, sans-serif;">
+                                                                                        <span class="field-name">Email</span>
+                                                                                    </td>
+                                                                                    <td align="right" style=" color: #0A2757; padding: 6px 0; font-size: 14px; font-weight: 600; opacity: 0.80; font-family: 'Proxima Soft', Arial, sans-serif;">
+                                                                                        <span class="field-value">someone.example@gmail.​com</span>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                            </table>
+
+
+                                                                            <!-- Section Divider -->
+                                                                            <div style="height: 16px; border-bottom: 1px solid rgba(16, 52, 111, 0.10);"></div>
+
+                                                                            <!-- Spacer -->
+                                                                            <div style="height: 12px; line-height: 12px; font-size: 1px;">&nbsp;</div>
+
+                                                                            <!-- Amount Details Table -->
+                                                                            <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" class="details-table details-table--fixed" style="table-layout: fixed; width: 100%;">
+                                                                                <!-- Bill Amount Row -->
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td class="td-label" style="padding: 6px 0; color: #0A2757; font-size: 14px; font-weight: 400; opacity: 0.60; font-family: 'Proxima Soft', Arial, sans-serif;">
+                                                                                        Bill Amount
+                                                                                    </td>
+                                                                                    <td class="td-value" align="right" style="padding: 6px 0; color: #0A2757; font-size: 14px; font-weight: 600; opacity: 0.80; font-family: 'Proxima Soft', Arial, sans-serif; text-align: right !important; white-space: nowrap; mso-line-height-rule: exactly;">
+                                                                                        <span>556.00</span>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+
+
+                                                                                <!-- Fee Row -->
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td class="td-label" style="padding: 6px 0; color: #0A2757; font-size: 14px; font-weight: 400; opacity: 0.60; font-family: 'Proxima Soft', Arial, sans-serif;">
+                                                                                        Fee
+                                                                                    </td>
+                                                                                    <td class="td-value" align="right" style="padding: 6px 0; color: #0A2757; font-size: 14px; font-weight: 600; opacity: 0.80; font-family: 'Proxima Soft', Arial, sans-serif; text-align: right !important; white-space: nowrap; mso-line-height-rule: exactly;">
+                                                                                        <span>10.00</span>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+
+                                                                                <!-- GInsure Bill Protect Row -->
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                            </table>
+
+                                                                            <!-- Section Divider -->
+                                                                            <div style="height: 16px; border-bottom: 1px solid rgba(16, 52, 111, 0.10);"></div>
+
+
+                                                                            <!-- Total Section -->
+                                                                            <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" class="details-table details-table--fixed" style="border-top: 1px solid rgba(16, 52, 111, 0.40); table-layout: fixed; width: 100%;">
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td class="td-label" style="padding: 20px 0 4px 0; color: #10346F; font-size: 16px; font-weight: 700; line-height: 16px; font-family: 'Proxima Soft', Arial, sans-serif;">
+                                                                                        Total
+                                                                                    </td>
+                                                                                    <td class="td-value" align="right" style="padding: 20px 0 4px 0; color: #10346F; font-size: 22px; font-weight: 700; line-height: 26px; font-family: 'Proxima Soft', Arial, sans-serif; text-align: right !important; white-space: nowrap; mso-line-height-rule: exactly;">
+                                                                                        <span>₱ 566.00</span>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <!-- Transaction Reference Section -->
+                                                                    <tr>
+                                                                        <td style="padding: 20px 24px 16px 24px; background-color: #F5F9FF;">
+                                                                            <!-- Reference Details Table -->
+                                                                            <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                                                                                <!-- Date Row -->
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td class="ref-label">
+                                                                                        Date
+                                                                                    </td>
+                                                                                    <td align="right" style="padding: 6px 0; color: #10346F; font-size: 14px; font-weight: 600; opacity: 0.60; font-family: Arial, Helvetica, sans-serif;">
+                                                                                        <span class="field-value">Aug 20, 2026</span>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+
+                                                                                <!-- GCash Reference Row -->
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td class="ref-label">
+                                                                                        GCash Reference No.
+                                                                                    </td>
+                                                                                    <td align="right" class="ref-value">
+                                                                                        <span>400000001</span>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    
+                                                                                </tr>
+
+                                                                                
+
+                                                                                    <!-- BCV3 Reference No. -->
+                                                                                    
+
+                                                                                    <!-- Bancnet Reference No. -->
+                                                                                    
+
+                                                                                    <!-- ECPay Reference No. (includes PhilHealth) -->
+                                                                                    
+
+                                                                                    <!-- EPAR for PhilHealth -->
+                                                                                    
+
+                                                                                    <!-- Multisys Reference No. -->
+                                                                                    
+
+                                                                                    <!-- Easytrip Load Balance -->
+                                                                                    
+
+                                                                                
+
+                                                                                    <!-- BCV3 Reference No. -->
+                                                                                    
+
+                                                                                    <!-- Bancnet Reference No. -->
+                                                                                    
+
+                                                                                    <!-- ECPay Reference No. (includes PhilHealth) -->
+                                                                                    
+
+                                                                                    <!-- EPAR for PhilHealth -->
+                                                                                    
+
+                                                                                    <!-- Multisys Reference No. -->
+                                                                                    
+
+                                                                                    <!-- Easytrip Load Balance -->
+                                                                                    
+
+                                                                                
+
+                                                                                    <!-- BCV3 Reference No. -->
+                                                                                    
+
+                                                                                    <!-- Bancnet Reference No. -->
+                                                                                    
+
+                                                                                    <!-- ECPay Reference No. (includes PhilHealth) -->
+                                                                                    
+
+                                                                                    <!-- EPAR for PhilHealth -->
+                                                                                    
+
+                                                                                    <!-- Multisys Reference No. -->
+                                                                                    
+
+                                                                                    <!-- Easytrip Load Balance -->
+                                                                                    
+
+                                                                                
+
+                                                                                    <!-- BCV3 Reference No. -->
+                                                                                    
+
+                                                                                    <!-- Bancnet Reference No. -->
+                                                                                    
+
+                                                                                    <!-- ECPay Reference No. (includes PhilHealth) -->
+                                                                                    
+
+                                                                                    <!-- EPAR for PhilHealth -->
+                                                                                    
+
+                                                                                    <!-- Multisys Reference No. -->
+                                                                                    
+
+                                                                                    <!-- Easytrip Load Balance -->
+                                                                                    
+
+                                                                                
+
+                                                                                    <!-- BCV3 Reference No. -->
+                                                                                    
+
+                                                                                    <!-- Bancnet Reference No. -->
+                                                                                    
+
+                                                                                    <!-- ECPay Reference No. (includes PhilHealth) -->
+                                                                                    
+
+                                                                                    <!-- EPAR for PhilHealth -->
+                                                                                    
+
+                                                                                    <!-- Multisys Reference No. -->
+                                                                                    
+
+                                                                                    <!-- Easytrip Load Balance -->
+                                                                                    
+
+                                                                                
+
+                                                                                    <!-- BCV3 Reference No. -->
+                                                                                    
+
+                                                                                    <!-- Bancnet Reference No. -->
+                                                                                    
+
+                                                                                    <!-- ECPay Reference No. (includes PhilHealth) -->
+                                                                                    
+
+                                                                                    <!-- EPAR for PhilHealth -->
+                                                                                    
+
+                                                                                    <!-- Multisys Reference No. -->
+                                                                                    
+
+                                                                                    <!-- Easytrip Load Balance -->
+                                                                                    
+
+                                                                                
+
+                                                                                    <!-- BCV3 Reference No. -->
+                                                                                    
+
+                                                                                    <!-- Bancnet Reference No. -->
+                                                                                    
+
+                                                                                    <!-- ECPay Reference No. (includes PhilHealth) -->
+                                                                                    
+
+                                                                                    <!-- EPAR for PhilHealth -->
+                                                                                    
+
+                                                                                    <!-- Multisys Reference No. -->
+                                                                                    
+
+                                                                                    <!-- Easytrip Load Balance -->
+                                                                                    
+
+                                                                                
+
+                                                                                    <!-- BCV3 Reference No. -->
+                                                                                    
+
+                                                                                    <!-- Bancnet Reference No. -->
+                                                                                    <tr>
+                                                                                        <td class="ref-label">
+                                                                                            Bancnet Reference No.
+                                                                                        </td>
+                                                                                        <td align="right" class="ref-value">
+                                                                                            <span>030178</span>
+                                                                                        </td>
+                                                                                    </tr>
+
+                                                                                    <!-- ECPay Reference No. (includes PhilHealth) -->
+                                                                                    
+
+                                                                                    <!-- EPAR for PhilHealth -->
+                                                                                    
+
+                                                                                    <!-- Multisys Reference No. -->
+                                                                                    
+
+                                                                                    <!-- Easytrip Load Balance -->
+                                                                                    
+
+                                                                                
+
+                                                                                    <!-- BCV3 Reference No. -->
+                                                                                    
+
+                                                                                    <!-- Bancnet Reference No. -->
+                                                                                    
+
+                                                                                    <!-- ECPay Reference No. (includes PhilHealth) -->
+                                                                                    
+
+                                                                                    <!-- EPAR for PhilHealth -->
+                                                                                    
+
+                                                                                    <!-- Multisys Reference No. -->
+                                                                                    
+
+                                                                                    <!-- Easytrip Load Balance -->
+                                                                                    
+
+                                                                                
+
+                                                                                    <!-- BCV3 Reference No. -->
+                                                                                    
+
+                                                                                    <!-- Bancnet Reference No. -->
+                                                                                    
+
+                                                                                    <!-- ECPay Reference No. (includes PhilHealth) -->
+                                                                                    
+
+                                                                                    <!-- EPAR for PhilHealth -->
+                                                                                    
+
+                                                                                    <!-- Multisys Reference No. -->
+                                                                                    
+
+                                                                                    <!-- Easytrip Load Balance -->
+                                                                                    
+
+                                                                                
+
+                                                                                    <!-- BCV3 Reference No. -->
+                                                                                    
+
+                                                                                    <!-- Bancnet Reference No. -->
+                                                                                    
+
+                                                                                    <!-- ECPay Reference No. (includes PhilHealth) -->
+                                                                                    
+
+                                                                                    <!-- EPAR for PhilHealth -->
+                                                                                    
+
+                                                                                    <!-- Multisys Reference No. -->
+                                                                                    
+
+                                                                                    <!-- Easytrip Load Balance -->
+                                                                                    
+
+                                                                                
+
+                                                                                    <!-- BCV3 Reference No. -->
+                                                                                    
+
+                                                                                    <!-- Bancnet Reference No. -->
+                                                                                    
+
+                                                                                    <!-- ECPay Reference No. (includes PhilHealth) -->
+                                                                                    
+
+                                                                                    <!-- EPAR for PhilHealth -->
+                                                                                    
+
+                                                                                    <!-- Multisys Reference No. -->
+                                                                                    
+
+                                                                                    <!-- Easytrip Load Balance -->
+                                                                                    
+
+                                                                                
+                                                                            </table>
+
+                                                                            <!-- Spacer -->
+                                                                            <div style="height: 12px; line-height: 12px; font-size: 1px;">&nbsp;</div>
+
+                                                                            <!-- Partner Logo Section -->
+                                                                            <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                                                                                
+
+                                                                                    <!-- BCV3 Bayad Logo -->
+                                                                                    
+
+                                                                                    <!-- Bancnet Logo -->
+                                                                                    
+
+                                                                                    <!-- ECPay Logo (includes PhilHealth) -->
+                                                                                    
+
+                                                                                    <!-- Multisys Logo -->
+                                                                                    
+
+                                                                                    <!-- Direct Biller Logo -->
+                                                                                    
+
+                                                                                
+
+                                                                                    <!-- BCV3 Bayad Logo -->
+                                                                                    
+
+                                                                                    <!-- Bancnet Logo -->
+                                                                                    
+
+                                                                                    <!-- ECPay Logo (includes PhilHealth) -->
+                                                                                    
+
+                                                                                    <!-- Multisys Logo -->
+                                                                                    
+
+                                                                                    <!-- Direct Biller Logo -->
+                                                                                    
+
+                                                                                
+
+                                                                                    <!-- BCV3 Bayad Logo -->
+                                                                                    
+
+                                                                                    <!-- Bancnet Logo -->
+                                                                                    
+
+                                                                                    <!-- ECPay Logo (includes PhilHealth) -->
+                                                                                    
+
+                                                                                    <!-- Multisys Logo -->
+                                                                                    
+
+                                                                                    <!-- Direct Biller Logo -->
+                                                                                    
+
+                                                                                
+
+                                                                                    <!-- BCV3 Bayad Logo -->
+                                                                                    
+
+                                                                                    <!-- Bancnet Logo -->
+                                                                                    
+
+                                                                                    <!-- ECPay Logo (includes PhilHealth) -->
+                                                                                    
+
+                                                                                    <!-- Multisys Logo -->
+                                                                                    
+
+                                                                                    <!-- Direct Biller Logo -->
+                                                                                    
+
+                                                                                
+
+                                                                                    <!-- BCV3 Bayad Logo -->
+                                                                                    
+
+                                                                                    <!-- Bancnet Logo -->
+                                                                                    
+
+                                                                                    <!-- ECPay Logo (includes PhilHealth) -->
+                                                                                    
+
+                                                                                    <!-- Multisys Logo -->
+                                                                                    
+
+                                                                                    <!-- Direct Biller Logo -->
+                                                                                    
+
+                                                                                
+
+                                                                                    <!-- BCV3 Bayad Logo -->
+                                                                                    
+
+                                                                                    <!-- Bancnet Logo -->
+                                                                                    
+
+                                                                                    <!-- ECPay Logo (includes PhilHealth) -->
+                                                                                    
+
+                                                                                    <!-- Multisys Logo -->
+                                                                                    
+
+                                                                                    <!-- Direct Biller Logo -->
+                                                                                    
+
+                                                                                
+
+                                                                                    <!-- BCV3 Bayad Logo -->
+                                                                                    
+
+                                                                                    <!-- Bancnet Logo -->
+                                                                                    
+
+                                                                                    <!-- ECPay Logo (includes PhilHealth) -->
+                                                                                    
+
+                                                                                    <!-- Multisys Logo -->
+                                                                                    
+
+                                                                                    <!-- Direct Biller Logo -->
+                                                                                    
+
+                                                                                
+
+                                                                                    <!-- BCV3 Bayad Logo -->
+                                                                                    
+
+                                                                                    <!-- Bancnet Logo -->
+                                                                                    <tr>
+                                                                                        <td align="center">
+                                                                                            <!--[if mso]>
+                                                                                            <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" class="partner-line">
+                                                                                                <tr>
+                                                                                                    <td class="partner-cell" valign="middle" style="padding-right:8px;">
+                                                                                                        <span class="partner-text">Powered by</span>
+                                                                                                    </td>
+                                                                                                    <td class="partner-cell" valign="middle">
+                                                                                                        
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </table>
+                                                                                            <![endif]-->
+
+                                                                                            <!--[if !mso]><!-->
+                                                                                            <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" class="partner-line" style="margin: 0 auto;">
+                                                                                                <tr>
+                                                                                                    <td class="partner-cell" valign="middle" style="padding-right:8px;">
+                                                                                                        <span class="partner-text">Powered by</span>
+                                                                                                    </td>
+                                                                                                    <td class="partner-cell" valign="middle">
+                                                                                                        
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </table>
+                                                                                            <!--<![endif]-->
+                                                                                        </td>
+                                                                                    </tr>
+
+                                                                                    <!-- ECPay Logo (includes PhilHealth) -->
+                                                                                    
+
+                                                                                    <!-- Multisys Logo -->
+                                                                                    
+
+                                                                                    <!-- Direct Biller Logo -->
+                                                                                    
+
+                                                                                
+
+                                                                                    <!-- BCV3 Bayad Logo -->
+                                                                                    
+
+                                                                                    <!-- Bancnet Logo -->
+                                                                                    
+
+                                                                                    <!-- ECPay Logo (includes PhilHealth) -->
+                                                                                    
+
+                                                                                    <!-- Multisys Logo -->
+                                                                                    
+
+                                                                                    <!-- Direct Biller Logo -->
+                                                                                    
+
+                                                                                
+
+                                                                                    <!-- BCV3 Bayad Logo -->
+                                                                                    
+
+                                                                                    <!-- Bancnet Logo -->
+                                                                                    
+
+                                                                                    <!-- ECPay Logo (includes PhilHealth) -->
+                                                                                    
+
+                                                                                    <!-- Multisys Logo -->
+                                                                                    
+
+                                                                                    <!-- Direct Biller Logo -->
+                                                                                    
+
+                                                                                
+
+                                                                                    <!-- BCV3 Bayad Logo -->
+                                                                                    
+
+                                                                                    <!-- Bancnet Logo -->
+                                                                                    
+
+                                                                                    <!-- ECPay Logo (includes PhilHealth) -->
+                                                                                    
+
+                                                                                    <!-- Multisys Logo -->
+                                                                                    
+
+                                                                                    <!-- Direct Biller Logo -->
+                                                                                    
+
+                                                                                
+
+                                                                                    <!-- BCV3 Bayad Logo -->
+                                                                                    
+
+                                                                                    <!-- Bancnet Logo -->
+                                                                                    
+
+                                                                                    <!-- ECPay Logo (includes PhilHealth) -->
+                                                                                    
+
+                                                                                    <!-- Multisys Logo -->
+                                                                                    
+
+                                                                                    <!-- Direct Biller Logo -->
+                                                                                    
+
+                                                                                
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <!-- Zigzag Bottom Section -->
+                                                                    <tr>
+                                                                        <td style="padding: 0; background-color: #F5F9FF;">
+                                                                            <div class="zigzag-bottom" style="height: 10px; width: 100%;"></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <!-- Bottom Spacer -->
+
+                                                                </table>
+
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                        <!-- Bottom Spacer -->
+                                        <div style="height: 24px; line-height: 24px; font-size: 1px;">&nbsp;</div>
+
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </td>
+                    </tr>
+                </table>
+
+                <!--[if mso | IE]>
+                        </td>
+                    </tr>
+                </table>
+                <![endif]-->
+
+            </td>
+        </tr>
+    </table>
+
+    <!--[if mso | IE]>
+            </td>
+        </tr>
+    </table>
+    <![endif]-->
+</center>
+
+</body>
+</html>
+
+--fixture-boundary--

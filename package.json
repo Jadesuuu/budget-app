@@ -18,7 +18,8 @@
     "test:e2e": "playwright test",
     "demo": "node scripts/demo-data.mts",
     "worker:dev": "wrangler dev -c workers/email-ingest/wrangler.jsonc --port 8787",
-    "email:send": "node scripts/send-test-email.mts"
+    "email:send": "node scripts/send-test-email.mts",
+    "fixture:make": "node scripts/make-fixture.mts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",

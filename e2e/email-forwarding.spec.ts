@@ -49,7 +49,7 @@ test("the setup wizard picks up Gmail's code and the first email by itself", asy
   await signIn(page);
   await page.goto("/settings/email-setup");
   await expect(page.getByText("Waiting for Gmail")).toBeVisible();
-  await expect(page.getByText("Not ready yet")).toBeVisible();
+  await expect(page.getByRole("link", { name: "Download your filter" })).toBeVisible();
   await expect(page.getByText("leave Disable forwarding selected")).toBeVisible();
 
   sendEmail("gmail-forwarding-confirmation.eml");
@@ -62,5 +62,8 @@ test("the setup wizard picks up Gmail's code and the first email by itself", asy
   await page.screenshot({ path: `.impeccable/review/app-email-setup-${testInfo.project.name}.png`, fullPage: true });
 
   const filter = await page.request.get("/settings/email-setup/filter");
-  expect(filter.status()).toBe(409);
+  expect(filter.status()).toBe(200);
+  const xml = await filter.text();
+  expect(xml).toContain("value='atome.ph OR bpi.com.ph OR eastwestbanker.com OR gcash.com'");
+  expect(xml).toMatch(/name='forwardTo' value='u_[a-z0-9]{10}@in.jadebonifacio.dev'/);
 });

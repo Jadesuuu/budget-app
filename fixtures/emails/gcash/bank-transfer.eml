@@ -1,0 +1,306 @@
+From: <noreply-banktransfer@gcash.com>
+To: u_test000000@in.jadebonifacio.dev
+Subject: GCash Bank Transfer
+Date: Tue, 06 Oct 2026 14:56:32 +0000
+Message-ID: <fixture-fixtures-emails-gcash-bank-transfer-eml@budget.test>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="fixture-boundary"
+
+--fixture-boundary
+Content-Type: text/html; charset=utf-8
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "https://example.com/redacted">
+<html>
+<head>
+    <link rel="preconnect" href="https://example.com/redacted">
+    <link rel="preconnect" href="https://example.com/redacted" crossorigin>
+    <link href="https://example.com/redacted" rel="stylesheet">
+    <style type="text/css">
+    @import url('https://example.com/redacted');
+    @font-face {
+    font-family: 'Karla'; font-style: normal; font-weight: 400; font-display: swap; src: local('Karla'), local('Karla-Regular'), url('https://example.com/redacted') format('truetype');
+    }
+    @font-face {
+    font-family: 'Karla'; font-style: normal; font-weight: 700; font-display: swap; src: local('Karla Bold'), local('Karla-Bold'), url('https://example.com/redacted') format('truetype');
+    }
+    @font-face {
+    font-family: 'Poppins'; font-style: normal; font-weight: 400; font-display: swap; src: local('Poppins Regular'), local('Poppins-Regular'), url('https://example.com/redacted') format('truetype');
+    }
+    @font-face {
+    font-family: 'Poppins'; font-style: normal; font-weight: 600; font-display: swap; src: local('Poppins SemiBold'), local('Poppins-SemiBold'), url('https://example.com/redacted') format('truetype');
+    }
+
+    /* .successfully-transferred::before{
+        content: url('https://example.com/redacted');
+        position: relative;
+        top: 6px;
+    } */
+    table {
+        border-collapse: collapse;
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .row > .col {
+        width: 50%;
+        line-height: 1.5rem;
+    }
+
+    .col:nth-child(2) {
+        text-align: right;
+    }
+
+    @media screen and (max-device-width: 767px), screen and (max-width:767px) {
+        .row > .col {
+            width: 100% !important;
+            text-align: center;
+        }
+    }
+    </style>
+</head>
+<body>
+<center>
+
+    <table style="width: 100%;" border="0" cellspacing="0" cellpadding="0" >
+        <tr>
+            <td align="center" valign="top" style="padding: 0 !important; margin: 0 !important;">
+                <table style="width: 800px !important;" border="0" cellspacing="0" cellpadding="0" >
+                    <!-- <tr class="spaceUnder" style="max-height: 242px; height: 242px;">
+                        <td align="center" valign="bottom" class="header" style="max-height: 242px !important; height: 242px;padding-bottom:0em !important;">
+                            <h3 style="font-family: 'Google Sans', sans-serif;">Thank you for using</h3>
+                            
+                        </td>
+                    </tr> -->
+                    <tr class="spaceUnder">
+                        <td align="center"
+                            background=""
+                            class="base"
+                            style="background-color: #0057E4; padding: 6% 0%;background-size:100%; background-size: contain; background-repeat: round;">
+                            
+                            <table class="body-t1" style="border-top-left-radius: 15px; border-top-right-radius: 15px;width: 80% !important; background-color: #ffff;" border="0" cellspacing="0" cellpadding="0" >
+                                <tr>
+                                    <td>
+                                        <div style="background-color: #ffff; padding: 5px; width: 63px; height: 64px; margin-left: auto; margin-right: auto; border-radius: 50%; position: relative; margin-top: 1.5rem;">
+                                            
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border-top-left-radius: 5px; border-top-right-radius: 5px;" bgcolor="#ffffff" align="center" colspan="2" valign="baseline">
+
+                                        <h5 class="successfully-transferred" style="font-family: 'Nunito', 'Roboto', sans-serif; font-size: 1.75rem;font-weight:800; margin: 1rem 0; color: #0033B8;">
+                                            <!--  -->
+                                            Successfully Transferred!
+                                        </h5>
+                                        <p style="font-family: 'Nunito', 'Roboto', sans-serif; color: #0A2757; font-weight: 700; opacity: 40%; font-size: 1.25rem;">Sent via GCash</p>
+                                        <hr style="width: 90%; background-color: #cccc; border: none; height: 1px;"/>
+                                    </td>
+                                </tr>
+                               
+                            </table>
+                            <table bgcolor="#ffffff" class="body-t2" style="width: 80% !important;background-color: white; border-collapse: separate; border-spacing: 0 15px; border-color: transparent !important;" >
+                
+                                <tr>
+                                    <td bgcolor="#ffffff" style="width: 50%;padding-left: 5%;">
+                                        <span class="field-name" style="opacity: 60%;font-family: 'Nunito', 'Roboto', 'Google Sans', sans-serif;font-size: 1.3rem;color:#0A2757;font-weight:700;">Bank </span>
+                                    </td>
+                                    <td bgcolor="#ffffff"  style="width: 80%;padding: 0 5% 0 5%; text-align: right;">
+                                        <span class="field-value" style="opacity: 80%;font-family: 'Nunito', 'Roboto', 'Google Sans', sans-serif;font-size: 1.3rem;color:#0A2757;font-weight:700;">BPI / VYBE by BPI</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td bgcolor="#ffffff" style="width: 50%;padding-left: 5%;">
+                                        <span class="field-name" style="opacity: 60%;font-family: 'Nunito', 'Roboto', 'Google Sans', sans-serif;font-size: 1.3rem;color:#0A2757;font-weight:700;">Account No. </span>
+                                    </td>
+                                    <td bgcolor="#ffffff" style="width: 80%;padding: 0 5% 0 5%; text-align: right;">
+                                        <span class="field-value" style="opacity: 80%;font-family: 'Nunito', 'Roboto', 'Google Sans', sans-serif;font-size: 1.3rem;color:#0A2757;font-weight:700;">******5678</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td bgcolor="#ffffff"style="width: 50%;padding-left: 5%;">
+                                        <span class="field-name" style="opacity: 60%;font-family: 'Nunito', 'Roboto', 'Google Sans', sans-serif;font-size: 1.3rem;color:#0A2757;font-weight:700;">Account Name </span>
+                                    </td>
+                                    <td bgcolor="#ffffff" style="width: 80%;padding: 0 5% 0 5%; text-align: right;">
+                                        <span class="field-value" style="opacity: 80%;font-family: 'Nunito', 'Roboto', 'Google Sans', sans-serif;font-size: 1.3rem;color:#0A2757;font-weight:700;"Juan</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td bgcolor="#ffffff"style="width: 50%;padding-left: 5%;">
+                                        <span class="field-name" style="opacity: 60%;font-family: 'Nunito', 'Roboto', 'Google Sans', sans-serif;font-size: 1.3rem;color:#0A2757;font-weight:700;">Receipt sent to </span>
+                                    </td>
+                                    <td bgcolor="#ffffff" style="width: 80%;padding: 0 5% 0 5%; text-align: right;">
+                                        <span class="field-value" style="opacity: 80%;font-family: 'Nunito', 'Roboto', 'Google Sans', sans-serif;font-size: 1.3rem;color:#0A2757;font-weight:700; word-break: break-all;">someone.example@gmail.com</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td bgcolor="#ffffff"style="width: 50%;padding-left: 5%;">
+                                        <span class="field-name" style="opacity: 60%;font-family: 'Nunito', 'Roboto', 'Google Sans', sans-serif;font-size: 1.3rem;color:#0A2757;font-weight:700;">Transfer Date </span>
+                                    </td>
+                                    <td bgcolor="#ffffff" style="width: 80%;padding: 0 5% 0 5%; text-align: right;">
+                                        <span class="field-value" style="opacity: 80%;font-family: 'Nunito', 'Roboto', 'Google Sans', sans-serif;font-size: 1.3rem;color:#0A2757;font-weight:700;">06 October 2026, 10:56:31PM</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <hr style="width: 90%; background-color: #cccc; border: none; height: 1px;"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td bgcolor="#ffffff" style="width: 50%;padding-left: 7%;">
+                                        <span class="field-name" style="opacity: 60%;font-family: 'Nunito', 'Roboto', 'Google Sans', sans-serif;font-size: 1.3rem;color:#0A2757;font-weight:700;">Transfer Amount </span>
+                                    </td>
+                                    <td bgcolor="#ffffff" style="opacity: 80%; width: 80%;padding: 0 5% 0 5%; text-align: right; ">
+                                        <span id="amount-transferred" class="field-value" style="font-family: 'Nunito', 'Roboto', 'Google Sans', sans-serif; font-size: 1.3em;color:#0A2757;font-weight:700;">1000.00</span>
+                                    </td>
+                                </tr>
+                                
+                                
+                                <tr>
+                                    <td bgcolor="#ffffff" style="width: 50%;padding-left: 7%;">
+                                        <span class="field-name" style="opacity: 60%;font-family: 'Nunito', 'Roboto', 'Google Sans', sans-serif;font-size: 1.3rem;color:#0A2757;font-weight:700;">+Fee </span>
+                                    </td>
+                                    <td bgcolor="#ffffff" style="opacity: 80%; width: 80%;padding: 0 5% 0 5%; text-align: right; ">
+                                        <span id="fee" class="field-value" style="font-family: 'Nunito', 'Roboto', 'Google Sans', sans-serif;font-size: 1.3rem;color:#0A2757;font-weight:700;">10.00</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <hr style="width: 90%; background-color: #cccc; border: none; height: 1px;"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 50%;padding-left: 7%;">
+                                        <span class="field-name" style="font-family: 'Nunito', 'Roboto', sans-serif;font-size: 1.3rem;color:#10346F;font-weight:800;">Total </span>
+                                    </td>
+                                    <td style="width: 80%;padding: 0 5% 0 5%; text-align: right; ">
+                                        
+                                        <span id="total-amount" class="field-value" style="font-family: 'Nunito', 'Roboto', sans-serif;font-size: 1.75rem;color:#10346F;font-weight:800;">1010.00</span>
+                                    </td>
+                                </tr>
+                                <!-- <tr>
+                                    <td colspan="2">
+                                        <hr style="width: 90%; background-color: #cccc; border: none; height: 1px;"/>
+                                    </td>
+                                </tr> -->
+                            </table>
+
+                            <table style="background-color: #F5F9FF; width: 80%;" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td colspan="2" style="padding-top: 2rem;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="opacity: 60%; color: #0A2757; text-align: left; width: 50%; padding:2% 7%; font-family: 'Nunito', 'Roboto', 'Google Sans', sans-serif; font-size: 1.25rem; font-weight:700;">
+                                        <span>InstaPay Invoice No. </span>
+                                    </td>
+                                    <td style="opacity: 80%; color: #0A2757; text-align: right; width: 50%; padding-right: 7%; font-family: 'Nunito', 'Roboto', 'Google Sans', sans-serif; font-size: 1.25rem; font-weight:700;">
+                                        10000001
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="opacity: 60%; color: #0A2757; text-align: left; width: 50%; padding:2% 7%; font-family: 'Nunito', 'Roboto', 'Google Sans', sans-serif; font-size: 1.25rem; font-weight:700;">
+                                        <span>InstaPay Trace No. </span>
+                                    </td>
+                                    <td style="opacity: 80%; color: #0A2757; text-align: right; width: 50%; padding-right: 7%; font-family: 'Nunito', 'Roboto', 'Google Sans', sans-serif; font-size: 1.25rem; font-weight:700;">
+                                        000000000000001
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="opacity: 60%; color: #0A2757; text-align: left; width: 50%; padding:2% 7%; font-family: 'Nunito', 'Roboto', 'Google Sans', sans-serif; font-size: 1.25rem; font-weight:700;">
+                                        <span>Ref No. </span>
+                                    </td>
+                                    <td style="opacity: 80%; color: #0A2757; text-align: right; width: 50%; padding-right: 7%; font-family: 'Nunito', 'Roboto', 'Google Sans', sans-serif; font-size: 1.25rem; font-weight:700;">
+                                        4000000000001
+                                    </td>
+                                </tr>
+
+                                <!-- <tr>
+                                    <td colspan="4"  style="width: 50%;padding: 0 5% 0 5%; font-family: 'Karla', 'Google Sans', sans-serif; font-size: 1.25rem;">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div style="padding-bottom: 1rem;">
+                                                    <span>InstaPay Invoice No. </span> 10000001
+                                                </div>
+                                                <div style="padding-bottom: 1rem;">
+                                                    <span>InstaPay Trace No. </span> 000000000000001
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div  style="padding-bottom: 1rem;">
+                                                    <span>Ref No.</span> 4000000000001
+                                                </div  style="padding-bottom: 1rem;">
+                                                <div>06 October 2026, 10:56:31PM</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr> -->
+
+                                <!-- <td bgcolor="#ffffff" align="center" colspan="2">
+                                    <div style="margin-top: 1.25rem;">
+                                     <span class="field-name" style="color: #6d6e72; vertical-align: middle;font-family: 'Poppins', 'Google Sans', sans-serif; font-size: 1.25rem;">Bank Transfer </span></div>
+                                </td> -->
+                                <tr>
+                                    <td align="center" colspan="2">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td align="center" colspan="2">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td align="center" colspan="2">
+                                        <span class="paybills" style="opacity: 40%; font-size: 1rem;color:#4B4D51;font-weight:800;text-transform: uppercase;letter-spacing: 0.25; font-family: 'Nunito', 'Roboto', sans-serif;">
+                                            Powered By
+                                        </span>
+                                        &nbsp;
+                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" colspan="2">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td align="center" colspan="2">&nbsp;</td>
+                                </tr>
+                            </table>
+
+                            <table border="0" cellspacing="0" cellpadding="0" style="border-color: transparent; width: 80%; background: linear-gradient(-135deg, #ffffff 14px, transparent 0), linear-gradient(135deg, #ffffff 14px, transparent 0); background: url(https://example.com/redacted); background-repeat: repeat-x; background-position:center top;" class="zigzag-bottom">
+                                <tr>
+                                    <td align="center" colspan="2">&nbsp;</td>
+                                </tr>
+                            </table>
+                            <br/><br/>
+                            <table style="width: 75% !important; font-size: 1.2rem; line-height: 1.5;color:#FFFFFF;">
+                                <tr>
+                                    <td align="center" colspan="2" style="font-family: 'Poppins', 'Roboto', sans-serif;">
+                                        <span  style="color: rgba(255, 255, 255, 0.8);" class="reminder">In case funds were not credited to your nominated bank account, please contact the receiving bank and provide the InstaPay Trace No. to confirm status of your transaction.
+                                            <br/> <br/>
+                                            For assistance, please visit our <span style="color: #ffff">Help Center</span>.
+							
+                            <!-- For assistance, please visit our Help Center at <strong><a style="color: #FFF;text-decoration: none;"href="https://example.com/redacted" target="_blank">help.gcash.com</a></strong> or in the GCash App.</span> -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" colspan="2">&nbsp;</td>
+                                </tr>
+                                <!-- <tr>
+                                    <td align="center" colspan="2">&nbsp;</td>
+                                </tr> -->
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- <tr>
+                        <td align="center" valign="baseline">
+                            
+                        </td>
+                    </tr> -->
+                </table>
+            </td>
+        </tr>
+    </table>
+</center>
+</body>
+
+</html>
+
+--fixture-boundary--

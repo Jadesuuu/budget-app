@@ -71,7 +71,7 @@ test("record a transfer with a fee", async ({ page }) => {
   await page.goto("/add");
   await page.locator("label.seg-opt", { hasText: "Transfer" }).click();
   await page.getByLabel("Amount").fill("1,000");
-  await page.getByRole("combobox", { name: "From", exact: true }).selectOption({ label: "BPI Savings ••7712" });
+  await page.getByRole("combobox", { name: "From", exact: true }).selectOption({ label: "BPI Savings ••5678" });
   await page.getByRole("combobox", { name: "To", exact: true }).selectOption({ label: "Maya Wallet" });
   await page.getByLabel(/^Fee/).fill("15");
   await page.getByRole("button", { name: "Save", exact: true }).click();

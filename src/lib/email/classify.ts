@@ -17,6 +17,7 @@ export type ClassifyContext = {
 export type Outcome =
   | { kind: "gmail_confirmation"; code: string; requestedBy: string }
   | { kind: "transaction"; parser: string; parserVersion: number; accountId: string; transaction: ParsedTransaction }
+  | { kind: "info"; note: string; parser: string; parserVersion: number }
   | { kind: "flagged"; note: string }
   | { kind: "failed"; note: string; parser?: string; parserVersion?: number };
 
@@ -52,7 +53,9 @@ export function classify(msg: Message, ctx: ClassifyContext): Outcome {
   } catch {
     return { kind: "failed", note: "Couldn't read this email.", ...tag };
   }
-  if (!candidate) return { kind: "failed", note: "This email doesn't contain a transaction.", ...tag };
+  if (!candidate) {
+    return parser.info ? { kind: "info", note: parser.info, ...tag } : { kind: "failed", note: "This email doesn't contain a transaction.", ...tag };
+  }
   const parsed = parsedTransactionSchema.safeParse(candidate);
   if (!parsed.success) return { kind: "failed", note: "Couldn't read the amount or date in this email.", ...tag };
 
@@ -64,10 +67,14 @@ export function classify(msg: Message, ctx: ClassifyContext): Outcome {
   return { kind: "transaction", ...tag, accountId, transaction: parsed.data };
 }
 
+// Messages rarely say whether a deposit account is "savings" or "debit"; treat them as one family.
+const DEPOSIT = new Set(["savings", "debit"]);
+const sameFamily = (a: string, b: string) => a === b || (DEPOSIT.has(a) && DEPOSIT.has(b));
+
 /** Same institution, then last 4 digits, then account type; only an unambiguous match counts. */
 export function matchAccount(tx: ParsedTransaction, institution: Institution, accounts: Account[]): string | null {
   let pool = accounts.filter((a) => a.institutionId === institution.id && !a.archived);
   if (tx.last4) pool = pool.filter((a) => a.last4 === tx.last4);
-  if (pool.length > 1 && tx.accountType) pool = pool.filter((a) => a.type === tx.accountType);
+  if (pool.length > 1 && tx.accountType) pool = pool.filter((a) => sameFamily(a.type, tx.accountType!));
   return pool.length === 1 ? pool[0].id : null;
 }

@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [tsconfigPaths(), react()],
   test: {
     environment: "node",
-    include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
+    include: ["src/**/*.test.ts", "src/**/*.test.tsx", "shared/**/*.test.ts", "workers/**/src/**/*.test.ts"],
     exclude: ["e2e/**", "node_modules/**"],
   },
 });

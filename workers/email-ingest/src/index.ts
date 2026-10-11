@@ -1,5 +1,8 @@
-// Cloudflare Email Worker: receives mail for u_xxxxxxxxxx@<inbound domain> and stores it untouched.
-// No parsing here (CLAUDE.md): the parse job reads raw_emails separately and can be re-run.
+// Cloudflare Email Worker: receives mail for u_xxxxxxxxxx@<inbound domain> and stores it as received.
+// No transaction parsing here (CLAUDE.md): the parse job reads raw_emails separately and can be re-run.
+// The one exception is redaction: full card numbers are masked before storage (never stored).
+
+import { withoutCardNumbers } from "./redacted-mime";
 
 export interface Env {
   SUPABASE_URL: string;
@@ -30,7 +33,7 @@ export default {
       return;
     }
 
-    const raw = await new Response(message.raw).text();
+    const { raw } = await withoutCardNumbers(await new Response(message.raw).text());
     const response = await fetch(`${env.SUPABASE_URL}/rest/v1/rpc/ingest_raw_email`, {
       method: "POST",
       headers: {

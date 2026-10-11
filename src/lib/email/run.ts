@@ -1,10 +1,11 @@
 import "server-only";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { classify, type Account, type ClassifyContext, type Institution } from "./classify";
+import { insertParsedTransaction } from "@/lib/parsing/insert";
 import { readMessage } from "./message";
 import { TEMPLATE_PARSERS } from "./parsers";
 
-export type RunSummary = { processed: number; transactions: number; confirmations: number; flagged: number; failed: number };
+export type RunSummary = { processed: number; transactions: number; confirmations: number; info: number; flagged: number; failed: number };
 
 /**
  * Parses pending raw emails. Safe to re-run: an email that already produced a transaction never produces a second.
@@ -12,7 +13,7 @@ export type RunSummary = { processed: number; transactions: number; confirmation
  */
 export async function processPendingEmails(options: { limit?: number; userId?: string } = {}): Promise<RunSummary> {
   const db = createAdminClient();
-  const summary: RunSummary = { processed: 0, transactions: 0, confirmations: 0, flagged: 0, failed: 0 };
+  const summary: RunSummary = { processed: 0, transactions: 0, confirmations: 0, info: 0, flagged: 0, failed: 0 };
 
   let query = db.from("raw_emails").select("id, user_id, raw_mime").eq("status", "pending").order("received_at").limit(options.limit ?? 50);
   if (options.userId) query = query.eq("user_id", options.userId);
@@ -89,26 +90,24 @@ export async function processPendingEmails(options: { limit?: number; userId?: s
         .eq("id", email.id);
       summary.confirmations++;
     } else if (outcome.kind === "transaction") {
-      const existing = await db.from("transactions").select("id").eq("raw_email_id", email.id).maybeSingle();
-      if (existing.error) throw existing.error;
-      if (!existing.data) {
-        const { error: insertError } = await db.from("transactions").insert({
-          user_id: email.user_id,
-          account_id: outcome.accountId,
-          amount_centavos: outcome.transaction.amountCentavos,
-          occurred_at: outcome.transaction.occurredAt,
-          merchant: outcome.transaction.merchant,
-          status: "pending",
-          source: "email",
-          raw_email_id: email.id,
-        });
-        if (insertError) throw insertError;
-      }
+      await insertParsedTransaction(db, {
+        userId: email.user_id,
+        accountId: outcome.accountId,
+        tx: outcome.transaction,
+        source: "email",
+        rawEmailId: email.id,
+      });
       await db
         .from("raw_emails")
         .update({ ...base, status: "parsed", kind: "transaction", parser: outcome.parser, parser_version: outcome.parserVersion, note: null })
         .eq("id", email.id);
       summary.transactions++;
+    } else if (outcome.kind === "info") {
+      await db
+        .from("raw_emails")
+        .update({ ...base, status: "parsed", kind: "other", note: outcome.note, parser: outcome.parser, parser_version: outcome.parserVersion })
+        .eq("id", email.id);
+      summary.info++;
     } else {
       await db
         .from("raw_emails")

@@ -1,0 +1,284 @@
+From: EastWest Credit Cards e-SOA <e-SOA@eastwestbanker.com>
+To: u_test000000@in.jadebonifacio.dev
+Subject: Credit Card Electronic Statement of Account for Jul 2026
+Date: Thu, 30 Jul 2026 00:50:24 +0000
+Message-ID: <fixture-fixtures-emails-eastwest-esoa-jul-eml@budget.test>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="fixture-boundary"
+
+--fixture-boundary
+Content-Type: text/plain; charset=utf-8
+
+Dear Mr./Ms. DELA CRUZ,
+                
+
+                
+                    We have attached your EASTWEST VISA electronic-Statement of Account (e-SOA) for JUL 27 2026. To view your e-SOA, simply launch the attached file and type in the last six (6) digits of your EASTWEST VISA. You will need an Adobe Reader to view your e-SOA.
+                
+
+                For your quick reference, below is your credit card account summary:
+
+                
+                    
+                        Payment Due Date
+                        :
+                        08/20/2026
+                    
+                    
+                        Minimum Payment Due
+                        :
+                        Php555.45
+                    
+                    
+                        Total Statement Balance
+                        :
+                        Php15,869.94
+                    
+                
+
+                
+                    
+                        
+                            
+                        
+                        
+                            EastWest EasyWay App 
+                            Check your available credit limit, rewards/rebate balance, pay your balance, and more on the EastWest EasyWay App.
+                            
+                            To enroll, simply scan the QR code or download the EasyWay app from the Apple App Store or Google Play Store.
+                            
+                        
+                    
+                
+
+                
+                    You may also access your credit card account through the EastWest System Tech Assistant (ESTA) chatbot at EW Credit Cards on Facebook messenger.
+                
+
+                
+
+                
+                    
+                        
+                            OTHER IMPORTANT REMINDERS:
+                        
+                    
+                    
+                        
+                        
+                            Please ensure that your e-mail address, mobile number, home or office address, and landline number with EastWest are always updated. To update your contact information in real time, kindly chat with our EastWest System Tech Assistant (ESTA) chatbot by searching EW Credit Cards on Facebook messenger.
+                        
+                    
+                    
+                        
+                        
+                            To ensure continuous delivery of your e-SOA to your Inbox, please add EastWest Credit Cards e-SOA to your e-mail address book or contact list.
+                        
+                    
+                    
+                        
+                        For a list of accredited payment centers and methods, please visit the EastWest website.
+                    
+                    
+                        
+                        Please do not reply to this e-mail.
+                    
+                
+
+                
+
+                
+                    
+                        
+                            STAY SECURE. FOCUS ON SAFETY.
+                        
+                    
+                    
+                        
+                        
+                            EastWest will NEVER CALL to ask for your Card Expiry Date, CVV (3 digits at the back of the card), or One Time Password/OTP (6-digit code sent via SMS to authenticate online purchases).
+                        
+                    
+                    
+                        
+                        
+                            Be wary of calls or messages from individuals claiming to be EastWest representatives asking for your personal information. NEVER DISCLOSE your credit card details to anyone.
+                        
+                    
+                    
+                        
+                        
+                            Smash that Chip! The chip contains sensitive information.  Protect information by disabling the chip of your old credit card immediately by punching a hole or cutting through it
+                        
+                    
+                
+
+                
+                    Sincerely,
+                    
+                    
+                    EastWest Credit Cards
+                
+
+                
+                    
+                        For inquiries and feedback, you may chat with the EastWest System Tech Assistant chatbot at www.ewlend.com/esta, call the EastWest 24-Hour Customer Service Hotline at +60000000001, or e-mail cards@eastwestbanker.com.
+                     
+                    EastWest is regulated by the Bangko Sentral ng Pilipinas (BSP)
+                    https://example.com/redacted 
+                    This e-mail is confidential. If you are not the intended recipient hereof, you must not forward, copy or otherwise use this e-mail.  If you received this message by mistake, please notify us immediately via cards@eastwestbanker.com.
+--fixture-boundary
+Content-Type: text/html; charset=utf-8
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Credit Card Electronic Statement of Account for Jul 2026</title>
+    <style>
+
+        a[x-apple-data-detectors='true'] {
+        color: inherit !important;
+        text-decoration: none !important;
+        }
+
+        a {
+        color: inherit !important;
+        text-decoration: none !important;
+        }
+
+    </style>
+</head>
+<body>
+    <table style='font-family: Arial; width: 650px; text-align: justify;font-size:15px !important;'>
+        <tr>
+            <td>
+                <p>
+                    Dear Mr./Ms. <span style='font-weight: bold;'>DELA CRUZ</span>,
+                </p>
+
+                <p>
+                    We have attached your <span style='font-weight: bold;'>EASTWEST VISA</span> electronic-Statement of Account (e-SOA) for <span style='font-weight: bold;'>JUL 27 2026.</span> To view your e-SOA, simply launch the attached file and type in the last six (6) digits of your <span style='font-weight: bold;'>EASTWEST VISA</span>. You will need an Adobe Reader to view your e-SOA.
+                </p>
+
+                For your quick reference, below is your credit card account summary:
+
+                <table width="90%" align="center" style='font-family: Arial; font-size: 15px !important;'>
+                    <tr>
+                        <td width='40%' style="padding-top: 7px;">Payment Due Date</td>
+                        <td width='5%' style="padding-top: 7px;">:</td>
+                        <td width='55%' style="padding-top: 7px;">08/20/2026</td>
+                    </tr>
+                    <tr>
+                        <td>Minimum Payment Due</td>
+                        <td>:</td>
+                        <td>Php555.45</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom: 20px;">Total Statement Balance</td>
+                        <td style="padding-bottom: 20px;">:</td>
+                        <td style="padding-bottom: 20px;">Php15,869.94</td>
+                    </tr>
+                </table>
+
+                <table align="center" width="99%" cellpadding="8" cellspacing="0" style="font-family: Arial; font-size: 14.5px !important; border:1px solid #7030A0; border-radius:12px;">
+                    <tr>
+                        <td width="150">
+                            
+                        </td>
+                        <td style="padding-top: 0px;">
+                            <p><strong>EastWest EasyWay App</strong></p> 
+                            <p>Check your available credit limit, rewards/rebate balance, pay your balance, and more on the EastWest EasyWay App.
+                            </p>
+                            <p>To enroll, simply scan the QR code or download the EasyWay app from the Apple App Store or Google Play Store.
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+
+                <p style='padding-bottom: 10px;'>
+                    You may also access your credit card account through the EastWest System Tech Assistant (ESTA) chatbot at EW Credit Cards on Facebook messenger.
+                </p>
+
+                
+
+                <table style='font-family: Arial; font-size: 15px !important; padding-bottom: 20px; text-align:justify;' width='100%'>
+                    <tr>
+                        <td colspan="2" style="padding-bottom: 5px;">
+                            <b>OTHER IMPORTANT REMINDERS:</b>
+                        </td>
+                    </tr>
+                    <tr >
+                        <td width='5%' style='vertical-align: top;'></td>
+                        <td width='95%' style="padding-bottom: 5px;">
+                            Please ensure that your e-mail address, mobile number, home or office address, and landline number with EastWest are always updated. To update your contact information in real time, kindly chat with our EastWest System Tech Assistant (ESTA) chatbot by searching EW Credit Cards on Facebook messenger.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style='vertical-align: top;'></td>
+                        <td style="padding-bottom: 5px;">
+                            To ensure continuous delivery of your e-SOA to your Inbox, please add <strong>EastWest Credit Cards e-SOA</strong> to your e-mail address book or contact list.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style='vertical-align: top;'></td>
+                        <td style="padding-bottom: 5px;">For a list of accredited payment centers and methods, please visit the EastWest website.</td>
+                    </tr>
+                    <tr>
+                        <td style='vertical-align: top;'></td>
+                        <td style="padding-bottom: 5px;">Please do not reply to this e-mail.</td>
+                    </tr>
+                </table>
+
+                
+
+                <table style='font-family: Arial; font-size: 15px !important; padding-bottom: 20px; text-align:justify;' width='100%'>
+                    <tr>
+                        <td colspan="2" style="padding-bottom: 5px;">
+                            <b>STAY SECURE. FOCUS ON SAFETY.</b>
+                        </td>
+                    </tr>
+                    <tr >
+                        <td width='5%' style='vertical-align: top;'></td>
+                        <td width='95%' style="padding-bottom: 5px;">
+                            EastWest will NEVER CALL to ask for your Card Expiry Date, CVV (3 digits at the back of the card), or One Time Password/OTP (6-digit code sent via SMS to authenticate online purchases).
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style='vertical-align: top;'></td>
+                        <td style="padding-bottom: 5px;">
+                            Be wary of calls or messages from individuals claiming to be EastWest representatives asking for your personal information. NEVER DISCLOSE your credit card details to anyone.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style='vertical-align: top;'></td>
+                        <td style="padding-bottom: 5px;">
+                            Smash that Chip! The chip contains sensitive information.  Protect information by disabling the chip of your old credit card immediately by punching a hole or cutting through it
+                        </td>
+                    </tr>
+                </table>
+
+                <p style='padding-bottom: 25px;'>
+                    Sincerely,
+                    <br/>
+                    <br/>
+                    EastWest Credit Cards
+                </p>
+
+                <span style='font-size: 10.5px;'>
+                    <p>
+                        For inquiries and feedback, you may chat with the EastWest System Tech Assistant chatbot at www.ewlend.com/esta, call the EastWest 24-Hour Customer Service Hotline at +60000000001, or e-mail cards@eastwestbanker.com.
+                    </p> <br>
+                    <center>EastWest is regulated by the Bangko Sentral ng Pilipinas (BSP)</center>
+                    <center><i>https://example.com/redacted</i></center> <br><br>
+                    <i>This e-mail is confidential. If you are not the intended recipient hereof, you must not forward, copy or otherwise use this e-mail.  If you received this message by mistake, please notify us immediately via cards@eastwestbanker.com.</i>
+                </span>
+
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>
+
+--fixture-boundary--

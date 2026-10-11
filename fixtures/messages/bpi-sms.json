@@ -1,0 +1,14 @@
+[
+  {
+    "name": "transfer out",
+    "sender": "BPI",
+    "body": "BPI: You have transferred PHP 22,170.00 to GCash/G-Xchange on Sep 14 2026; 07:53:04 PM (GMT +8).",
+    "expect": { "amountCentavos": -2217000, "merchant": "Transfer to GCash/G-Xchange", "occurredAt": "2026-09-14T19:53:04+08:00" }
+  },
+  {
+    "name": "credit card SOA reminder (not a transaction)",
+    "sender": "BPI",
+    "body": "[BPI] This is a gentle reminder that your BPI Credit Card SOA for Sep 2026 is due for payment on 10/06/2026.\n\nMin. Due: PHP850.00\nTotal Due: PHP8,665.30\n\nIf paid, pls. disregard. Thank you.",
+    "expect": null
+  }
+]
