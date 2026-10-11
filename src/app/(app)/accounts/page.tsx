@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { ChevronRight, Plus } from "lucide-react";
+import { BalanceCheckChip } from "@/components/balance-check";
 import { PageHeader } from "@/components/page-header";
 import { getAccountsWithBalances, OWED_TYPES, TYPE_LABEL } from "@/lib/data/accounts";
+import { getBalanceChecks } from "@/lib/data/reconcile";
 import { badgeFor } from "@/lib/inbox";
 import { formatPeso } from "@/lib/money";
 
@@ -26,7 +28,7 @@ export default function AccountsPage() {
 }
 
 async function AccountGroups() {
-  const accounts = await getAccountsWithBalances();
+  const [accounts, checks] = await Promise.all([getAccountsWithBalances(), getBalanceChecks()]);
 
   if (accounts.length === 0) {
     return (
@@ -61,6 +63,7 @@ async function AccountGroups() {
                       <span className="acct-sub">
                         {[TYPE_LABEL[a.type], a.last4 && `••${a.last4}`, a.pending > 0 && `${a.pending} to review`].filter(Boolean).join(", ")}
                       </span>
+                      <BalanceCheckChip check={checks.get(a.id)} bank={a.institutionName ?? a.name} />
                     </span>
                     <span className="acct-bal">
                       {OWED_TYPES.has(a.type) ? formatPeso(-a.balance) : formatPeso(a.balance)}

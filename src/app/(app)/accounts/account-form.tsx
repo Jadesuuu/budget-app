@@ -22,9 +22,28 @@ const GROUPS: { kind: string; label: string }[] = [
   { kind: "other", label: "Other" },
 ];
 
-type Existing = { id: string; name: string; type: string; last4: string | null; institutionId: string; balanceInput: string };
+type Existing = {
+  id: string;
+  name: string;
+  type: string;
+  last4: string | null;
+  institutionId: string;
+  balanceInput: string;
+  /** Exact stored moment of the opening balance, and its Manila date for the date field. */
+  balanceAt: string;
+  balanceDate: string;
+};
 
-export function AccountForm({ institutions, existing }: { institutions: InstitutionOption[]; existing?: Existing }) {
+export function AccountForm({
+  institutions,
+  existing,
+  today,
+}: {
+  institutions: InstitutionOption[];
+  existing?: Existing;
+  /** Today in Manila, from the server, so the date field never disagrees with the server's clock. */
+  today: string;
+}) {
   const [state, action, pending] = useActionState<FormState, FormData>(existing ? updateAccount : createAccount, { status: "idle" });
   const [type, setType] = useState(existing?.type ?? "savings");
   const [institution, setInstitution] = useState(existing?.institutionId ?? "");
@@ -108,6 +127,24 @@ export function AccountForm({ institutions, existing }: { institutions: Institut
           {OWED.has(type)
             ? "From your latest statement or app. Payments and new charges are added on top."
             : "From your bank or e-wallet app. Confirmed transactions are added on top."}
+        </span>
+      </div>
+
+      <div className="field">
+        <label htmlFor="acct-balance-date">Balance as of</label>
+        <input
+          id="acct-balance-date"
+          className="input"
+          type="date"
+          name="balanceDate"
+          defaultValue={existing?.balanceDate ?? today}
+          max={today}
+          required
+          aria-describedby="acct-balance-date-hint"
+        />
+        {existing?.balanceAt && <input type="hidden" name="originalBalanceAt" value={existing.balanceAt} />}
+        <span id="acct-balance-date-hint" className="hint">
+          Only transactions from this date on change the balance. Older ones still show in your history.
         </span>
       </div>
 

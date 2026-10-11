@@ -1,11 +1,19 @@
 import "server-only";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { classify, type Account, type ClassifyContext, type Institution } from "./classify";
-import { insertParsedTransaction } from "@/lib/parsing/insert";
+import { insertParsedTransaction, recordStatement } from "@/lib/parsing/insert";
 import { readMessage } from "./message";
 import { TEMPLATE_PARSERS } from "./parsers";
 
-export type RunSummary = { processed: number; transactions: number; confirmations: number; info: number; flagged: number; failed: number };
+export type RunSummary = {
+  processed: number;
+  transactions: number;
+  statements: number;
+  confirmations: number;
+  info: number;
+  flagged: number;
+  failed: number;
+};
 
 /**
  * Parses pending raw emails. Safe to re-run: an email that already produced a transaction never produces a second.
@@ -13,7 +21,7 @@ export type RunSummary = { processed: number; transactions: number; confirmation
  */
 export async function processPendingEmails(options: { limit?: number; userId?: string } = {}): Promise<RunSummary> {
   const db = createAdminClient();
-  const summary: RunSummary = { processed: 0, transactions: 0, confirmations: 0, info: 0, flagged: 0, failed: 0 };
+  const summary: RunSummary = { processed: 0, transactions: 0, statements: 0, confirmations: 0, info: 0, flagged: 0, failed: 0 };
 
   let query = db.from("raw_emails").select("id, user_id, raw_mime").eq("status", "pending").order("received_at").limit(options.limit ?? 50);
   if (options.userId) query = query.eq("user_id", options.userId);
@@ -102,6 +110,13 @@ export async function processPendingEmails(options: { limit?: number; userId?: s
         .update({ ...base, status: "parsed", kind: "transaction", parser: outcome.parser, parser_version: outcome.parserVersion, note: null })
         .eq("id", email.id);
       summary.transactions++;
+    } else if (outcome.kind === "statement") {
+      await recordStatement(db, { userId: email.user_id, accountId: outcome.accountId, statement: outcome.statement, source: "email", rawEmailId: email.id });
+      await db
+        .from("raw_emails")
+        .update({ ...base, status: "parsed", kind: "other", note: "Statement recorded", parser: outcome.parser, parser_version: outcome.parserVersion })
+        .eq("id", email.id);
+      summary.statements++;
     } else if (outcome.kind === "info") {
       await db
         .from("raw_emails")

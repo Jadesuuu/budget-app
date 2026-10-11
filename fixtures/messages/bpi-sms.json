@@ -6,9 +6,9 @@
     "expect": { "amountCentavos": -2217000, "merchant": "Transfer to GCash/G-Xchange", "occurredAt": "2026-09-14T19:53:04+08:00" }
   },
   {
-    "name": "credit card SOA reminder (not a transaction)",
+    "name": "credit card SOA reminder becomes a statement",
     "sender": "BPI",
     "body": "[BPI] This is a gentle reminder that your BPI Credit Card SOA for Sep 2026 is due for payment on 10/06/2026.\n\nMin. Due: PHP850.00\nTotal Due: PHP8,665.30\n\nIf paid, pls. disregard. Thank you.",
-    "expect": null
+    "expectStatement": { "dueDate": "2026-10-06", "totalCentavos": 866530, "minimumCentavos": 85000, "statementDate": null }
   }
 ]

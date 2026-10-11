@@ -25,14 +25,14 @@ export type Database = {
           Tables: {
             "accounts": {
                   Row: {
-                    "archived_at": string | null,"created_at": string,"currency": string,"id": string,"institution_id": string,"last4": string | null,"name": string,"opening_balance_centavos": number,"type": Database["public"]['Enums']["account_type"],"updated_at": string,"user_id": string
+                    "archived_at": string | null,"created_at": string,"currency": string,"id": string,"institution_id": string,"last4": string | null,"name": string,"opening_balance_at": string,"opening_balance_centavos": number,"type": Database["public"]['Enums']["account_type"],"updated_at": string,"user_id": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "archived_at"?: string | null,"created_at"?: string,"currency"?: string,"id"?: string,"institution_id": string,"last4"?: string | null,"name": string,"opening_balance_centavos"?: number,"type": Database["public"]['Enums']["account_type"],"updated_at"?: string,"user_id"?: string
+                    "archived_at"?: string | null,"created_at"?: string,"currency"?: string,"id"?: string,"institution_id": string,"last4"?: string | null,"name": string,"opening_balance_at"?: string,"opening_balance_centavos"?: number,"type": Database["public"]['Enums']["account_type"],"updated_at"?: string,"user_id"?: string
                   }
                   Update: {
-                    "archived_at"?: string | null,"created_at"?: string,"currency"?: string,"id"?: string,"institution_id"?: string,"last4"?: string | null,"name"?: string,"opening_balance_centavos"?: number,"type"?: Database["public"]['Enums']["account_type"],"updated_at"?: string,"user_id"?: string
+                    "archived_at"?: string | null,"created_at"?: string,"currency"?: string,"id"?: string,"institution_id"?: string,"last4"?: string | null,"name"?: string,"opening_balance_at"?: string,"opening_balance_centavos"?: number,"type"?: Database["public"]['Enums']["account_type"],"updated_at"?: string,"user_id"?: string
                   }
                   Relationships: [
                     {
@@ -41,6 +41,44 @@ export type Database = {
 isOneToOne: false
       referencedRelation: "institutions"
       referencedColumns: ["id"]
+    }
+                  ]
+                },"balance_checkpoints": {
+                  Row: {
+                    "account_id": string,"as_of": string,"balance_centavos": number,"created_at": string,"id": string,"raw_email_id": string | null,"raw_message_id": string | null,"source": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "account_id": string,"as_of": string,"balance_centavos": number,"created_at"?: string,"id"?: string,"raw_email_id"?: string | null,"raw_message_id"?: string | null,"source": string,"user_id"?: string
+                  }
+                  Update: {
+                    "account_id"?: string,"as_of"?: string,"balance_centavos"?: number,"created_at"?: string,"id"?: string,"raw_email_id"?: string | null,"raw_message_id"?: string | null,"source"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "balance_checkpoints_account_id_user_id_fkey"
+      columns: ["account_id","user_id"]
+isOneToOne: false
+      referencedRelation: "account_balances"
+      referencedColumns: ["account_id","user_id"]
+    },{
+      foreignKeyName: "balance_checkpoints_account_id_user_id_fkey"
+      columns: ["account_id","user_id"]
+isOneToOne: false
+      referencedRelation: "accounts"
+      referencedColumns: ["id","user_id"]
+    },{
+      foreignKeyName: "balance_checkpoints_raw_email_id_user_id_fkey"
+      columns: ["raw_email_id","user_id"]
+isOneToOne: false
+      referencedRelation: "raw_emails"
+      referencedColumns: ["id","user_id"]
+    },{
+      foreignKeyName: "balance_checkpoints_raw_message_id_user_id_fkey"
+      columns: ["raw_message_id","user_id"]
+isOneToOne: false
+      referencedRelation: "raw_messages"
+      referencedColumns: ["id","user_id"]
     }
                   ]
                 },"capture_links": {
@@ -110,6 +148,32 @@ isOneToOne: true
                   }
                   Relationships: [
                     
+                  ]
+                },"imports": {
+                  Row: {
+                    "account_id": string,"created_at": string,"file_name": string | null,"format": string,"id": string,"period_end": string | null,"period_start": string | null,"rows_added": number,"rows_matched": number,"rows_total": number,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "account_id": string,"created_at"?: string,"file_name"?: string | null,"format": string,"id"?: string,"period_end"?: string | null,"period_start"?: string | null,"rows_added"?: number,"rows_matched"?: number,"rows_total"?: number,"user_id"?: string
+                  }
+                  Update: {
+                    "account_id"?: string,"created_at"?: string,"file_name"?: string | null,"format"?: string,"id"?: string,"period_end"?: string | null,"period_start"?: string | null,"rows_added"?: number,"rows_matched"?: number,"rows_total"?: number,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "imports_account_id_user_id_fkey"
+      columns: ["account_id","user_id"]
+isOneToOne: false
+      referencedRelation: "account_balances"
+      referencedColumns: ["account_id","user_id"]
+    },{
+      foreignKeyName: "imports_account_id_user_id_fkey"
+      columns: ["account_id","user_id"]
+isOneToOne: false
+      referencedRelation: "accounts"
+      referencedColumns: ["id","user_id"]
+    }
                   ]
                 },"income_sources": {
                   Row: {
@@ -343,34 +407,40 @@ isOneToOne: false
                   ]
                 },"statements": {
                   Row: {
-                    "account_id": string,"amount_paid_centavos": number,"created_at": string,"due_date": string,"id": string,"minimum_due_centavos": number,"period_end": string,"period_start": string,"statement_balance_centavos": number,"updated_at": string,"user_id": string
+                    "account_id": string,"amount_paid_centavos": number,"created_at": string,"due_date": string,"id": string,"minimum_due_centavos": number,"period_end": string,"period_start": string | null,"source": string,"statement_balance_centavos": number,"updated_at": string,"user_id": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "account_id": string,"amount_paid_centavos"?: number,"created_at"?: string,"due_date": string,"id"?: string,"minimum_due_centavos"?: number,"period_end": string,"period_start": string,"statement_balance_centavos": number,"updated_at"?: string,"user_id"?: string
+                    "account_id": string,"amount_paid_centavos"?: number,"created_at"?: string,"due_date": string,"id"?: string,"minimum_due_centavos"?: number,"period_end": string,"period_start"?: string | null,"source"?: string,"statement_balance_centavos": number,"updated_at"?: string,"user_id"?: string
                   }
                   Update: {
-                    "account_id"?: string,"amount_paid_centavos"?: number,"created_at"?: string,"due_date"?: string,"id"?: string,"minimum_due_centavos"?: number,"period_end"?: string,"period_start"?: string,"statement_balance_centavos"?: number,"updated_at"?: string,"user_id"?: string
+                    "account_id"?: string,"amount_paid_centavos"?: number,"created_at"?: string,"due_date"?: string,"id"?: string,"minimum_due_centavos"?: number,"period_end"?: string,"period_start"?: string | null,"source"?: string,"statement_balance_centavos"?: number,"updated_at"?: string,"user_id"?: string
                   }
                   Relationships: [
                     {
       foreignKeyName: "statements_account_id_user_id_fkey"
       columns: ["account_id","user_id"]
 isOneToOne: false
-      referencedRelation: "credit_cards"
+      referencedRelation: "account_balances"
       referencedColumns: ["account_id","user_id"]
+    },{
+      foreignKeyName: "statements_account_id_user_id_fkey"
+      columns: ["account_id","user_id"]
+isOneToOne: false
+      referencedRelation: "accounts"
+      referencedColumns: ["id","user_id"]
     }
                   ]
                 },"transactions": {
                   Row: {
-                    "account_id": string,"amount_centavos": number,"category_id": string | null,"confirmed_at": string | null,"created_at": string,"duplicate_of": string | null,"id": string,"merchant": string | null,"note": string | null,"occurred_at": string,"raw_email_id": string | null,"raw_message_id": string | null,"recurring_rule_id": string | null,"source": Database["public"]['Enums']["txn_source"],"status": Database["public"]['Enums']["txn_status"],"transfer_id": string | null,"updated_at": string,"user_id": string
+                    "account_id": string,"amount_centavos": number,"category_id": string | null,"confirmed_at": string | null,"created_at": string,"duplicate_of": string | null,"id": string,"import_id": string | null,"merchant": string | null,"note": string | null,"occurred_at": string,"raw_email_id": string | null,"raw_message_id": string | null,"recurring_rule_id": string | null,"source": Database["public"]['Enums']["txn_source"],"status": Database["public"]['Enums']["txn_status"],"transfer_id": string | null,"updated_at": string,"user_id": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "account_id": string,"amount_centavos": number,"category_id"?: string | null,"confirmed_at"?: string | null,"created_at"?: string,"duplicate_of"?: string | null,"id"?: string,"merchant"?: string | null,"note"?: string | null,"occurred_at": string,"raw_email_id"?: string | null,"raw_message_id"?: string | null,"recurring_rule_id"?: string | null,"source"?: Database["public"]['Enums']["txn_source"],"status"?: Database["public"]['Enums']["txn_status"],"transfer_id"?: string | null,"updated_at"?: string,"user_id"?: string
+                    "account_id": string,"amount_centavos": number,"category_id"?: string | null,"confirmed_at"?: string | null,"created_at"?: string,"duplicate_of"?: string | null,"id"?: string,"import_id"?: string | null,"merchant"?: string | null,"note"?: string | null,"occurred_at": string,"raw_email_id"?: string | null,"raw_message_id"?: string | null,"recurring_rule_id"?: string | null,"source"?: Database["public"]['Enums']["txn_source"],"status"?: Database["public"]['Enums']["txn_status"],"transfer_id"?: string | null,"updated_at"?: string,"user_id"?: string
                   }
                   Update: {
-                    "account_id"?: string,"amount_centavos"?: number,"category_id"?: string | null,"confirmed_at"?: string | null,"created_at"?: string,"duplicate_of"?: string | null,"id"?: string,"merchant"?: string | null,"note"?: string | null,"occurred_at"?: string,"raw_email_id"?: string | null,"raw_message_id"?: string | null,"recurring_rule_id"?: string | null,"source"?: Database["public"]['Enums']["txn_source"],"status"?: Database["public"]['Enums']["txn_status"],"transfer_id"?: string | null,"updated_at"?: string,"user_id"?: string
+                    "account_id"?: string,"amount_centavos"?: number,"category_id"?: string | null,"confirmed_at"?: string | null,"created_at"?: string,"duplicate_of"?: string | null,"id"?: string,"import_id"?: string | null,"merchant"?: string | null,"note"?: string | null,"occurred_at"?: string,"raw_email_id"?: string | null,"raw_message_id"?: string | null,"recurring_rule_id"?: string | null,"source"?: Database["public"]['Enums']["txn_source"],"status"?: Database["public"]['Enums']["txn_status"],"transfer_id"?: string | null,"updated_at"?: string,"user_id"?: string
                   }
                   Relationships: [
                     {
@@ -396,6 +466,12 @@ isOneToOne: false
       columns: ["duplicate_of","user_id"]
 isOneToOne: false
       referencedRelation: "transactions"
+      referencedColumns: ["id","user_id"]
+    },{
+      foreignKeyName: "transactions_import_id_user_id_fkey"
+      columns: ["import_id","user_id"]
+isOneToOne: false
+      referencedRelation: "imports"
       referencedColumns: ["id","user_id"]
     },{
       foreignKeyName: "transactions_raw_email_id_user_id_fkey"
@@ -428,6 +504,26 @@ isOneToOne: false
                   Relationships: [
                     
                   ]
+                },"account_reconciliation": {
+                  Row: {
+                    "account_id": string | null,"as_of": string | null,"checkpoint_id": string | null,"confirmed_centavos": number | null,"pending_centavos": number | null,"reported_centavos": number | null,"source": string | null,"user_id": string | null
+                  }
+                  ComputedFields: never
+                  Relationships: [
+                    {
+      foreignKeyName: "balance_checkpoints_account_id_user_id_fkey"
+      columns: ["account_id","user_id"]
+isOneToOne: false
+      referencedRelation: "account_balances"
+      referencedColumns: ["account_id","user_id"]
+    },{
+      foreignKeyName: "balance_checkpoints_account_id_user_id_fkey"
+      columns: ["account_id","user_id"]
+isOneToOne: false
+      referencedRelation: "accounts"
+      referencedColumns: ["id","user_id"]
+    }
+                  ]
                 }
           }
           Functions: {
@@ -451,6 +547,7 @@ isOneToOne: false
 "created_at": string,
 "duplicate_of": string | null,
 "id": string,
+"import_id": string | null,
 "merchant": string | null,
 "note": string | null,
 "occurred_at": string,
@@ -484,6 +581,7 @@ isOneToOne: false
 "created_at": string,
 "duplicate_of": string | null,
 "id": string,
+"import_id": string | null,
 "merchant": string | null,
 "note": string | null,
 "occurred_at": string,
@@ -514,6 +612,7 @@ isOneToOne: false
 "created_at": string,
 "duplicate_of": string | null,
 "id": string,
+"import_id": string | null,
 "merchant": string | null,
 "note": string | null,
 "occurred_at": string,
@@ -541,6 +640,7 @@ isOneToOne: false
 "created_at": string,
 "duplicate_of": string | null,
 "id": string,
+"import_id": string | null,
 "merchant": string | null,
 "note": string | null,
 "occurred_at": string,

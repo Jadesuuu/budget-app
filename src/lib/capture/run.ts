@@ -1,6 +1,6 @@
 import "server-only";
 import type { Account } from "@/lib/email/classify";
-import { insertParsedTransaction } from "@/lib/parsing/insert";
+import { insertParsedTransaction, recordStatement } from "@/lib/parsing/insert";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { classifyCapture, type CaptureContext, type CaptureInstitution } from "./classify";
 import { MESSAGE_PARSERS } from "./parsers";
@@ -13,12 +13,12 @@ export async function loadCaptureInstitutions(db: AdminClient): Promise<CaptureI
   return data.map((i) => ({ id: i.id, slug: i.slug ?? "", name: i.name, smsSenders: i.sms_senders, appPackages: i.app_packages }));
 }
 
-export type CaptureRunSummary = { processed: number; transactions: number; info: number; flagged: number; failed: number };
+export type CaptureRunSummary = { processed: number; transactions: number; statements: number; info: number; flagged: number; failed: number };
 
 /** Parses pending captured messages. Safe to re-run: a message never produces a second transaction. */
 export async function processPendingMessages(options: { userId?: string; limit?: number } = {}): Promise<CaptureRunSummary> {
   const db = createAdminClient();
-  const summary: CaptureRunSummary = { processed: 0, transactions: 0, info: 0, flagged: 0, failed: 0 };
+  const summary: CaptureRunSummary = { processed: 0, transactions: 0, statements: 0, info: 0, flagged: 0, failed: 0 };
 
   let query = db
     .from("raw_messages")
@@ -63,6 +63,13 @@ export async function processPendingMessages(options: { userId?: string; limit?:
         .update({ status: "parsed", parser: outcome.parser, parser_version: outcome.parserVersion, note: null, parsed_at: parsedAt })
         .eq("id", m.id);
       summary.transactions++;
+    } else if (outcome.kind === "statement") {
+      await recordStatement(db, { userId: m.user_id, accountId: outcome.accountId, statement: outcome.statement, source: "sms", rawMessageId: m.id });
+      await db
+        .from("raw_messages")
+        .update({ status: "parsed", parser: outcome.parser, parser_version: outcome.parserVersion, note: "Statement recorded", parsed_at: parsedAt })
+        .eq("id", m.id);
+      summary.statements++;
     } else if (outcome.kind === "info") {
       await db
         .from("raw_messages")

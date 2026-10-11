@@ -12,6 +12,7 @@ const ctx: ClassifyContext = {
     { id: "i-bpi", slug: "bpi", name: "BPI", emailDomains: ["bpi.com.ph"] },
     { id: "i-atome", slug: "atome", name: "Atome", emailDomains: ["atome.ph"] },
     { id: "i-ew", slug: "eastwest", name: "EastWest", emailDomains: ["eastwestbanker.com"] },
+    { id: "i-tiktok", slug: "tiktok-shop", name: "TikTok Shop", emailDomains: [] },
   ],
   accounts: [
     { id: "acct-gcash", institutionId: "i-gcash", type: "ewallet", last4: null, archived: false },
@@ -19,6 +20,7 @@ const ctx: ClassifyContext = {
     { id: "acct-bpi-credit", institutionId: "i-bpi", type: "credit", last4: "9999", archived: false },
     { id: "acct-atome", institutionId: "i-atome", type: "bnpl", last4: "4321", archived: false },
     { id: "acct-ew", institutionId: "i-ew", type: "credit", last4: "1234", archived: false },
+    { id: "acct-tiktok", institutionId: "i-tiktok", type: "bnpl", last4: null, archived: false },
   ],
   forwardingSources: ["someone.example@gmail.com"],
   parsers: TEMPLATE_PARSERS,
@@ -43,14 +45,25 @@ describe("bank email parsers (real, redacted samples)", () => {
   });
 
   it.each([
-    "atome/bill-statement.eml",
-    "atome/due-reminder.eml",
-    "atome/tiktok-paylater-reminder.eml",
-    "eastwest/esoa-jul.eml",
-    "eastwest/esoa-sep.eml",
-    "eastwest/minimum-payment-advisory.eml",
-  ])("%s is recognised as a statement or reminder, not a transaction", async (file) => {
-    expect((await classify(await load(file), ctx)).kind).toBe("info");
+    ["eastwest/esoa-sep.eml", "acct-ew", { statementDate: "2026-09-27", dueDate: "2026-10-21", totalCentavos: 2603458, minimumCentavos: 91121 }],
+    ["eastwest/esoa-jul.eml", "acct-ew", { statementDate: "2026-07-27", dueDate: "2026-08-20", totalCentavos: 1586994, minimumCentavos: 55545 }],
+    ["atome/bill-statement.eml", "acct-atome", { statementDate: "2026-09-17", dueDate: "2026-09-27", totalCentavos: 649224 }],
+    ["atome/due-reminder.eml", "acct-atome", { statementDate: null, dueDate: "2026-08-27", totalCentavos: 998745 }],
+    ["atome/tiktok-paylater-reminder.eml", "acct-tiktok", { institutionSlug: "tiktok-shop", dueDate: "2026-06-15", totalCentavos: 404418 }],
+  ])("%s becomes a statement", async (file, accountId, expected) => {
+    expect(classify(await load(file), ctx)).toMatchObject({ kind: "statement", accountId, statement: expected });
+  });
+
+  it("files TikTok PayLater bills under TikTok PayLater, never the Atome Card", async () => {
+    const noTikTok = { ...ctx, accounts: ctx.accounts.filter((a) => a.id !== "acct-tiktok") };
+    expect(classify(await load("atome/tiktok-paylater-reminder.eml"), noTikTok)).toMatchObject({
+      kind: "failed",
+      note: "Add your TikTok Shop account so its statements can be recorded.",
+    });
+  });
+
+  it("treats the collections advisory as a reminder only", async () => {
+    expect((await classify(await load("eastwest/minimum-payment-advisory.eml"), ctx)).kind).toBe("info");
   });
 
   it("matches the BPI deposit account even though the email doesn't say savings or debit", async () => {

@@ -73,6 +73,8 @@ const accountRows = must(
   "accounts",
 );
 const acct = (name: string) => accountRows.find((a) => a.name === name)!.id;
+// Starting balances date from a month ago, so the sample transactions below count toward them.
+must(await db.from("accounts").update({ opening_balance_at: ago(30 * DAY) }).eq("user_id", uid).select("id"), "opening dates");
 
 // 4. Cards, statements, loan, installment plan
 must(

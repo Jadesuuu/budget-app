@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { requireUser } from "@/lib/auth";
+import { todayInManila } from "@/lib/dates";
 import { parsePesoInput } from "@/lib/money-input";
 
 export type AddState = { status: "idle" } | { status: "error"; message: string };
@@ -10,8 +11,12 @@ export type AddState = { status: "idle" } | { status: "error"; message: string }
 const date = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Pick a date.");
 const time = z.string().regex(/^(\d{2}:\d{2})?$/, "Pick a time.");
 
-/** A calendar date + optional time entered in the Philippines, as an instant. */
+/**
+ * A calendar date + optional time entered in the Philippines, as an instant. Today with no time means
+ * "just now"; an earlier day with no time means midday.
+ */
 function manilaInstant(day: string, at: string): string {
+  if (!at && day === todayInManila()) return new Date().toISOString();
   return `${day}T${at || "12:00"}:00+08:00`;
 }
 

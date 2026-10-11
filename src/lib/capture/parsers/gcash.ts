@@ -35,6 +35,8 @@ export const gcashSms: MessageParser = {
         merchant: t.merchant(m).trim(),
         last4: null,
         accountType: "ewallet",
+        // "Your new balance is P864.55" / "New balance is P999.38": a free balance checkpoint.
+        balanceAfterCentavos: pesoAmount(/new balance is (P[\d,]+\.\d{2})/i.exec(msg.body)?.[1] ?? "") ?? null,
       };
     }
     return null;

@@ -1,6 +1,7 @@
 import { readForwardingConfirmation } from "./gmail";
 import { domainOf, type Message } from "./message";
-import { parsedTransactionSchema, type ParsedTransaction, type TemplateParser } from "./parsers/types";
+import { resolveStatement } from "@/lib/parsing/statement-outcome";
+import { parsedTransactionSchema, type ParsedStatement, type ParsedTransaction, type TemplateParser } from "./parsers/types";
 
 export type Institution = { id: string; slug: string; name: string; emailDomains: string[] };
 export type Account = { id: string; institutionId: string; type: string; last4: string | null; archived: boolean };
@@ -17,6 +18,7 @@ export type ClassifyContext = {
 export type Outcome =
   | { kind: "gmail_confirmation"; code: string; requestedBy: string }
   | { kind: "transaction"; parser: string; parserVersion: number; accountId: string; transaction: ParsedTransaction }
+  | { kind: "statement"; parser: string; parserVersion: number; accountId: string; statement: ParsedStatement }
   | { kind: "info"; note: string; parser: string; parserVersion: number }
   | { kind: "flagged"; note: string }
   | { kind: "failed"; note: string; parser?: string; parserVersion?: number };
@@ -54,6 +56,11 @@ export function classify(msg: Message, ctx: ClassifyContext): Outcome {
     return { kind: "failed", note: "Couldn't read this email.", ...tag };
   }
   if (!candidate) {
+    const statement = parser.statement?.(msg) ?? null;
+    if (statement) {
+      const resolved = resolveStatement(statement, institution, ctx.institutions, ctx.accounts);
+      return resolved.kind === "statement" ? { ...resolved, ...tag } : { ...resolved, ...tag };
+    }
     return parser.info ? { kind: "info", note: parser.info, ...tag } : { kind: "failed", note: "This email doesn't contain a transaction.", ...tag };
   }
   const parsed = parsedTransactionSchema.safeParse(candidate);

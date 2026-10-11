@@ -1,8 +1,10 @@
 "use server";
 
+import { refresh } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { requireUser } from "@/lib/auth";
+import { todayInManila } from "@/lib/dates";
 import { parsePesoInput } from "@/lib/money-input";
 
 export type FormState = { status: "idle" } | { status: "error"; message: string; field?: string };
@@ -19,7 +21,18 @@ const accountSchema = z.object({
     .regex(/^(\d{4})?$/, "Last 4 digits must be exactly 4 numbers.")
     .transform((v) => v || null),
   balance: z.string().trim(),
+  balanceDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Pick the date of that balance."),
 });
+
+/**
+ * When the opening balance applies. Today means "right now" (it already includes today's spending);
+ * an earlier date means the start of that day in Manila.
+ */
+function openingBalanceAt(date: string): string | null {
+  const today = todayInManila();
+  if (date > today) return null;
+  return date === today ? new Date().toISOString() : `${date}T00:00:00+08:00`;
+}
 
 /** Cash balances are positive; what you owe on cards, BNPL and loans is stored as a negative balance. */
 function openingBalance(raw: string, type: string): number | null {
@@ -34,6 +47,8 @@ export async function createAccount(_prev: FormState, formData: FormData): Promi
   if (!parsed.success) return { status: "error", message: parsed.error.issues[0].message };
   const balance = openingBalance(parsed.data.balance, parsed.data.type);
   if (balance === null) return { status: "error", message: "Enter the balance as an amount, like 1,500.00.", field: "balance" };
+  const balanceAt = openingBalanceAt(parsed.data.balanceDate);
+  if (!balanceAt) return { status: "error", message: "The balance date can't be in the future.", field: "balanceDate" };
 
   const { supabase } = await requireUser();
   let institutionId = String(formData.get("institution") ?? "");
@@ -62,6 +77,7 @@ export async function createAccount(_prev: FormState, formData: FormData): Promi
       name: parsed.data.name,
       last4: parsed.data.last4,
       opening_balance_centavos: balance,
+      opening_balance_at: balanceAt,
     })
     .select("id")
     .single();
@@ -80,11 +96,16 @@ export async function updateAccount(_prev: FormState, formData: FormData): Promi
   }
   const balance = openingBalance(parsed.data.balance, parsed.data.type);
   if (balance === null) return { status: "error", message: "Enter the balance as an amount, like 1,500.00.", field: "balance" };
+  // Unchanged date keeps the exact original moment.
+  const original = String(formData.get("originalBalanceAt") ?? "");
+  const balanceAt =
+    original && todayInManila(new Date(original)) === parsed.data.balanceDate ? original : openingBalanceAt(parsed.data.balanceDate);
+  if (!balanceAt) return { status: "error", message: "The balance date can't be in the future.", field: "balanceDate" };
 
   const { supabase } = await requireUser();
   const { error } = await supabase
     .from("accounts")
-    .update({ name: parsed.data.name, last4: parsed.data.last4, opening_balance_centavos: balance })
+    .update({ name: parsed.data.name, last4: parsed.data.last4, opening_balance_centavos: balance, opening_balance_at: balanceAt })
     .eq("id", id.data);
   if (error) return { status: "error", message: "Couldn't save the changes. Try again." };
   redirect(`/accounts/${id.data}`);
@@ -96,4 +117,28 @@ export async function archiveAccount(formData: FormData) {
   const { error } = await supabase.from("accounts").update({ archived_at: new Date().toISOString() }).eq("id", id);
   if (error) throw error;
   redirect("/accounts");
+}
+
+export type CheckState = { status: "idle" } | { status: "saved" } | { status: "error"; message: string };
+
+/** "Update from your bank app": the balance the user sees right now becomes a checkpoint. */
+export async function recordBankBalance(_prev: CheckState, formData: FormData): Promise<CheckState> {
+  const id = z.uuid().safeParse(formData.get("accountId"));
+  if (!id.success) return { status: "error", message: "That account couldn't be found." };
+  const raw = String(formData.get("amount") ?? "").trim();
+  const centavos = raw === "0" ? 0 : parsePesoInput(raw);
+  if (centavos === null) return { status: "error", message: "Enter the balance as an amount, like 1,500.00." };
+
+  const { supabase } = await requireUser();
+  const account = await supabase.from("accounts").select("type").eq("id", id.data).maybeSingle();
+  if (account.error || !account.data) return { status: "error", message: "That account couldn't be found." };
+  const { error } = await supabase.from("balance_checkpoints").insert({
+    account_id: id.data,
+    balance_centavos: OWED_TYPES.has(account.data.type) ? -centavos : centavos,
+    as_of: new Date().toISOString(),
+    source: "manual",
+  });
+  if (error) return { status: "error", message: "Couldn't save the balance. Try again." };
+  refresh();
+  return { status: "saved" };
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { PageHeader } from "@/components/page-header";
 import { getInstitutionOptions } from "@/lib/data/accounts";
+import { todayInManila } from "@/lib/dates";
 import { AccountForm } from "../account-form";
 
 export const metadata: Metadata = { title: "Add account" };
@@ -18,5 +19,6 @@ export default function NewAccountPage() {
 }
 
 async function Form() {
-  return <AccountForm institutions={await getInstitutionOptions()} />;
+  const institutions = await getInstitutionOptions();
+  return <AccountForm institutions={institutions} today={todayInManila()} />;
 }

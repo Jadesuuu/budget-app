@@ -17,7 +17,7 @@ export async function getDueSoon(): Promise<{ today: string; items: DueItem[] }>
     supabase
       .from("statements")
       .select(
-        "id, due_date, statement_balance_centavos, minimum_due_centavos, amount_paid_centavos, credit_cards(accounts(name, last4))",
+        "id, due_date, statement_balance_centavos, minimum_due_centavos, amount_paid_centavos, accounts(name, last4)",
       )
       .gte("due_date", from)
       .lte("due_date", until),
@@ -47,8 +47,8 @@ export async function getDueSoon(): Promise<{ today: string; items: DueItem[] }>
         balance: s.statement_balance_centavos,
         minimumDue: s.minimum_due_centavos,
         paid: s.amount_paid_centavos,
-        accountName: s.credit_cards?.accounts?.name ?? "Credit card",
-        last4: s.credit_cards?.accounts?.last4 ?? null,
+        accountName: s.accounts?.name ?? "Credit card",
+        last4: s.accounts?.last4 ?? null,
       })),
       loanPayments: loanPayments.data.map((p) => ({
         id: p.id,

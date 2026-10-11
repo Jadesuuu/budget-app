@@ -5,7 +5,8 @@
  */
 export function field(text: string, label: string): string | null {
   const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const m = new RegExp(String.raw`(?:^|\n)[ \t]*${escaped}[ \t]*:?[ \t]*(?:\n[ \t]*:?[ \t]*)?([^\n]*\S)`, "i").exec(text);
+  // Between label and value: spaces, line breaks and colons in any arrangement ("Label\n  :\n  value").
+  const m = new RegExp(String.raw`(?:^|\n)[ \t]*${escaped}[\s:]*([^\n]*\S)`, "i").exec(text);
   return m ? m[1].trim() : null;
 }
 

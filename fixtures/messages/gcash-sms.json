@@ -3,25 +3,25 @@
     "name": "paid merchant",
     "sender": "GCash",
     "body": "You have paid P130.83 GCash to FFT*PINDUOD on 10-09-26 11:30:30 AM. Your new balance is P864.55. Ref. No. 4000000000001.",
-    "expect": { "amountCentavos": -13083, "merchant": "FFT*PINDUOD", "occurredAt": "2026-10-09T11:30:30+08:00" }
+    "expect": { "amountCentavos": -13083, "merchant": "FFT*PINDUOD", "occurredAt": "2026-10-09T11:30:30+08:00", "balanceAfterCentavos": 86455 }
   },
   {
     "name": "cash out",
     "sender": "GCash",
     "body": "You have successfully withdrawn P1,018.00 from your GCash wallet with applicable fees on 10-08-26 07:41:00 PM Your new balance is P995.38. Ref. No 4000000000001",
-    "expect": { "amountCentavos": -101800, "merchant": "Cash out", "occurredAt": "2026-10-08T19:41:00+08:00" }
+    "expect": { "amountCentavos": -101800, "merchant": "Cash out", "occurredAt": "2026-10-08T19:41:00+08:00", "balanceAfterCentavos": 99538 }
   },
   {
     "name": "payment processed",
     "sender": "GCash",
     "body": "Your payment of P143.00 to Angkas has been successfully processed on 10-08-26 06:55:46 PM. Ref. No. 400000001",
-    "expect": { "amountCentavos": -14300, "merchant": "Angkas", "occurredAt": "2026-10-08T18:55:46+08:00" }
+    "expect": { "amountCentavos": -14300, "merchant": "Angkas", "occurredAt": "2026-10-08T18:55:46+08:00", "balanceAfterCentavos": null }
   },
   {
     "name": "received money",
     "sender": "GCash",
     "body": "You received P544.50 from 7 Eleven CI. New balance is P999.38 10-07-26 10:06PM. Ref no. 4000000000001.",
-    "expect": { "amountCentavos": 54450, "merchant": "Received from 7 Eleven CI", "occurredAt": "2026-10-07T22:06:00+08:00" }
+    "expect": { "amountCentavos": 54450, "merchant": "Received from 7 Eleven CI", "occurredAt": "2026-10-07T22:06:00+08:00", "balanceAfterCentavos": 99938 }
   },
   {
     "name": "refund",

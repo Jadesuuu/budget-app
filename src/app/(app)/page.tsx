@@ -7,6 +7,10 @@ import { PageHeader } from "@/components/page-header";
 import { requireUser } from "@/lib/auth";
 import { getDueSoon } from "@/lib/data/due";
 import { getInbox } from "@/lib/data/inbox";
+import { getAccountsWithBalances } from "@/lib/data/accounts";
+import { getBalanceChecks } from "@/lib/data/reconcile";
+import { formatPeso } from "@/lib/money";
+import { CircleAlert } from "lucide-react";
 import { ReviewInbox } from "@/components/review-inbox";
 import { monthName, todayInManila } from "@/lib/dates";
 
@@ -29,11 +33,17 @@ export default function HomePage() {
 
 async function HomeContent() {
   const { supabase } = await requireUser();
-  const [inbox, accounts, due] = await Promise.all([
+  const [inbox, accounts, due, checks, accountList] = await Promise.all([
     getInbox(),
     supabase.from("accounts").select("id", { count: "exact", head: true }).is("archived_at", null),
     getDueSoon(),
+    getBalanceChecks(),
+    getAccountsWithBalances(),
   ]);
+  const offBalance = accountList.flatMap((a) => {
+    const check = checks.get(a.id);
+    return check?.state === "off" ? [{ ...a, gap: check.gapCentavos }] : [];
+  });
   if (accounts.error) throw accounts.error;
   const pendingCount = inbox.items.length;
   const hasAccounts = (accounts.count ?? 0) > 0;
@@ -60,6 +70,25 @@ async function HomeContent() {
               <span className="setup-step-static">Confirm what comes in, one tap each</span>
             </li>
           </ol>
+        </section>
+      )}
+
+      {offBalance.length > 0 && (
+        <section className="attention" aria-labelledby="attention-h">
+          <h2 id="attention-h">Needs a look</h2>
+          <ul>
+            {offBalance.map((a) => (
+              <li key={a.id}>
+                <Link href={`/accounts/${a.id}`}>
+                  <CircleAlert aria-hidden />
+                  <span>
+                    <b>{a.name}</b>: {formatPeso(Math.abs(a.gap))} unaccounted for
+                  </span>
+                  <ChevronRight aria-hidden />
+                </Link>
+              </li>
+            ))}
+          </ul>
         </section>
       )}
 

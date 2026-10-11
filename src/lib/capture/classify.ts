@@ -1,5 +1,6 @@
 import { matchAccount, type Account } from "@/lib/email/classify";
-import { parsedTransactionSchema } from "@/lib/email/parsers/types";
+import { parsedTransactionSchema, type ParsedStatement } from "@/lib/email/parsers/types";
+import { resolveStatement } from "@/lib/parsing/statement-outcome";
 import type { CapturedMessage } from "./payload";
 import type { MessageParser } from "./parsers";
 
@@ -15,6 +16,7 @@ export type CaptureContext = { institutions: CaptureInstitution[]; accounts: Acc
 
 export type CaptureOutcome =
   | { kind: "transaction"; parser: string; parserVersion: number; accountId: string; transaction: import("@/lib/email/parsers/types").ParsedTransaction }
+  | { kind: "statement"; parser: string; parserVersion: number; accountId: string; statement: ParsedStatement }
   | { kind: "info"; note: string; parser: string; parserVersion: number }
   | { kind: "flagged"; note: string }
   | { kind: "failed"; note: string; parser?: string; parserVersion?: number };
@@ -69,6 +71,11 @@ export function classifyCapture(msg: CapturedMessage, receivedAt: string, ctx: C
     return { kind: "failed", note: "Couldn't read this message.", ...tag };
   }
   if (!candidate) {
+    const statement = parser.statement?.(msg, receivedAt) ?? null;
+    if (statement) {
+      const resolved = resolveStatement(statement, institution, ctx.institutions, ctx.accounts);
+      return { ...resolved, ...tag };
+    }
     return parser.info ? { kind: "info", note: parser.info, ...tag } : { kind: "failed", note: "This message doesn't contain a transaction.", ...tag };
   }
   const parsed = parsedTransactionSchema.safeParse(candidate);

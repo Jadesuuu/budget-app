@@ -96,6 +96,14 @@ in a review inbox.
   - Senders are matched via `institutions.sms_senders` / `app_packages` (Viber: chat name vs sms_senders).
     Messages from unknown senders are recorded WITHOUT their content (personal texts/chats are never kept).
   - Android: forwarder app (Message487 / SMS to URL Forwarder). iPhone: Shortcuts message automation (SMS only).
+- Accuracy model (no PH bank offers personal APIs; never scrape or store bank credentials):
+  1. Notifications capture most transactions as pending items.
+  2. Balance checkpoints (`balance_checkpoints`, view `account_reconciliation`) compare the bank's stated
+     balance (GCash "new balance", statements, imports, or typed from the app) with Budget's at that moment.
+  3. History/statement import (`/accounts/[id]/import`, CSV now; PDF layouts added from real samples) matches
+     rows to existing transactions (same amount, within 2 days) and adds only what's missing; undoable.
+  Accounts have `opening_balance_at`: only transactions at/after it move the balance (imports never double count).
+  Statements attach to credit/BNPL/loan accounts directly; one per account per due date.
 - Full card numbers are masked (Luhn check, `shared/redact.ts`) before ANY storage: the email Worker
   rebuilds the MIME without them (GCash GBills receipts contain full card numbers); the capture route
   redacts the payload. Fixtures are made with `pnpm fixture:make` (also scrambles refs, names via --replace)

@@ -1,3 +1,4 @@
+import { usDate } from "@/lib/parsing/dates";
 import { manilaDateTime, pesoAmount } from "@/lib/parsing/values";
 import type { MessageParser } from "./index";
 
@@ -32,5 +33,19 @@ export const bpiSoaReminderSms: MessageParser = {
   institution: "bpi",
   matches: (msg) => /Credit Card SOA .* is due for payment/i.test(msg.body),
   parse: () => null,
-  info: "Credit card due-date reminder. Due dates from these are added in a later update.",
+  statement: (msg) => {
+    const dueDate = usDate(/due for payment on (\d{1,2}\/\d{1,2}\/\d{4})/i.exec(msg.body)?.[1] ?? "");
+    const total = pesoAmount(/Total Due:\s*(PHP\s?[\d,]+\.\d{2})/i.exec(msg.body)?.[1] ?? "");
+    if (!dueDate || total === null) return null;
+    return {
+      institutionSlug: null,
+      accountType: "credit",
+      last4: null,
+      statementDate: null,
+      dueDate,
+      totalCentavos: total,
+      minimumCentavos: pesoAmount(/Min\. Due:\s*(PHP\s?[\d,]+\.\d{2})/i.exec(msg.body)?.[1] ?? ""),
+    };
+  },
+  info: "BPI credit card reminder.",
 };

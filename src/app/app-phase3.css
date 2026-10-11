@@ -152,3 +152,27 @@ select.input { appearance: auto; }
 .warning-box svg { color: var(--danger); width: 20px; height: 20px; flex: none; margin-top: 1px; }
 .new-link { display: grid; gap: 12px; }
 .new-link .alias-box code { font-size: 13px; }
+
+/* balance checks, statements, imports */
+.check-chip { display: inline-flex; align-items: center; gap: 5px; font-size: 12.5px; font-weight: 600; margin-top: 3px; }
+.check-chip svg { width: 14px; height: 14px; }
+.check-chip.ok { color: var(--income); }
+.check-chip.muted { color: var(--muted); }
+.check-chip.warn { color: var(--danger); }
+.sec-head .check-chip { margin-top: 0; }
+.balance-form { max-width: 360px; }
+.attention { display: grid; gap: 8px; }
+.attention h2 { font-family: var(--tf-display); font-weight: var(--display-weight); letter-spacing: var(--display-tracking); font-size: 19px; }
+.attention ul { display: grid; gap: 8px; }
+.attention a {
+  display: flex; align-items: center; gap: 10px; padding: 12px 14px; text-decoration: none; font-size: 14.5px;
+  border-radius: var(--radius-card); background: var(--danger-soft); color: var(--ink); min-height: 48px;
+}
+.attention a > svg:first-child { color: var(--danger); width: 20px; height: 20px; flex: none; }
+.attention a span { flex: 1; }
+.attention a > svg:last-child { color: var(--muted); width: 18px; height: 18px; }
+.file-input { padding: 10px 12px; min-height: 52px; }
+.import-preview { display: grid; gap: 12px; }
+.import-done { display: grid; gap: 12px; justify-items: start; padding: 18px; border-radius: var(--radius-card); background: var(--surface); border: var(--card-border); }
+.import-done > svg { width: 28px; height: 28px; color: var(--income); }
+.settings-sec > .btn { justify-self: start; }

@@ -1,4 +1,4 @@
-import type { ParsedTransaction } from "@/lib/email/parsers/types";
+import type { ParsedStatement, ParsedTransaction } from "@/lib/email/parsers/types";
 import type { CapturedMessage } from "../payload";
 
 export type MessageParser = {
@@ -10,6 +10,8 @@ export type MessageParser = {
   matches(msg: CapturedMessage): boolean;
   /** Same output contract as email parsers (parsedTransactionSchema). receivedAt is the fallback time. */
   parse(msg: CapturedMessage, receivedAt: string): ParsedTransaction | null;
+  /** For statement and bill reminders: what's owed and when. */
+  statement?(msg: CapturedMessage, receivedAt: string): ParsedStatement | null;
   /** Shown when parse returns null: what this kind of message is, e.g. "Statement reminder". */
   info?: string;
 };

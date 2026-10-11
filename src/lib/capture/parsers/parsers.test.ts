@@ -5,7 +5,7 @@ import { classifyCapture, type CaptureContext } from "../classify";
 import type { CapturedMessage } from "../payload";
 import { MESSAGE_PARSERS } from "./index";
 
-type Fixture = { name: string; sender: string; body: string; expect: Record<string, unknown> | null };
+type Fixture = { name: string; sender: string; body: string; expect?: Record<string, unknown>; expectStatement?: Record<string, unknown> };
 const load = (file: string) => JSON.parse(readFileSync(join(process.cwd(), "fixtures/messages", file), "utf8")) as Fixture[];
 
 const ctx: CaptureContext = {
@@ -33,7 +33,7 @@ describe.each([
       if (fixture.expect) {
         expect(outcome).toMatchObject({ kind: "transaction", accountId, transaction: fixture.expect });
       } else {
-        expect(outcome.kind).toBe("info");
+        expect(outcome).toMatchObject({ kind: "statement", accountId: "acct-bpi-credit", statement: fixture.expectStatement });
       }
     });
   }

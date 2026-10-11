@@ -1,6 +1,6 @@
-import { atomeCardTransaction, atomeRefund, atomeReminders } from "./atome";
+import { atomeBill, atomeCardTransaction, atomeDueReminder, atomeRefund, tiktokPayLaterReminder } from "./atome";
 import { bpiInstapayIncoming } from "./bpi";
-import { eastwestStatements } from "./eastwest";
+import { eastwestAdvisory, eastwestEsoa } from "./eastwest";
 import { gcashBankTransfer, gcashBillsPayment } from "./gcash";
 import type { TemplateParser } from "./types";
 
@@ -14,6 +14,9 @@ export const TEMPLATE_PARSERS: TemplateParser[] = [
   bpiInstapayIncoming,
   atomeCardTransaction,
   atomeRefund,
-  atomeReminders,
-  eastwestStatements,
+  atomeBill,
+  atomeDueReminder,
+  tiktokPayLaterReminder,
+  eastwestEsoa,
+  eastwestAdvisory,
 ];

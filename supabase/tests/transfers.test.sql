@@ -7,13 +7,13 @@ insert into auth.users (id, email, aud, role) values
   ('aaaaaaaa-0000-4000-8000-000000000001', 'a@test.local', 'authenticated', 'authenticated'),
   ('bbbbbbbb-0000-4000-8000-000000000002', 'b@test.local', 'authenticated', 'authenticated');
 
-insert into public.accounts (id, user_id, institution_id, type, name, opening_balance_centavos) values
+insert into public.accounts (id, user_id, institution_id, type, name, opening_balance_centavos, opening_balance_at) values
   ('aaaaaaaa-3333-4000-8000-000000000001', 'aaaaaaaa-0000-4000-8000-000000000001',
-   (select id from public.institutions where slug = 'bpi'), 'savings', 'BPI Savings', 2000000),
+   (select id from public.institutions where slug = 'bpi'), 'savings', 'BPI Savings', 2000000, '2026-01-01 00:00+08'),
   ('aaaaaaaa-3333-4000-8000-000000000002', 'aaaaaaaa-0000-4000-8000-000000000001',
-   (select id from public.institutions where slug = 'gcash'), 'ewallet', 'GCash', 100000),
+   (select id from public.institutions where slug = 'gcash'), 'ewallet', 'GCash', 100000, '2026-01-01 00:00+08'),
   ('bbbbbbbb-3333-4000-8000-000000000001', 'bbbbbbbb-0000-4000-8000-000000000002',
-   (select id from public.institutions where slug = 'gcash'), 'ewallet', 'B GCash', 0);
+   (select id from public.institutions where slug = 'gcash'), 'ewallet', 'B GCash', 0, '2026-01-01 00:00+08');
 
 set local role authenticated;
 select set_config('request.jwt.claims', '{"sub":"aaaaaaaa-0000-4000-8000-000000000001","role":"authenticated"}', true);
