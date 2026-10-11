@@ -1,0 +1,972 @@
+<!doctype html>
+<html lang="en" data-theme="sakura" data-mode="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Budget Theme Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Bagel+Fat+One&family=Barlow:wght@400;500;600;700&family=Big+Shoulders+Display:wght@600;700;800;900&family=Fredoka:wght@400;500;600;700&family=Geist:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Marcellus&family=Rubik:wght@400;500;600;700&family=Work+Sans:wght@400;500;600;700&family=Young+Serif&family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap">
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<style>
+/* ============================================================
+   THEME TOKENS
+   Each theme lends type, palette, density and one signature move.
+   Layout, navigation and controls are shared.
+   ============================================================ */
+:root {
+  --space: 16px;
+  --radius-card: 16px;
+  --radius-ctl: 12px;
+  --radius-tile: 12px;
+  --display-weight: 700;
+  --display-tracking: -0.02em;
+  --amount-weight: 700;
+  --font-display: system-ui, sans-serif;
+  --font-body: system-ui, sans-serif;
+  --font-amount: var(--font-display);
+  --card-border: 1px solid var(--line);
+  --card-shadow: 0 1px 2px rgb(0 0 0 / .04), 0 8px 24px -12px rgb(0 0 0 / .18);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+}
+
+/* ---------- Sakura ---------- */
+[data-theme="sakura"] {
+  --bg: #FFF4F7; --surface: #FFFFFF; --surface-2: #FCE6EE; --ink: #3D1F33; --muted: #7A5068;
+  --line: #F1D2DE; --line-strong: #E5B3C6; --accent: #C2306A; --on-accent: #FFFFFF; --accent-soft: #FADCE7;
+  --income: #1E7A4C; --danger: #B42318; --danger-soft: #FDE4E1;
+  --s1: #C2306A; --s2: #F08DB0; --s3: #8C4A7A; --s4: #E9B9C9; --s5: #5E2A4C;
+  --tile-bg: #FADCE7; --tile-ink: #8E1F4D;
+  --font-display: "Zen Maru Gothic", system-ui, sans-serif; --font-body: "Zen Maru Gothic", system-ui, sans-serif;
+  --display-weight: 900; --radius-card: 30px 6px 30px 6px; --radius-tile: 22px 4px 22px 4px; --radius-ctl: 22px 6px 22px 6px;
+  --card-shadow: 0 10px 30px -14px rgb(194 48 106 / .35);
+}
+[data-theme="sakura"][data-mode="dark"] {
+  --bg: #1D1118; --surface: #2A1922; --surface-2: #36202D; --ink: #FBEAF1; --muted: #CFA9BB;
+  --line: #48293A; --line-strong: #6A3B55; --accent: #FF8FB8; --on-accent: #3A0C20; --accent-soft: #4A2236;
+  --income: #74D6A5; --danger: #FF8A80; --danger-soft: #4A1C1A;
+  --s1: #FF8FB8; --s2: #C6487E; --s3: #F5C1D4; --s4: #8E4A6E; --s5: #FFD8E6;
+  --tile-bg: #4A2236; --tile-ink: #FFC2D8;
+  --card-shadow: 0 12px 30px -14px rgb(0 0 0 / .6);
+}
+
+/* ---------- Strawberry Milk ---------- */
+[data-theme="strawberry"] {
+  --bg: #FFE9EE; --surface: #FFFCF9; --surface-2: #FFDDE5; --ink: #55202F; --muted: #87505E;
+  --line: #F6C6D2; --line-strong: #E89AAE; --accent: #C93158; --on-accent: #FFFFFF; --accent-soft: #FFD3DE;
+  --income: #1E7A4C; --danger: #B42318; --danger-soft: #FFE1DC;
+  --s1: #C93158; --s2: #F59AB0; --s3: #6E2A3B; --s4: #F2C14E; --s5: #9ACB8F;
+  --tile-bg: #FFFCF9; --tile-ink: #C93158;
+  --font-display: "Fredoka", system-ui, sans-serif; --font-body: "Fredoka", system-ui, sans-serif;
+  --display-weight: 600; --display-tracking: -0.01em; --amount-weight: 600;
+  --radius-card: 16px; --radius-ctl: 999px; --radius-tile: 14px;
+  --card-border: 2px solid var(--line-strong);
+  --card-shadow: 0 6px 0 -1px var(--line-strong), 0 14px 24px -14px rgb(201 49 88 / .45);
+}
+[data-theme="strawberry"][data-mode="dark"] {
+  --bg: #271519; --surface: #351F25; --surface-2: #42272F; --ink: #FFE9EE; --muted: #D9A9B5;
+  --line: #553039; --line-strong: #7A4352; --accent: #FF9AB4; --on-accent: #3B0F1B; --accent-soft: #55283A;
+  --income: #7EDBA9; --danger: #FF8A80; --danger-soft: #4D1D1A;
+  --s1: #FF9AB4; --s2: #C9506F; --s3: #FFE0E8; --s4: #F2C14E; --s5: #9ACB8F;
+  --tile-bg: #42272F; --tile-ink: #FFB8CA;
+  --card-shadow: 0 6px 0 -1px var(--line-strong), 0 14px 24px -14px rgb(0 0 0 / .6);
+}
+
+/* ---------- Bubblegum Pop ---------- */
+[data-theme="bubblegum"] {
+  --bg: #FBEFFF; --surface: #FFFFFF; --surface-2: #F1E1FF; --ink: #2A1140; --muted: #634580;
+  --line: #E6CCFA; --line-strong: #CFA4F2; --accent: #C4127F; --on-accent: #FFFFFF; --accent-soft: #FFD6EF;
+  --income: #0B7A5E; --danger: #B42318; --danger-soft: #FFE1DC;
+  --s1: #E5199A; --s2: #8B5CF6; --s3: #22C9A0; --s4: #FFB020; --s5: #4CC9F0;
+  --tile-bg: #22C9A0; --tile-ink: #0B2A22;
+  --font-display: "Bagel Fat One", system-ui, sans-serif; --font-body: "Rubik", system-ui, sans-serif;
+  --display-weight: 400; --display-tracking: 0; --amount-weight: 400;
+  --radius-card: 22px; --radius-ctl: 999px; --radius-tile: 16px;
+  --card-shadow: 0 2px 0 rgb(42 17 64 / .06), 0 18px 32px -16px rgb(139 92 246 / .45);
+}
+[data-theme="bubblegum"][data-mode="dark"] {
+  --bg: #170A27; --surface: #23123A; --surface-2: #2F1A4C; --ink: #FBEFFF; --muted: #C8A9E6;
+  --line: #3D2460; --line-strong: #5B3889; --accent: #FF5CC8; --on-accent: #2A0420; --accent-soft: #4A1C55;
+  --income: #5CF2C8; --danger: #FF8A80; --danger-soft: #4A1C1A;
+  --s1: #FF5CC8; --s2: #A98BFF; --s3: #5CF2C8; --s4: #FFC94D; --s5: #6FD8FF;
+  --tile-bg: #5CF2C8; --tile-ink: #0B2A22;
+  --card-shadow: 0 18px 32px -16px rgb(0 0 0 / .7);
+}
+
+/* ---------- Barako ---------- */
+[data-theme="barako"] {
+  --bg: #E7D7BE; --surface: #F6EDDF; --surface-2: #EADBC3; --ink: #2A190F; --muted: #6A4E3A;
+  --line: #D5BF9E; --line-strong: #B99A72; --accent: #6E3F1C; --on-accent: #FBF3E6; --accent-soft: #E3CCAA;
+  --income: #2F6B2A; --danger: #A12A1C; --danger-soft: #F3D6C9;
+  --s1: #6E3F1C; --s2: #B07A45; --s3: #3E2A1E; --s4: #D9A066; --s5: #7D8B5A;
+  --tile-bg: transparent; --tile-ink: #6E3F1C;
+  --font-display: "Young Serif", Georgia, serif; --font-body: "Work Sans", system-ui, sans-serif;
+  --display-weight: 400; --display-tracking: -0.01em; --amount-weight: 400;
+  --radius-card: 6px; --radius-ctl: 8px; --radius-tile: 999px;
+  --card-shadow: 0 1px 0 rgb(42 25 15 / .08), 0 12px 24px -16px rgb(42 25 15 / .5);
+}
+[data-theme="barako"][data-mode="dark"] {
+  --bg: #1C130E; --surface: #2A1D15; --surface-2: #36261C; --ink: #F3E6D3; --muted: #C2A78B;
+  --line: #45322A; --line-strong: #6A4E3A; --accent: #D9A066; --on-accent: #2A190E; --accent-soft: #4A3424;
+  --income: #A6D08F; --danger: #FF8F7A; --danger-soft: #4A2018;
+  --s1: #D9A066; --s2: #8C5A33; --s3: #F3E6D3; --s4: #B07A45; --s5: #A6B57E;
+  --tile-ink: #D9A066;
+  --card-shadow: 0 14px 30px -18px rgb(0 0 0 / .8);
+}
+
+/* ---------- Courtside ---------- */
+[data-theme="courtside"] {
+  --bg: #F3E6D0; --surface: #FFFCF6; --surface-2: #EEDCBC; --ink: #1B1914; --muted: #5C5345;
+  --line: #E0C9A2; --line-strong: #C9A877; --accent: #C2410C; --on-accent: #FFFFFF; --accent-soft: #FBD9C4;
+  --income: #1E7A4C; --danger: #B42318; --danger-soft: #FCDDD6;
+  --s1: #C2410C; --s2: #1F3A8A; --s3: #F59E0B; --s4: #6B4F2A; --s5: #94A3B8;
+  --tile-bg: #17191D; --tile-ink: #FFB020;
+  --font-display: "Big Shoulders Display", Impact, sans-serif; --font-body: "Barlow", system-ui, sans-serif;
+  --display-weight: 800; --display-tracking: 0; --amount-weight: 800;
+  --radius-card: 10px; --radius-ctl: 8px; --radius-tile: 8px;
+}
+[data-theme="courtside"][data-mode="dark"] {
+  --bg: #111316; --surface: #1B1E23; --surface-2: #252930; --ink: #F5F1EA; --muted: #B3AA9C;
+  --line: #30353D; --line-strong: #4A515C; --accent: #FF7A2F; --on-accent: #1A0D04; --accent-soft: #43261A;
+  --income: #6EE7A8; --danger: #FF8A80; --danger-soft: #4A1C1A;
+  --s1: #FF7A2F; --s2: #7AA2FF; --s3: #FFB020; --s4: #C9A877; --s5: #94A3B8;
+  --tile-bg: #000000; --tile-ink: #FFB020;
+  --card-shadow: 0 14px 30px -18px rgb(0 0 0 / .8);
+}
+
+/* ---------- Denim ---------- */
+[data-theme="denim"] {
+  --bg: #E6ECF4; --surface: #FAFBFD; --surface-2: #D9E2EE; --ink: #13233F; --muted: #475A7A;
+  --line: #C4D0E2; --line-strong: #9DB0CC; --accent: #27457F; --on-accent: #FFFFFF; --accent-soft: #D3DEF0;
+  --income: #1E6B47; --danger: #B42318; --danger-soft: #F9DEDA;
+  --s1: #27457F; --s2: #B8652F; --s3: #6C8BBF; --s4: #D9A35A; --s5: #1A2E55;
+  --tile-bg: #8B5A2B; --tile-ink: #F6E3C8;
+  --stitch: #C98A3E;
+  --font-display: "Archivo", system-ui, sans-serif; --font-body: "Archivo", system-ui, sans-serif;
+  --display-weight: 800; --display-tracking: -0.01em;
+  --radius-card: 14px; --radius-ctl: 10px; --radius-tile: 8px;
+}
+[data-theme="denim"][data-mode="dark"] {
+  --bg: #0F1729; --surface: #18233D; --surface-2: #213052; --ink: #E7EDF8; --muted: #A8B7D4;
+  --line: #2A3A60; --line-strong: #3D5285; --accent: #E3A857; --on-accent: #1A1405; --accent-soft: #3A3423;
+  --income: #7FD6A8; --danger: #FF8A80; --danger-soft: #4A1C1A;
+  --s1: #E3A857; --s2: #7E9FD8; --s3: #C77A45; --s4: #4E6AA6; --s5: #E7EDF8;
+  --tile-bg: #8B5A2B; --tile-ink: #F6E3C8;
+  --stitch: #E3A857;
+  --card-shadow: 0 14px 30px -18px rgb(0 0 0 / .8);
+}
+
+/* ---------- Monochrome ---------- */
+[data-theme="mono"] {
+  --bg: #F2F2F2; --surface: #FFFFFF; --surface-2: #E8E8E8; --ink: #000000; --muted: #555555;
+  --line: #DADADA; --line-strong: #000000; --accent: #000000; --on-accent: #FFFFFF; --accent-soft: #E8E8E8;
+  --income: #1E6B47; --danger: #B42318; --danger-soft: #F6E0DD;
+  --s1: #000000; --s2: #555555; --s3: #8A8A8A; --s4: #B8B8B8; --s5: #DADADA;
+  --tile-bg: #000000; --tile-ink: #FFFFFF;
+  --font-display: "Geist", system-ui, sans-serif; --font-body: "Geist", system-ui, sans-serif;
+  --display-weight: 800; --display-tracking: -0.03em;
+  --radius-card: 4px; --radius-ctl: 4px; --radius-tile: 2px;
+  --card-shadow: none;
+}
+[data-theme="mono"][data-mode="dark"] {
+  --bg: #000000; --surface: #141414; --surface-2: #1F1F1F; --ink: #FFFFFF; --muted: #A6A6A6;
+  --line: #2C2C2C; --line-strong: #FFFFFF; --accent: #FFFFFF; --on-accent: #000000; --accent-soft: #262626;
+  --income: #7FD6A8; --danger: #FF8A80; --danger-soft: #3A1614;
+  --s1: #FFFFFF; --s2: #B8B8B8; --s3: #8A8A8A; --s4: #555555; --s5: #333333;
+  --tile-bg: #FFFFFF; --tile-ink: #000000;
+}
+
+/* ---------- Coal & Brass ---------- */
+[data-theme="coal"] {
+  --bg: #ECE8DF; --surface: #FAF8F3; --surface-2: #E2DCCF; --ink: #1B1C1F; --muted: #575348;
+  --line: #D6CFBF; --line-strong: #B5AA92; --accent: #7D5F14; --on-accent: #FFFFFF; --accent-soft: #EADFC2;
+  --income: #2F6B3A; --danger: #A12A1C; --danger-soft: #F3DCD3;
+  --s1: #7D5F14; --s2: #1B1C1F; --s3: #C9A24A; --s4: #6B6658; --s5: #B5AA92;
+  --font-display: "Marcellus", Georgia, serif; --font-body: "Manrope", system-ui, sans-serif;
+  --font-amount: "Manrope", system-ui, sans-serif;
+  --display-weight: 400; --display-tracking: 0; --amount-weight: 700;
+  --radius-card: 8px; --radius-ctl: 6px; --radius-tile: 6px;
+  --brass-1: #E7C873; --brass-2: #B8913A; --brass-3: #8A6A22; --brass-ink: #2A1F07;
+}
+[data-theme="coal"][data-mode="dark"] {
+  --bg: #141518; --surface: #1E1F23; --surface-2: #28292E; --ink: #ECE6DA; --muted: #A69E8D;
+  --line: #313238; --line-strong: #4A4A50; --accent: #C9A24A; --on-accent: #17130A; --accent-soft: #3A3220;
+  --income: #8FD19E; --danger: #FF8F7A; --danger-soft: #45201A;
+  --s1: #C9A24A; --s2: #ECE6DA; --s3: #8A6A22; --s4: #6B6658; --s5: #E7C873;
+  --card-shadow: 0 14px 30px -18px rgb(0 0 0 / .85);
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; min-height: 100vh;
+  background: color-mix(in oklab, var(--bg) 88%, var(--ink));
+  color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.45;
+  transition: background-color .3s var(--ease-out), color .3s var(--ease-out);
+}
+::selection { background: var(--accent); color: var(--on-accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+button { font: inherit; color: inherit; cursor: pointer; }
+h1, h2, h3, p { margin: 0; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+.num { font-variant-numeric: tabular-nums; }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+svg.lucide { width: 1.1em; height: 1.1em; stroke-width: 2; flex: none; }
+
+/* ============================================================
+   PREVIEW CHROME (outside the app)
+   ============================================================ */
+.chrome {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center;
+  padding: 10px 16px;
+  background: color-mix(in oklab, var(--bg) 80%, var(--ink));
+  border-bottom: 1px solid color-mix(in oklab, var(--line) 60%, var(--ink));
+}
+.chrome-title { font-weight: 600; font-size: 13px; color: var(--ink); display: flex; gap: 8px; align-items: baseline; }
+.chrome-title small { font-weight: 400; color: var(--ink); opacity: .8; }
+.themes { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; flex: 1 1 100%; order: 3; padding-bottom: 2px; }
+.themes::-webkit-scrollbar { display: none; }
+.theme-chip {
+  display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
+  padding: 6px 12px 6px 6px; border-radius: 999px; border: 1px solid transparent;
+  background: var(--surface); font-size: 13px; font-weight: 500;
+}
+.theme-chip[aria-pressed="true"] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.swatch { width: 22px; height: 22px; border-radius: 50%; display: grid; overflow: hidden; grid-template-columns: 1fr 1fr; border: 1px solid rgb(0 0 0 / .12); }
+.swatch i { display: block; }
+.chrome-controls { display: flex; gap: 8px; margin-left: auto; }
+.seg { display: inline-flex; background: var(--surface); border-radius: 999px; padding: 3px; border: 1px solid var(--line); }
+.seg button { border: 0; background: none; padding: 6px 12px; border-radius: 999px; font-size: 13px; display: inline-flex; gap: 6px; align-items: center; color: var(--muted); }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.view-seg { display: none; }
+@media (min-width: 860px) {
+  .themes { flex: 0 1 auto; order: 0; }
+  .view-seg { display: inline-flex; }
+}
+
+/* ============================================================
+   STAGE / DEVICE
+   ============================================================ */
+.stage { padding: 0; display: flex; justify-content: center; }
+.device { width: 100%; background: var(--bg); position: relative; }
+@media (min-width: 860px) {
+  .stage { padding: 28px 24px 40px; }
+  .stage[data-view="phone"] .device {
+    width: 410px; height: min(864px, calc(100vh - 120px)); overflow-y: auto; overflow-x: hidden;
+    border-radius: 44px; border: 10px solid #0E0E10;
+    box-shadow: 0 30px 60px -30px rgb(0 0 0 / .55);
+    scrollbar-width: none;
+  }
+  .stage[data-view="phone"] .device::-webkit-scrollbar { display: none; }
+  .stage[data-view="phone"][data-full] .device { height: auto; }
+  .stage[data-view="desktop"] .device {
+    max-width: 1320px; border-radius: 14px; overflow: hidden;
+    border: 1px solid color-mix(in oklab, var(--line) 60%, var(--ink));
+    box-shadow: 0 30px 60px -36px rgb(0 0 0 / .5);
+  }
+}
+
+/* ============================================================
+   APP SHELL
+   ============================================================ */
+.app { container-type: inline-size; container-name: app; min-height: 100%; }
+.shell { display: grid; grid-template-columns: minmax(0, 1fr); min-height: 100%; }
+.rail { display: none; }
+.main { padding: 0 var(--space) 24px; display: flex; flex-direction: column; gap: 28px; min-width: 0; }
+.aside { display: contents; }
+
+.topbar {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 0 0;
+}
+.month-btn {
+  display: inline-flex; align-items: center; gap: 6px; border: 0; background: none; padding: 6px 0;
+  font-family: var(--font-display); font-weight: var(--display-weight); letter-spacing: var(--display-tracking);
+  font-size: 26px; line-height: 1.1;
+}
+.month-btn svg { width: 18px; height: 18px; color: var(--muted); }
+.avatar {
+  width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--accent-soft); color: var(--ink); font-weight: 600; font-size: 14px; border: 0;
+}
+
+.sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.sec-head h2 {
+  font-family: var(--font-display); font-weight: var(--display-weight); letter-spacing: var(--display-tracking);
+  font-size: 19px; line-height: 1.2;
+}
+.sec-head .link { border: 0; background: none; color: var(--accent); font-weight: 600; font-size: 14px; padding: 4px 0; }
+.sec-sub { color: var(--muted); font-size: 14px; }
+
+/* ---------- Review inbox ---------- */
+.review-head { flex-direction: column; align-items: flex-start; gap: 4px; }
+.review-title { display: flex; align-items: center; gap: 10px; white-space: nowrap; }
+.review-count {
+  font-family: var(--font-amount); font-weight: var(--amount-weight);
+  font-size: 15px; min-width: 28px; height: 28px; padding: 0 9px; border-radius: 999px;
+  display: inline-grid; place-items: center; background: var(--accent); color: var(--on-accent);
+  font-variant-numeric: tabular-nums;
+}
+.stack { position: relative; isolation: isolate; display: grid; margin-bottom: 14px; padding-bottom: 44px; }
+.stack > * { grid-area: 1 / 1; align-self: start; }
+.txn-card {
+  position: relative; background: var(--surface); border: var(--card-border); border-radius: var(--radius-card);
+  box-shadow: var(--card-shadow); padding: 18px; display: flex; flex-direction: column; gap: 14px;
+  touch-action: pan-y; user-select: none; -webkit-user-select: none;
+  transition: transform .45s var(--ease-out), opacity .35s var(--ease-out);
+}
+.txn-card[data-depth="1"] { transform: translateY(34px) scale(.96); z-index: -1; }
+.txn-card[data-depth="2"] { transform: translateY(52px) scale(.92); opacity: .55; z-index: -2; }
+.txn-card[data-depth="1"] > *, .txn-card[data-depth="2"] > * { visibility: hidden; }
+.peek {
+  position: absolute; left: 20px; right: 20px; bottom: 9px; display: flex; justify-content: space-between; gap: 12px;
+  font-size: 13px; color: var(--muted); white-space: nowrap;
+}
+.peek b { color: var(--ink); font-weight: 600; overflow: hidden; text-overflow: ellipsis; }
+.peek .num.in { color: var(--income); }
+.txn-card[data-depth="1"] > .peek { visibility: visible; }
+.txn-card[data-depth="0"] > .peek { display: none; }
+.txn-card.out-right { transform: translateX(120%) rotate(8deg); opacity: 0; }
+.txn-card.out-left { transform: translateX(-120%) rotate(-8deg); opacity: 0; }
+.txn-card.dragging { transition: none; }
+.drag-hint {
+  position: absolute; top: 16px; padding: 4px 10px; border-radius: 999px; font-size: 13px; font-weight: 600;
+  opacity: 0; pointer-events: none; display: inline-flex; gap: 6px; align-items: center;
+}
+.drag-hint.confirm { right: 16px; background: var(--accent); color: var(--on-accent); }
+.drag-hint.ignore { left: 16px; background: var(--surface-2); color: var(--ink); }
+
+.txn-top { display: flex; align-items: center; gap: 12px; }
+.inst {
+  width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; flex: none;
+  background: var(--surface-2); color: var(--ink); font-weight: 700; font-size: 12px; letter-spacing: .02em;
+}
+.txn-meta { min-width: 0; flex: 1; }
+.txn-acct { font-weight: 600; font-size: 14px; }
+.txn-src { color: var(--muted); font-size: 13px; display: flex; align-items: center; gap: 5px; }
+.txn-src svg { width: 14px; height: 14px; }
+.chip {
+  display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 999px;
+  background: var(--surface-2); font-size: 13px; font-weight: 500; white-space: nowrap;
+}
+.chip svg { width: 14px; height: 14px; }
+.txn-merchant { font-size: 17px; font-weight: 600; }
+.txn-amount {
+  font-family: var(--font-amount); font-weight: var(--amount-weight); letter-spacing: var(--display-tracking);
+  font-size: 40px; line-height: 1; display: flex; align-items: baseline; gap: 2px; font-variant-numeric: tabular-nums;
+}
+.txn-amount .cents { font-size: .5em; }
+.txn-amount .sign { margin-right: 4px; }
+.txn-amount.in { color: var(--income); }
+.flow { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--muted); }
+.flow.in { color: var(--income); }
+.flag {
+  display: flex; gap: 8px; align-items: flex-start; padding: 10px 12px; border-radius: var(--radius-ctl);
+  background: var(--danger-soft); color: var(--ink); font-size: 13px;
+}
+.flag svg { color: var(--danger); margin-top: 1px; }
+.flag b { font-weight: 600; }
+
+.actions { display: grid; grid-template-columns: 1fr 1.4fr; gap: 10px; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 52px; padding: 0 18px; border-radius: var(--radius-ctl); font-weight: 600; font-size: 16px;
+  border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink);
+  transition: transform .15s var(--ease-out), background-color .2s;
+}
+.btn:active { transform: scale(.97); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.kbd-hints { display: none; }
+.queue { display: none; }
+
+.empty {
+  text-align: left; padding: 22px; border-radius: var(--radius-card); border: 1.5px dashed var(--line-strong);
+  display: grid; gap: 10px; justify-items: start;
+}
+.empty h3 { font-family: var(--font-display); font-weight: var(--display-weight); font-size: 20px; }
+.empty p { color: var(--muted); max-width: 40ch; }
+
+/* ---------- Due soon ---------- */
+.due-list { display: grid; gap: 10px; }
+.due-row {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 14px; align-items: center;
+  padding: 12px; background: var(--surface); border-radius: var(--radius-card); border: var(--card-border);
+}
+.due-tile {
+  width: 54px; height: 58px; border-radius: var(--radius-tile); display: grid; place-content: center; text-align: center;
+  background: var(--tile-bg, var(--surface-2)); color: var(--tile-ink, var(--ink));
+}
+.due-tile .d { font-family: var(--font-amount); font-weight: var(--amount-weight); font-size: 24px; line-height: 1; font-variant-numeric: tabular-nums; }
+.due-tile .m { font-size: 12px; font-weight: 600; margin-top: 2px; }
+.due-name { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.due-sub { color: var(--muted); font-size: 13px; }
+.due-amt { text-align: right; }
+.due-amt .v { font-weight: 700; font-variant-numeric: tabular-nums; }
+.due-amt .l { color: var(--muted); font-size: 12px; }
+.due-row.overdue { border-color: var(--danger); }
+.due-row.overdue .due-tile { background: var(--danger); color: #fff; }
+[data-mode="dark"] .due-row.overdue .due-tile { color: #1A0806; }
+.overdue-tag { display: flex; justify-content: flex-end; margin-top: 2px; gap: 4px; align-items: center; color: var(--danger); font-weight: 600; font-size: 13px; }
+.overdue-tag svg { width: 14px; height: 14px; }
+.estimate { grid-column: 2 / -1; font-size: 12.5px; color: var(--muted); display: flex; gap: 6px; align-items: flex-start; }
+.estimate svg { width: 14px; height: 14px; margin-top: 2px; }
+
+/* ---------- Month ---------- */
+.month-card { background: var(--surface); border: var(--card-border); border-radius: var(--radius-card); padding: 16px; display: grid; gap: 14px; }
+.month-line { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.month-line .spent { font-family: var(--font-amount); font-weight: var(--amount-weight); font-size: 26px; font-variant-numeric: tabular-nums; letter-spacing: var(--display-tracking); }
+.month-line .of { color: var(--muted); font-size: 14px; }
+.bar { display: flex; height: 14px; border-radius: 999px; overflow: hidden; background: var(--surface-2); gap: 2px; }
+.bar i { display: block; height: 100%; }
+.legend { display: grid; grid-template-columns: 1fr; gap: 8px 16px; font-size: 13.5px; }
+@container app (min-width: 460px) { .legend { grid-template-columns: 1fr 1fr; } }
+.legend li { display: flex; align-items: center; gap: 8px; justify-content: space-between; }
+.legend .k { display: flex; align-items: center; gap: 8px; }
+.legend .dot { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+.legend .v { color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* ---------- Accounts ---------- */
+.acct-group + .acct-group { margin-top: 16px; }
+.acct-group h3 { font-size: 13px; color: var(--muted); font-weight: 600; margin-bottom: 6px; }
+.acct-list { background: var(--surface); border: var(--card-border); border-radius: var(--radius-card); overflow: hidden; }
+.acct { display: flex; align-items: center; gap: 12px; padding: 12px 14px; }
+.acct + .acct { border-top: 1px solid var(--line); }
+.acct .inst { width: 34px; height: 34px; font-size: 11px; border-radius: 10px; }
+.acct-name { flex: 1; min-width: 0; }
+.acct-name p:first-child { font-weight: 600; font-size: 14.5px; }
+.acct-name p:last-child { color: var(--muted); font-size: 12.5px; }
+.acct-bal { text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+.acct-bal small { display: block; font-weight: 500; color: var(--muted); font-size: 12px; }
+
+.sample-note { color: var(--muted); font-size: 12.5px; display: flex; gap: 6px; align-items: center; }
+.sample-note svg { width: 14px; height: 14px; }
+
+/* ---------- Tab bar (phone) ---------- */
+.tabbar {
+  position: sticky; bottom: 0; z-index: 5;
+  display: grid; grid-template-columns: repeat(5, 1fr); align-items: end;
+  padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
+  background: color-mix(in oklab, var(--surface) 92%, transparent);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid var(--line);
+}
+.tab { border: 0; background: none; display: grid; justify-items: center; gap: 3px; font-size: 11.5px; font-weight: 500; color: var(--muted); padding: 6px 0; position: relative; }
+.tab svg { width: 22px; height: 22px; }
+.tab[aria-current="page"] { color: var(--accent); }
+.tab .badge {
+  position: absolute; top: 0; left: calc(50% + 6px); min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px;
+  background: var(--accent); color: var(--on-accent); font-size: 11px; font-weight: 700; display: grid; place-items: center;
+}
+.tab.add { align-self: center; }
+.tab.add span.plus {
+  width: 52px; height: 52px; border-radius: var(--radius-ctl); display: grid; place-items: center;
+  background: var(--accent); color: var(--on-accent); box-shadow: 0 6px 14px -6px rgb(0 0 0 / .35);
+}
+.tab.add span.plus svg { width: 26px; height: 26px; }
+
+/* ---------- Toast ---------- */
+.toast {
+  position: sticky; bottom: 84px; z-index: 6; margin: 0 var(--space);
+  display: flex; align-items: center; gap: 12px; justify-content: space-between;
+  padding: 12px 14px; border-radius: var(--radius-ctl); background: var(--ink); color: var(--bg); font-size: 14px;
+  box-shadow: 0 12px 30px -12px rgb(0 0 0 / .5);
+  transform: translateY(20px); opacity: 0; pointer-events: none; transition: all .3s var(--ease-out);
+}
+.toast.show { transform: none; opacity: 1; pointer-events: auto; }
+.toast button { border: 0; background: none; color: inherit; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; padding: 4px; }
+
+/* ============================================================
+   DESKTOP LAYOUT (container width)
+   ============================================================ */
+@container app (min-width: 760px) {
+  .shell { grid-template-columns: 220px minmax(0, 1fr) 400px; }
+  .rail {
+    display: flex; flex-direction: column; gap: 4px; padding: 22px 14px; border-right: 1px solid var(--line);
+    background: var(--surface); position: sticky; top: 0; align-self: start; min-height: 100vh;
+  }
+  .brand { font-family: var(--font-display); font-weight: var(--display-weight); font-size: 22px; letter-spacing: var(--display-tracking); padding: 4px 10px 18px; }
+  .rail .btn.primary { min-height: 44px; font-size: 15px; margin-bottom: 14px; }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px; padding: 10px; border-radius: var(--radius-ctl);
+    border: 0; background: none; color: var(--muted); font-weight: 500; text-align: left; width: 100%;
+  }
+  .nav-item:hover { background: var(--surface-2); color: var(--ink); }
+  .nav-item[aria-current="page"] { background: var(--accent-soft); color: var(--ink); font-weight: 600; }
+  .nav-item .badge { margin-left: auto; background: var(--accent); color: var(--on-accent); font-size: 12px; font-weight: 700; border-radius: 999px; padding: 1px 8px; }
+  .rail-foot { margin-top: auto; }
+
+  .main { padding: 8px 32px 40px; }
+  .aside {
+    display: flex; flex-direction: column; gap: 28px; padding: 22px 24px 40px;
+    border-left: 1px solid var(--line); background: color-mix(in oklab, var(--bg) 60%, var(--surface));
+  }
+  .main .due-sec, .main .acct-sec, .aside .month-sec { display: none; }
+  .tabbar { display: none; }
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translate(-50%, 20px); margin: 0; min-width: 340px; }
+  .toast.show { transform: translate(-50%, 0); }
+  .stage[data-view="desktop"] .toast { position: sticky; left: auto; transform: translateY(20px); margin: 0 auto; width: max-content; bottom: 24px; }
+  .stage[data-view="desktop"] .toast.show { transform: none; }
+
+  .topbar { padding-top: 22px; }
+  .review-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+  .txn-amount { font-size: 48px; }
+  .kbd-hints { display: flex; gap: 14px; color: var(--muted); font-size: 13px; margin-top: 12px; }
+  .kbd-hints kbd {
+    font-family: var(--font-body); font-size: 12px; font-weight: 600; padding: 2px 7px; border-radius: 6px;
+    border: 1px solid var(--line-strong); border-bottom-width: 2px; background: var(--surface); color: var(--ink); margin-right: 4px;
+  }
+  .queue { display: block; }
+  .queue h3 { font-size: 14px; color: var(--muted); font-weight: 600; margin-bottom: 8px; }
+  .queue ol { background: var(--surface); border: var(--card-border); border-radius: var(--radius-card); overflow: hidden; }
+  .q-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 12px 14px; }
+  .q-row + .q-row { border-top: 1px solid var(--line); }
+  .q-row .inst { width: 32px; height: 32px; font-size: 11px; border-radius: 9px; }
+  .q-row p:first-child { font-weight: 600; font-size: 14px; }
+  .q-row p:last-child { color: var(--muted); font-size: 12.5px; }
+  .q-amt { font-weight: 700; font-variant-numeric: tabular-nums; }
+  .q-amt.in { color: var(--income); }
+  .q-empty { padding: 14px; color: var(--muted); font-size: 14px; }
+}
+@container app (max-width: 759px) {
+  .aside .due-sec, .aside .acct-sec, .aside .month-sec { display: none; }
+}
+
+/* ============================================================
+   SIGNATURE MOVES
+   ============================================================ */
+
+/* Sakura: petal-cut corners + petal drift on confirm */
+[data-theme="sakura"] .inst { border-radius: 14px 4px 14px 4px; }
+.petal { position: absolute; pointer-events: none; z-index: 30; width: 16px; height: 16px; color: var(--s2); animation: petal 1.6s var(--ease-out) forwards; }
+@keyframes petal {
+  from { transform: translate(0, 0) rotate(0); opacity: 1; }
+  to { transform: translate(var(--dx), var(--dy)) rotate(var(--rot)); opacity: 0; }
+}
+
+/* Strawberry Milk: chunky carton cards, pill everything */
+[data-theme="strawberry"] .btn { border-width: 2px; }
+[data-theme="strawberry"] .btn.primary { border-color: color-mix(in oklab, var(--accent) 68%, #000); box-shadow: 0 6px 14px -6px rgb(85 32 47 / .45); }
+[data-theme="strawberry"] .due-tile { border: 2px solid var(--line-strong); }
+[data-theme="strawberry"] .chip { background: var(--accent-soft); color: var(--ink); }
+
+/* Bubblegum Pop: die-cut stickers */
+[data-theme="bubblegum"] .chip,
+[data-theme="bubblegum"] .due-tile,
+[data-theme="bubblegum"] .review-count {
+  box-shadow: 0 0 0 3px #fff, 0 6px 12px -4px rgb(42 17 64 / .35);
+}
+[data-theme="bubblegum"][data-mode="dark"] .chip,
+[data-theme="bubblegum"][data-mode="dark"] .due-tile,
+[data-theme="bubblegum"][data-mode="dark"] .review-count { box-shadow: 0 0 0 3px var(--surface), 0 6px 12px -4px rgb(0 0 0 / .6); }
+[data-theme="bubblegum"] .chip { background: var(--s5); color: #0A2733; transform: rotate(-3deg); }
+[data-theme="bubblegum"] .due-row:nth-child(odd) .due-tile { transform: rotate(-4deg); }
+[data-theme="bubblegum"] .due-row:nth-child(even) .due-tile { transform: rotate(3deg); background: var(--s4); color: #2A1A00; }
+[data-theme="bubblegum"] .review-count { transform: rotate(6deg); }
+[data-theme="bubblegum"] .txn-merchant, [data-theme="bubblegum"] .due-name, [data-theme="bubblegum"] .acct-name p:first-child { font-weight: 600; }
+
+/* Barako: receipt-edge card + rubber-stamp date */
+[data-theme="barako"] .stack .txn-card[data-depth="0"] {
+  padding-bottom: 26px;
+  -webkit-mask: radial-gradient(circle 7px at 50% 100%, #0000 98%, #000) 0 0 / 18px 100% repeat-x;
+          mask: radial-gradient(circle 7px at 50% 100%, #0000 98%, #000) 0 0 / 18px 100% repeat-x;
+}
+[data-theme="barako"] .due-tile {
+  border: 2px solid currentColor; outline: 1px solid currentColor; outline-offset: 3px;
+  width: 46px; height: 46px; transform: rotate(-6deg); margin: 3px;
+}
+[data-theme="barako"] .due-tile .d { font-family: "Young Serif", serif; }
+[data-theme="barako"] .due-row.overdue .due-tile { background: transparent; color: var(--danger); }
+[data-theme="barako"] .txn-src { font-style: italic; }
+
+/* Courtside: scoreboard digits + court-line section rule */
+[data-theme="courtside"] .due-tile {
+  box-shadow: inset 0 0 0 2px #2C3038; border-radius: 8px;
+  text-shadow: 0 0 10px rgb(255 176 32 / .55);
+}
+[data-theme="courtside"] .due-tile .d { font-size: 28px; letter-spacing: .04em; }
+[data-theme="courtside"] .due-tile .m { color: #E9E4DA; text-shadow: none; }
+[data-theme="courtside"] .due-row.overdue .due-tile { background: #000; color: #FF5A4E; text-shadow: 0 0 10px rgb(255 90 78 / .6); }
+[data-theme="courtside"] .sec-head { position: relative; padding-bottom: 10px; }
+[data-theme="courtside"] .sec-head::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--accent); }
+[data-theme="courtside"] .sec-head::before {
+  content: ""; position: absolute; left: 50%; bottom: -7px; width: 16px; height: 16px; margin-left: -8px;
+  border: 2px solid var(--accent); border-radius: 50%;
+}
+[data-theme="courtside"] .sec-head h2, [data-theme="courtside"] .month-btn { font-size: 30px; line-height: 1; }
+[data-theme="courtside"] .month-btn { font-size: 34px; }
+[data-theme="courtside"] .txn-amount { font-size: 54px; }
+
+/* Denim: stitched seams + leather patch */
+[data-theme="denim"] .txn-card[data-depth="0"]::after,
+[data-theme="denim"] .month-card::after {
+  content: ""; position: absolute; inset: 6px; border-radius: calc(var(--radius-card) - 5px);
+  border: 1.5px dashed var(--stitch); opacity: .8; pointer-events: none;
+}
+[data-theme="denim"] .month-card { position: relative; }
+[data-theme="denim"] .due-tile {
+  border-radius: 8px; outline: 1.5px dashed #E8C38E; outline-offset: -5px;
+}
+[data-theme="denim"] .due-tile .d { font-stretch: 112%; }
+[data-theme="denim"] .month-btn, [data-theme="denim"] .sec-head h2 { font-stretch: 115%; }
+
+/* Monochrome: front card inverts, weight carries hierarchy */
+[data-theme="mono"] .stack .txn-card[data-depth="0"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+[data-theme="mono"] .stack .txn-card[data-depth="0"] .txn-src,
+[data-theme="mono"] .stack .txn-card[data-depth="0"] .flow { color: color-mix(in oklab, var(--bg) 72%, var(--ink)); }
+[data-theme="mono"] .stack .txn-card[data-depth="0"] .flow.in,
+[data-theme="mono"] .stack .txn-card[data-depth="0"] .txn-amount.in { color: var(--bg); }
+[data-theme="mono"] .stack .txn-card[data-depth="0"] .inst,
+[data-theme="mono"] .stack .txn-card[data-depth="0"] .chip { background: color-mix(in oklab, var(--bg) 16%, var(--ink)); color: var(--bg); }
+[data-theme="mono"] .stack .txn-card[data-depth="0"] .flag { background: color-mix(in oklab, var(--bg) 12%, var(--ink)); color: var(--bg); }
+[data-theme="mono"] .stack .txn-card[data-depth="0"] .flag svg { color: var(--bg); }
+[data-theme="mono"] .txn-amount { font-size: 52px; letter-spacing: -0.04em; }
+[data-theme="mono"] .month-btn { font-size: 32px; }
+[data-theme="mono"] .bar { border-radius: 0; height: 10px; }
+
+/* Coal & Brass: brass nameplate on the due amount, lettering does the engraving */
+[data-theme="coal"] .due-tile { background: transparent; color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+[data-theme="coal"] .due-tile .d { font-family: "Marcellus", serif; font-weight: 400; }
+[data-theme="coal"] .due-amt .v {
+  display: inline-block; padding: 3px 9px; border-radius: 3px;
+  background: var(--brass-2); color: var(--brass-ink); box-shadow: inset 0 0 0 1px var(--brass-3);
+  font-family: "Marcellus", serif; font-weight: 400; letter-spacing: .01em; font-size: 14px;
+}
+[data-theme="coal"] .review-count { background: var(--brass-2); color: var(--brass-ink); box-shadow: inset 0 0 0 1px var(--brass-3); }
+[data-theme="coal"] .month-btn, [data-theme="coal"] .sec-head h2 { letter-spacing: .01em; }
+[data-theme="coal"] .btn.primary { background: var(--brass-2); color: var(--brass-ink); border-color: var(--brass-3); }
+[data-theme="coal"] .tab.add span.plus { background: var(--brass-2); color: var(--brass-ink); }
+
+/* capture mode for review screenshots */
+[data-bare] .chrome { display: none; }
+[data-bare] .stage { padding: 0; justify-content: flex-start; }
+[data-bare] .stage .device { width: 390px; height: auto; border: 0; border-radius: 0; box-shadow: none; overflow: visible; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="chrome" role="region" aria-label="Preview controls">
+  <p class="chrome-title">Theme preview <small>All names and amounts are sample data</small></p>
+  <div class="themes" id="themes" role="group" aria-label="Theme"></div>
+  <div class="chrome-controls">
+    <div class="seg view-seg" role="group" aria-label="Device">
+      <button data-view="phone" aria-pressed="true"><i data-lucide="smartphone"></i>Phone</button>
+      <button data-view="desktop" aria-pressed="false"><i data-lucide="monitor"></i>Desktop</button>
+    </div>
+    <div class="seg" role="group" aria-label="Appearance">
+      <button data-mode="light" aria-pressed="true"><i data-lucide="sun"></i><span class="vh">Light</span></button>
+      <button data-mode="dark" aria-pressed="false"><i data-lucide="moon"></i><span class="vh">Dark</span></button>
+    </div>
+  </div>
+</div>
+
+<div class="stage" id="stage" data-view="phone">
+  <div class="device">
+    <div class="app">
+      <div class="shell">
+
+        <nav class="rail" aria-label="Main">
+          <p class="brand">Budget</p>
+          <button class="btn primary"><i data-lucide="plus"></i>Add transaction</button>
+          <button class="nav-item" aria-current="page"><i data-lucide="house"></i>Home</button>
+          <button class="nav-item"><i data-lucide="inbox"></i>Review<span class="badge" data-count></span></button>
+          <button class="nav-item"><i data-lucide="wallet"></i>Accounts</button>
+          <button class="nav-item"><i data-lucide="credit-card"></i>Cards &amp; loans</button>
+          <button class="nav-item"><i data-lucide="chart-no-axes-column"></i>Reports</button>
+          <div class="rail-foot"><button class="nav-item"><i data-lucide="settings"></i>Settings</button></div>
+        </nav>
+
+        <main class="main">
+          <header class="topbar">
+            <button class="month-btn">October<i data-lucide="chevron-down"></i></button>
+            <button class="avatar" aria-label="Profile">JB</button>
+          </header>
+
+          <section aria-labelledby="review-h">
+            <div class="sec-head review-head">
+              <div class="review-title">
+                <h2 id="review-h">To review</h2>
+                <span class="review-count" data-count></span>
+              </div>
+              <span class="sec-sub" id="review-sub">From your emails and recurring bills</span>
+            </div>
+            <div class="review-grid">
+              <div>
+                <div class="stack" id="stack"></div>
+                <div class="actions" id="actions">
+                  <button class="btn" id="ignore"><i data-lucide="x"></i>Ignore</button>
+                  <button class="btn primary" id="confirm"><i data-lucide="check"></i>Confirm</button>
+                </div>
+                <p class="kbd-hints"><span><kbd>C</kbd>Confirm</span><span><kbd>I</kbd>Ignore</span><span><kbd>U</kbd>Undo</span></p>
+              </div>
+              <div class="queue">
+                <h3>Up next</h3>
+                <ol id="queue"></ol>
+              </div>
+            </div>
+          </section>
+
+          <section class="due-sec" aria-label="Due soon" data-slot="due"></section>
+          <section class="month-sec" aria-label="This month" data-slot="month"></section>
+          <section class="acct-sec" aria-label="Accounts" data-slot="accts"></section>
+          <p class="sample-note"><i data-lucide="info"></i>Sample data for previewing themes</p>
+        </main>
+
+        <aside class="aside">
+          <section class="due-sec" aria-label="Due soon" data-slot="due"></section>
+          <section class="month-sec" aria-label="This month" data-slot="month"></section>
+          <section class="acct-sec" aria-label="Accounts" data-slot="accts"></section>
+        </aside>
+      </div>
+
+      <div class="toast" id="toast" role="status" aria-live="polite"><span id="toast-msg"></span><button id="undo">Undo</button></div>
+
+      <nav class="tabbar" aria-label="Main">
+        <button class="tab" aria-current="page"><i data-lucide="house"></i>Home</button>
+        <button class="tab"><i data-lucide="inbox"></i>Review<span class="badge" data-count></span></button>
+        <button class="tab add" aria-label="Add transaction"><span class="plus"><i data-lucide="plus"></i></span></button>
+        <button class="tab"><i data-lucide="wallet"></i>Accounts</button>
+        <button class="tab"><i data-lucide="menu"></i>More</button>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<script>
+const THEMES = [
+  { id: "sakura", name: "Sakura", sw: ["#FADCE7", "#C2306A"] },
+  { id: "strawberry", name: "Strawberry Milk", sw: ["#FFFCF9", "#C93158"] },
+  { id: "bubblegum", name: "Bubblegum Pop", sw: ["#22C9A0", "#E5199A"] },
+  { id: "barako", name: "Barako", sw: ["#E7D7BE", "#6E3F1C"] },
+  { id: "courtside", name: "Courtside", sw: ["#17191D", "#C2410C"] },
+  { id: "denim", name: "Denim", sw: ["#27457F", "#C98A3E"] },
+  { id: "mono", name: "Monochrome", sw: ["#FFFFFF", "#000000"] },
+  { id: "coal", name: "Coal & Brass", sw: ["#1E1F23", "#C9A24A"] },
+];
+
+// Sample data. Money in centavos, as the real app stores it.
+const INBOX = [
+  { id: 1, inst: "BPI", acct: "BPI Credit ••4417", src: "mail", when: "From BPI email, 8:42 PM", merchant: "Jollibee Katipunan", amt: -28900, cat: ["utensils", "Food"] },
+  { id: 2, inst: "GC", acct: "GCash", src: "mail", when: "From GCash email, 6:15 PM", merchant: "Received from Carla M.", amt: 150000, cat: ["arrow-down-left", "Transfer in"] },
+  { id: 3, inst: "BDO", acct: "BDO Savings ••0921", src: "mail", when: "From BDO email, yesterday", merchant: "Meralco", amt: -234156, cat: ["zap", "Bills"], dup: "You added ₱2,341.56 to Meralco by hand on Oct 9." },
+  { id: 4, inst: "MY", acct: "Maya Wallet", src: "mail", when: "From Maya email, yesterday", merchant: "Grab ride", amt: -18600, cat: ["car", "Transport"] },
+  { id: 5, inst: "BDO", acct: "BDO Savings ••0921", src: "repeat", when: "Recurring, expected Oct 15", merchant: "Salary", amt: 2850000, cat: ["briefcase", "Income"] },
+];
+const DUE = [
+  { name: "Maya Credit", d: "10", m: "Oct", sub: "Minimum ₱2,000.00", amt: 200000, label: "1 day late", overdue: true },
+  { name: "BPI Credit ••4417", d: "18", m: "Oct", sub: "Statement balance ₱18,450.20", amt: 150000, label: "Minimum, in 7 days",
+    estimate: "Paying only the minimum: about 22 months and ₱7,940 in interest. Estimate." },
+  { name: "Atome, Shopee order", d: "22", m: "Oct", sub: "Payment 2 of 3", amt: 99900, label: "In 11 days" },
+  { name: "EastWest ••8830", d: "02", m: "Nov", sub: "Statement balance ₱6,204.75", amt: 85000, label: "Minimum, in 22 days" },
+];
+const MONTH = { spent: 2431000, plan: 3200000, cats: [["Food", 782000], ["Bills", 645000], ["Shopping", 490000], ["Transport", 314000], ["Load & subscriptions", 200000]] };
+const ACCTS = [
+  { group: "Cash & e-wallets", items: [
+    { inst: "BDO", name: "BDO Savings", sub: "••0921", bal: 3840215 },
+    { inst: "BPI", name: "BPI Debit", sub: "••7712", bal: 1230000 },
+    { inst: "GC", name: "GCash", sub: "E-wallet", bal: 482050 },
+    { inst: "MY", name: "Maya Wallet", sub: "E-wallet", bal: 125000 },
+  ]},
+  { group: "Credit, BNPL & loans", items: [
+    { inst: "BPI", name: "BPI Credit", sub: "••4417, limit ₱60,000", bal: -1845020, owed: true },
+    { inst: "EW", name: "EastWest", sub: "••8830, limit ₱35,000", bal: -620475, owed: true },
+    { inst: "MY", name: "Maya Credit", sub: "Credit line", bal: -480000, owed: true },
+    { inst: "AT", name: "Atome", sub: "2 payments left", bal: -199800, owed: true },
+  ]},
+];
+
+const peso = (c, opts = {}) => {
+  const abs = Math.abs(c), whole = Math.floor(abs / 100).toLocaleString("en-PH"), cents = String(abs % 100).padStart(2, "0");
+  return opts.split ? { whole: "₱" + whole, cents: "." + cents } : "₱" + whole + "." + cents;
+};
+const store = {
+  get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch {} },
+};
+
+let queue = INBOX.slice();
+const history = [];
+const root = document.documentElement;
+const stage = document.getElementById("stage");
+
+function icons() { if (window.lucide) lucide.createIcons(); }
+
+function cardHTML(t, depth) {
+  const inc = t.amt > 0, a = peso(t.amt, { split: true });
+  return `<article class="txn-card" data-depth="${depth}" ${depth === 0 ? 'tabindex="0" aria-label="' + t.merchant + '"' : 'aria-hidden="true"'}>
+    ${depth === 0 ? `<span class="drag-hint ignore"><i data-lucide="x"></i>Ignore</span><span class="drag-hint confirm"><i data-lucide="check"></i>Confirm</span>` : ""}
+    <div class="txn-top">
+      <span class="inst" aria-hidden="true">${t.inst}</span>
+      <div class="txn-meta"><p class="txn-acct">${t.acct}</p><p class="txn-src"><i data-lucide="${t.src}"></i>${t.when}</p></div>
+      <span class="chip"><i data-lucide="${t.cat[0]}"></i>${t.cat[1]}</span>
+    </div>
+    <div>
+      <p class="flow ${inc ? "in" : ""}"><i data-lucide="${inc ? "arrow-down-left" : "arrow-up-right"}"></i>${inc ? "Money in" : "Money out"}</p>
+      <p class="txn-merchant">${t.merchant}</p>
+    </div>
+    <p class="txn-amount ${inc ? "in" : ""}"><span class="sign">${inc ? "+" : "−"}</span>${a.whole}<span class="cents">${a.cents}</span></p>
+    ${depth === 1 ? `<p class="peek"><span>Next: <b>${t.merchant}</b></span><span class="num ${inc ? "in" : ""}">${inc ? "+" : "−"}${peso(t.amt)}</span></p>` : ""}
+    ${t.dup ? `<p class="flag"><i data-lucide="copy"></i><span><b>Possible duplicate.</b> ${t.dup}</span></p>` : ""}
+  </article>`;
+}
+
+function renderInbox() {
+  const stack = document.getElementById("stack");
+  document.querySelectorAll("[data-count]").forEach(el => { el.textContent = queue.length; el.hidden = queue.length === 0; });
+  document.getElementById("confirm").disabled = document.getElementById("ignore").disabled = queue.length === 0;
+  if (!queue.length) {
+    stack.innerHTML = `<div class="empty"><h3>All caught up</h3><p>New transactions from your forwarded emails will show up here for a quick check.</p><button class="btn" id="reset"><i data-lucide="rotate-ccw"></i>Reset sample data</button></div>`;
+    document.getElementById("reset").onclick = () => { queue = INBOX.slice(); history.length = 0; renderInbox(); };
+  } else {
+    stack.innerHTML = queue.slice(0, 3).map((t, i) => cardHTML(t, i)).reverse().join("");
+    const front = stack.querySelector('[data-depth="0"]');
+    const fit = () => stack.querySelectorAll('.txn-card:not([data-depth="0"])').forEach(c => c.style.height = front.offsetHeight + "px");
+    fit(); document.fonts && document.fonts.ready.then(fit);
+    bindSwipe(front);
+  }
+  const q = document.getElementById("queue");
+  const rest = queue.slice(1);
+  q.innerHTML = rest.length ? rest.map(t => `<li class="q-row"><span class="inst" aria-hidden="true">${t.inst}</span>
+      <div><p>${t.merchant}</p><p>${t.acct}</p></div>
+      <span class="q-amt ${t.amt > 0 ? "in" : ""}">${t.amt > 0 ? "+" : "−"}${peso(t.amt)}</span></li>`).join("")
+    : `<li class="q-empty">Nothing else waiting.</li>`;
+  icons();
+}
+
+function decide(kind) {
+  const card = document.querySelector('#stack [data-depth="0"]');
+  if (!card || !queue.length) return;
+  const t = queue[0];
+  card.classList.add(kind === "confirm" ? "out-right" : "out-left");
+  if (kind === "confirm" && root.dataset.theme === "sakura") petals(card);
+  history.push(t);
+  setTimeout(() => { queue.shift(); renderInbox(); }, 260);
+  toast(`${kind === "confirm" ? "Confirmed" : "Ignored"} ${t.merchant}`);
+}
+function undo() {
+  const t = history.pop();
+  if (!t) return;
+  queue.unshift(t); renderInbox(); hideToast();
+}
+
+let toastTimer;
+function toast(msg) {
+  document.getElementById("toast-msg").textContent = msg;
+  document.getElementById("toast").classList.add("show");
+  clearTimeout(toastTimer); toastTimer = setTimeout(hideToast, 4000);
+}
+function hideToast() { document.getElementById("toast").classList.remove("show"); }
+
+function petals(card) {
+  const r = card.getBoundingClientRect();
+  const host = card.closest(".device");
+  const hr = host.getBoundingClientRect();
+  for (let i = 0; i < 9; i++) {
+    const p = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    p.setAttribute("viewBox", "0 0 16 16"); p.classList.add("petal");
+    p.innerHTML = '<path fill="currentColor" d="M8 1c3 2.6 4.6 5.2 4.6 7.6A4.6 4.6 0 0 1 8 15a4.6 4.6 0 0 1-4.6-6.4C3.4 6.2 5 3.6 8 1Zm0 3.2L7 7.4h2L8 4.2Z"/>';
+    p.style.left = (r.left - hr.left + host.scrollLeft + r.width * (0.2 + Math.random() * 0.6)) + "px";
+    p.style.top = (r.top - hr.top + host.scrollTop + r.height * 0.4) + "px";
+    p.style.setProperty("--dx", (Math.random() * 160 - 40) + "px");
+    p.style.setProperty("--dy", (-60 - Math.random() * 120) + "px");
+    p.style.setProperty("--rot", (Math.random() * 360) + "deg");
+    p.style.animationDelay = (i * 40) + "ms";
+    host.appendChild(p);
+    setTimeout(() => p.remove(), 2000);
+  }
+}
+
+function bindSwipe(card) {
+  if (!card) return;
+  let x0 = null, dx = 0;
+  const hintC = card.querySelector(".drag-hint.confirm"), hintI = card.querySelector(".drag-hint.ignore");
+  card.addEventListener("pointerdown", e => { if (e.button) return; x0 = e.clientX; dx = 0; card.setPointerCapture(e.pointerId); card.classList.add("dragging"); });
+  card.addEventListener("pointermove", e => {
+    if (x0 === null) return;
+    dx = e.clientX - x0;
+    card.style.transform = `translateX(${dx}px) rotate(${dx / 30}deg)`;
+    hintC.style.opacity = Math.max(0, Math.min(1, dx / 90));
+    hintI.style.opacity = Math.max(0, Math.min(1, -dx / 90));
+  });
+  const end = () => {
+    if (x0 === null) return;
+    x0 = null; card.classList.remove("dragging"); card.style.transform = "";
+    hintC.style.opacity = hintI.style.opacity = 0;
+    if (dx > 100) decide("confirm"); else if (dx < -100) decide("ignore");
+  };
+  card.addEventListener("pointerup", end); card.addEventListener("pointercancel", end);
+}
+
+function renderStatic() {
+  const due = `<div class="sec-head"><h2>Due soon</h2><button class="link">See all</button></div>
+    <ul class="due-list">${DUE.map(d => `<li class="due-row ${d.overdue ? "overdue" : ""}">
+      <div class="due-tile"><span class="d">${d.d}</span><span class="m">${d.m}</span></div>
+      <div><p class="due-name">${d.name}</p><p class="due-sub">${d.sub}</p></div>
+      <div class="due-amt"><p class="v">${peso(d.amt)}</p>${d.overdue
+        ? `<p class="overdue-tag"><i data-lucide="circle-alert"></i>${d.label}</p>` : `<p class="l">${d.label}</p>`}</div>
+      ${d.estimate ? `<p class="estimate"><i data-lucide="trending-up"></i>${d.estimate}</p>` : ""}
+    </li>`).join("")}</ul>`;
+  const total = MONTH.cats.reduce((s, c) => s + c[1], 0);
+  const month = `<div class="sec-head"><h2>October spending</h2><button class="link">Details</button></div>
+    <div class="month-card">
+      <p class="month-line"><span class="spent">${peso(MONTH.spent)}</span><span class="of">spent of ${peso(MONTH.plan)} planned</span></p>
+      <div class="bar" role="img" aria-label="Spending by category">${MONTH.cats.map((c, i) =>
+        `<i style="width:${(c[1] / MONTH.plan * 100).toFixed(2)}%;background:var(--s${i + 1})"></i>`).join("")}</div>
+      <ul class="legend">${MONTH.cats.map((c, i) => `<li><span class="k"><span class="dot" style="background:var(--s${i + 1})"></span>${c[0]}</span><span class="v">${peso(c[1]).replace(/\.00$/, "")}</span></li>`).join("")}</ul>
+    </div>`;
+  const accts = `<div class="sec-head"><h2>Accounts</h2><button class="link">Manage</button></div>
+    ${ACCTS.map(g => `<div class="acct-group"><h3>${g.group}</h3><ul class="acct-list">${g.items.map(a => `<li class="acct">
+      <span class="inst" aria-hidden="true">${a.inst}</span>
+      <div class="acct-name"><p>${a.name}</p><p>${a.sub}</p></div>
+      <p class="acct-bal">${peso(a.bal)}${a.owed ? "<small>owed</small>" : ""}</p></li>`).join("")}</ul></div>`).join("")}`;
+  document.querySelectorAll('[data-slot="due"]').forEach(el => el.innerHTML = due);
+  document.querySelectorAll('[data-slot="month"]').forEach(el => el.innerHTML = month);
+  document.querySelectorAll('[data-slot="accts"]').forEach(el => el.innerHTML = accts);
+}
+
+function setTheme(id) {
+  root.dataset.theme = id; store.set("bp-theme", id);
+  document.querySelectorAll(".theme-chip").forEach(b => b.setAttribute("aria-pressed", b.dataset.id === id));
+}
+function setMode(m) {
+  root.dataset.mode = m; store.set("bp-mode", m);
+  document.querySelectorAll("[data-mode]").forEach(b => b.tagName === "BUTTON" && b.setAttribute("aria-pressed", b.dataset.mode === m));
+}
+function setView(v) {
+  stage.dataset.view = v; store.set("bp-view", v);
+  document.querySelectorAll("[data-view]").forEach(b => b.tagName === "BUTTON" && b.setAttribute("aria-pressed", b.dataset.view === v));
+}
+
+document.getElementById("themes").innerHTML = THEMES.map(t =>
+  `<button class="theme-chip" data-id="${t.id}" aria-pressed="false"><span class="swatch" aria-hidden="true"><i style="background:${t.sw[0]}"></i><i style="background:${t.sw[1]}"></i></span>${t.name}</button>`).join("");
+document.getElementById("themes").addEventListener("click", e => { const b = e.target.closest(".theme-chip"); if (b) setTheme(b.dataset.id); });
+document.querySelectorAll("button[data-mode]").forEach(b => b.onclick = () => setMode(b.dataset.mode));
+document.querySelectorAll("button[data-view]").forEach(b => b.onclick = () => setView(b.dataset.view));
+document.getElementById("confirm").onclick = () => decide("confirm");
+document.getElementById("ignore").onclick = () => decide("ignore");
+document.getElementById("undo").onclick = undo;
+document.addEventListener("keydown", e => {
+  if (e.target.closest("input, textarea") || e.metaKey || e.ctrlKey || e.altKey) return;
+  const k = e.key.toLowerCase();
+  if (k === "c") decide("confirm"); else if (k === "i") decide("ignore"); else if (k === "u") undo();
+});
+
+const params = new URLSearchParams(location.search);
+setTheme(params.get("theme") || store.get("bp-theme") || "sakura");
+setMode(params.get("mode") || store.get("bp-mode") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+setView(params.get("view") || store.get("bp-view") || "phone");
+if (params.has("full")) stage.dataset.full = "";
+if (params.has("bare")) root.dataset.bare = "";
+renderStatic();
+renderInbox();
+</script>
+</body>
+</html>
