@@ -116,6 +116,7 @@ Package manager: pnpm. Docker Desktop must be running for any `db:*` command.
 - `pnpm typecheck`: `next typegen` + `tsc --noEmit`
 - `pnpm lint`: ESLint
 - `pnpm test`: Vitest unit tests (`src/**/*.test.ts`)
+- `pnpm demo [email]`: replace that user's local data with demo accounts + a review inbox (local DB only)
 - `pnpm test:e2e`: Playwright against local stack, installed Chrome (phone + desktop); reads magic links from Mailpit
 - After editing `supabase/config.toml` auth settings: `pnpm db:stop && pnpm db:start` (db:reset does not reload auth config)
 - `pnpm db:start` / `pnpm db:stop`: local Supabase (Studio at http://127.0.0.1:54323)

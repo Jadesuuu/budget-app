@@ -6,6 +6,8 @@ import { DueList } from "@/components/due-list";
 import { PageHeader } from "@/components/page-header";
 import { requireUser } from "@/lib/auth";
 import { getDueSoon } from "@/lib/data/due";
+import { getInbox } from "@/lib/data/inbox";
+import { ReviewInbox } from "@/components/review-inbox";
 import { monthName, todayInManila } from "@/lib/dates";
 
 export default function HomePage() {
@@ -27,14 +29,13 @@ export default function HomePage() {
 
 async function HomeContent() {
   const { supabase } = await requireUser();
-  const [pending, accounts, due] = await Promise.all([
-    supabase.from("transactions").select("id", { count: "exact", head: true }).eq("status", "pending"),
+  const [inbox, accounts, due] = await Promise.all([
+    getInbox(),
     supabase.from("accounts").select("id", { count: "exact", head: true }).is("archived_at", null),
     getDueSoon(),
   ]);
-  if (pending.error) throw pending.error;
   if (accounts.error) throw accounts.error;
-  const pendingCount = pending.count ?? 0;
+  const pendingCount = inbox.items.length;
   const hasAccounts = (accounts.count ?? 0) > 0;
 
   return (
@@ -71,9 +72,7 @@ async function HomeContent() {
           <span className="sec-sub">From your emails and recurring bills</span>
         </div>
         {pendingCount > 0 ? (
-          <Link href="/review" className="btn primary block-btn">
-            Review {pendingCount} {pendingCount === 1 ? "transaction" : "transactions"}
-          </Link>
+          <ReviewInbox {...inbox} variant="home" />
         ) : (
           <p className="quiet-empty">Nothing to review. New transactions from your forwarded emails will show up here.</p>
         )}

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { House, Inbox, Menu, Settings, Wallet, type LucideIcon } from "lucide-react";
+import { House, Inbox, Menu, Plus, Settings, Wallet, type LucideIcon } from "lucide-react";
 
 type Item = { href: string; label: string; icon: LucideIcon };
 
@@ -23,11 +23,20 @@ function isCurrent(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
 }
 
+/** Highlights the current page. Reads the URL, so layouts wrap it in <Suspense> with the plain view as fallback. */
 export function TabBar() {
-  const pathname = usePathname();
+  return <TabBarView pathname={usePathname()} />;
+}
+
+export function TabBarView({ pathname }: { pathname: string }) {
   return (
     <nav className="tabbar" aria-label="Main">
-      {TABS.map(({ href, label, icon: Icon }) => (
+      {TABS.map(({ href, label, icon: Icon }, index) => [
+        index === 2 && (
+          <Link key="add" href="/add" className="tab add" aria-label="Add transaction" aria-current={pathname === "/add" ? "page" : undefined}>
+            <span className="plus"><Plus aria-hidden /></span>
+          </Link>
+        ),
         <Link
           key={href}
           href={href}
@@ -36,17 +45,24 @@ export function TabBar() {
         >
           <Icon aria-hidden />
           {label}
-        </Link>
-      ))}
+        </Link>,
+      ])}
     </nav>
   );
 }
 
 export function Rail() {
-  const pathname = usePathname();
+  return <RailView pathname={usePathname()} />;
+}
+
+export function RailView({ pathname }: { pathname: string }) {
   return (
     <nav className="rail" aria-label="Main">
       <p className="brand">Budget</p>
+      <Link href="/add" className="btn primary rail-add">
+        <Plus aria-hidden />
+        Add transaction
+      </Link>
       {RAIL.map(({ href, label, icon: Icon }) => (
         <Link key={href} href={href} className="nav-item" aria-current={isCurrent(pathname, href) ? "page" : undefined}>
           <Icon aria-hidden />

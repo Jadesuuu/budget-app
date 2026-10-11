@@ -2,6 +2,7 @@
 @import "./themes.css";
 @import "./app.css";
 @import "./app-extra.css";
+@import "./app-phase3.css";
 
 /* Expose theme tokens to Tailwind utilities (bg-surface, text-muted, font-display, ...). */
 @theme inline {

@@ -1,0 +1,103 @@
+/* ============================================================
+   Review inbox, accounts, add (phase 3)
+   ============================================================ */
+
+/* inbox card additions */
+.txn-card .txn-top .inst + .txn-meta { min-width: 0; }
+.cat-field { display: block; }
+.cat-select {
+  font: inherit; font-size: 14px; font-weight: 500; color: var(--ink);
+  background: var(--surface-2); border: 1px solid transparent; border-radius: var(--radius-ctl);
+  min-height: 40px; padding: 0 12px; max-width: 100%;
+}
+.cat-select:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.flag p { margin-bottom: 8px; }
+.flag-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.mini-btn {
+  border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink);
+  border-radius: var(--radius-ctl); padding: 0 12px; min-height: 36px; font-size: 13.5px; font-weight: 600;
+}
+.mini-btn:hover { background: var(--surface-2); }
+.transfer-hint {
+  display: flex; gap: 8px; align-items: flex-start; padding: 10px 12px; border-radius: var(--radius-ctl);
+  background: var(--accent-soft); color: var(--ink); font-size: 13px;
+}
+.transfer-hint > svg { color: var(--accent); margin-top: 2px; }
+.transfer-hint p { margin-bottom: 8px; }
+.transfer-hint b { font-weight: 600; }
+.transfer-pick { display: grid; gap: 8px; flex: 1; }
+.transfer-pick label { display: grid; gap: 4px; font-weight: 600; }
+.text-btn {
+  display: inline-flex; align-items: center; gap: 6px; border: 0; background: none; padding: 6px 0;
+  color: var(--muted); font-size: 13.5px; font-weight: 500; justify-self: start; width: fit-content;
+}
+.text-btn:hover { color: var(--ink); }
+.text-btn svg { width: 15px; height: 15px; }
+.see-all { margin-top: 10px; }
+.see-all .link { color: var(--accent); font-weight: 600; text-decoration: none; }
+.review-lede { margin-bottom: 14px; }
+.review-grid { display: block; }
+
+/* inbox toast: fixed above the tab bar on phones, bottom-centre on desktop */
+.toast {
+  position: fixed; left: var(--space); right: var(--space); margin: 0; z-index: 30;
+  bottom: calc(84px + env(safe-area-inset-bottom));
+}
+.toast[data-error] { background: var(--danger); color: #fff; }
+.petal { position: fixed; z-index: 40; }
+
+/* accounts */
+.group-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
+.group-head .group-title { margin: 0; }
+.group-total { font-weight: 700; font-size: 14px; font-variant-numeric: tabular-nums; }
+.acct-list li + li { border-top: 1px solid var(--line); }
+a.acct { text-decoration: none; min-height: 60px; }
+.acct + .acct { border-top: 0; }
+.acct-name { display: grid; flex: 1; min-width: 0; }
+.acct-title { font-weight: 600; font-size: 14.5px; }
+.acct-sub { color: var(--muted); font-size: 12.5px; }
+.acct .chev { color: var(--muted); width: 18px; height: 18px; }
+.balance-card {
+  background: var(--surface); border: var(--card-border); border-radius: var(--radius-card); box-shadow: var(--card-shadow);
+  padding: 18px; display: grid; gap: 4px;
+}
+.balance-label { color: var(--muted); font-size: 14px; font-weight: 600; }
+.balance-value {
+  font-family: var(--tf-amount); font-weight: var(--amount-weight); letter-spacing: var(--display-tracking);
+  font-size: 36px; line-height: 1.1; font-variant-numeric: tabular-nums;
+}
+.balance-meta { color: var(--muted); font-size: 13.5px; }
+.edit-details { border-top: 1px solid var(--line); padding-top: 16px; }
+.edit-details summary { cursor: pointer; font-weight: 600; color: var(--accent); min-height: 44px; display: flex; align-items: center; }
+.edit-details[open] summary { margin-bottom: 12px; }
+.archive-form { display: grid; gap: 8px; justify-items: start; margin-top: 24px; padding-top: 16px; border-top: 1px dashed var(--line-strong); }
+
+/* forms */
+.optional { color: var(--muted); font-weight: 400; }
+.hint { color: var(--muted); font-size: 12.5px; font-weight: 400; }
+.peso-input { position: relative; display: block; }
+.peso-input > span { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--muted); font-weight: 600; pointer-events: none; }
+.peso-input .input { padding-left: 32px; font-variant-numeric: tabular-nums; }
+.peso-input.big .input {
+  font-family: var(--tf-amount); font-weight: var(--amount-weight); font-size: 28px; min-height: 64px; padding-left: 40px;
+}
+.peso-input.big > span { font-size: 24px; left: 16px; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.form-actions { display: grid; gap: 10px; }
+.form-success { color: var(--income); font-weight: 600; font-size: 14px; }
+.seg-wide { width: 100%; border-radius: var(--radius-ctl); }
+.seg-wide .seg-opt { flex: 1; justify-content: center; border-radius: var(--radius-ctl); padding: 8px 6px; }
+select.input { appearance: auto; }
+.add-form, .account-form { max-width: 520px; }
+.rail-add { margin: 0 0 14px; min-height: 44px; font-size: 15px; }
+
+@container app (min-width: 760px) {
+  .review-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+  .toast { left: 50%; right: auto; bottom: 24px; transform: translate(-50%, 20px); min-width: 340px; }
+  .toast.show { transform: translate(-50%, 0); }
+  .form-actions { grid-template-columns: auto auto; justify-content: start; }
+}
+
+/* Cards behind the front card match its height, so the "Next" strip peeks out below it. */
+.stack > .txn-card[data-depth="1"],
+.stack > .txn-card[data-depth="2"] { align-self: stretch; }

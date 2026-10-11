@@ -27,9 +27,14 @@ insert into public.transactions (id, user_id, account_id, amount_centavos, occur
   ('aaaaaaaa-5555-4000-8000-000000000002', 'aaaaaaaa-0000-4000-8000-000000000001',
    'aaaaaaaa-3333-4000-8000-000000000001', -234156, now(), 'Meralco', 'email', null);
 
-select is((select count(*)::int from public.profiles where inbound_alias ~ '^u_[a-z0-9]{10}$'), 2,
+-- Scoped to the test users: a local database may also hold real accounts.
+select is((select count(*)::int from public.profiles
+           where user_id in ('aaaaaaaa-0000-4000-8000-000000000001', 'bbbbbbbb-0000-4000-8000-000000000002')
+             and inbound_alias ~ '^u_[a-z0-9]{10}$'), 2,
   'signup creates a profile with a valid inbound alias');
-select is((select count(distinct inbound_alias)::int from public.profiles), 2, 'inbound aliases are unique');
+select is((select count(distinct inbound_alias)::int from public.profiles
+           where user_id in ('aaaaaaaa-0000-4000-8000-000000000001', 'bbbbbbbb-0000-4000-8000-000000000002')), 2,
+  'inbound aliases are unique');
 select is((select count(*)::int from public.institutions where user_id is null), 21, 'shared institutions seeded');
 select is((select count(*)::int from public.categories where user_id is null), 18, 'shared categories seeded');
 

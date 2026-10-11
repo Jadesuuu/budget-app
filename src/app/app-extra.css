@@ -3,7 +3,7 @@
    ============================================================ */
 a { color: inherit; }
 a.tab, a.nav-item, a.avatar, a.btn { text-decoration: none; }
-.tabbar { grid-template-columns: repeat(4, 1fr); }
+.tabbar { grid-template-columns: repeat(5, 1fr); }
 a.tab[aria-current="page"] { color: var(--accent); }
 .page-title {
   font-family: var(--tf-display); font-weight: var(--display-weight); letter-spacing: var(--display-tracking);

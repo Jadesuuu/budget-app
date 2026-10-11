@@ -1,13 +1,18 @@
-import { Rail, TabBar } from "@/components/nav";
+import { Suspense } from "react";
+import { Rail, RailView, TabBar, TabBarView } from "@/components/nav";
 
 export default function AppLayout({ children }: LayoutProps<"/">) {
   return (
     <div className="app">
       <div className="shell shell-2col">
-        <Rail />
+        <Suspense fallback={<RailView pathname="" />}>
+          <Rail />
+        </Suspense>
         <main className="main">{children}</main>
       </div>
-      <TabBar />
+      <Suspense fallback={<TabBarView pathname="" />}>
+        <TabBar />
+      </Suspense>
     </div>
   );
 }

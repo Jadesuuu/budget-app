@@ -73,6 +73,12 @@ isOneToOne: false
       foreignKeyName: "credit_cards_account_id_user_id_fkey"
       columns: ["account_id","user_id"]
 isOneToOne: true
+      referencedRelation: "account_balances"
+      referencedColumns: ["account_id","user_id"]
+    },{
+      foreignKeyName: "credit_cards_account_id_user_id_fkey"
+      columns: ["account_id","user_id"]
+isOneToOne: true
       referencedRelation: "accounts"
       referencedColumns: ["id","user_id"]
     }
@@ -90,6 +96,12 @@ isOneToOne: true
                   }
                   Relationships: [
                     {
+      foreignKeyName: "income_sources_account_id_user_id_fkey"
+      columns: ["account_id","user_id"]
+isOneToOne: false
+      referencedRelation: "account_balances"
+      referencedColumns: ["account_id","user_id"]
+    },{
       foreignKeyName: "income_sources_account_id_user_id_fkey"
       columns: ["account_id","user_id"]
 isOneToOne: false
@@ -136,6 +148,12 @@ isOneToOne: false
                   }
                   Relationships: [
                     {
+      foreignKeyName: "installment_plans_account_id_user_id_fkey"
+      columns: ["account_id","user_id"]
+isOneToOne: false
+      referencedRelation: "account_balances"
+      referencedColumns: ["account_id","user_id"]
+    },{
       foreignKeyName: "installment_plans_account_id_user_id_fkey"
       columns: ["account_id","user_id"]
 isOneToOne: false
@@ -199,6 +217,12 @@ isOneToOne: false
       foreignKeyName: "loans_account_id_user_id_fkey"
       columns: ["account_id","user_id"]
 isOneToOne: false
+      referencedRelation: "account_balances"
+      referencedColumns: ["account_id","user_id"]
+    },{
+      foreignKeyName: "loans_account_id_user_id_fkey"
+      columns: ["account_id","user_id"]
+isOneToOne: false
       referencedRelation: "accounts"
       referencedColumns: ["id","user_id"]
     }
@@ -247,6 +271,12 @@ isOneToOne: false
       foreignKeyName: "recurring_rules_account_id_user_id_fkey"
       columns: ["account_id","user_id"]
 isOneToOne: false
+      referencedRelation: "account_balances"
+      referencedColumns: ["account_id","user_id"]
+    },{
+      foreignKeyName: "recurring_rules_account_id_user_id_fkey"
+      columns: ["account_id","user_id"]
+isOneToOne: false
       referencedRelation: "accounts"
       referencedColumns: ["id","user_id"]
     },{
@@ -285,17 +315,23 @@ isOneToOne: false
                   ]
                 },"transactions": {
                   Row: {
-                    "account_id": string,"amount_centavos": number,"category_id": string | null,"confirmed_at": string | null,"created_at": string,"duplicate_of": string | null,"id": string,"merchant": string | null,"note": string | null,"occurred_at": string,"raw_email_id": string | null,"recurring_rule_id": string | null,"source": Database["public"]['Enums']["txn_source"],"status": Database["public"]['Enums']["txn_status"],"updated_at": string,"user_id": string
+                    "account_id": string,"amount_centavos": number,"category_id": string | null,"confirmed_at": string | null,"created_at": string,"duplicate_of": string | null,"id": string,"merchant": string | null,"note": string | null,"occurred_at": string,"raw_email_id": string | null,"recurring_rule_id": string | null,"source": Database["public"]['Enums']["txn_source"],"status": Database["public"]['Enums']["txn_status"],"transfer_id": string | null,"updated_at": string,"user_id": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "account_id": string,"amount_centavos": number,"category_id"?: string | null,"confirmed_at"?: string | null,"created_at"?: string,"duplicate_of"?: string | null,"id"?: string,"merchant"?: string | null,"note"?: string | null,"occurred_at": string,"raw_email_id"?: string | null,"recurring_rule_id"?: string | null,"source"?: Database["public"]['Enums']["txn_source"],"status"?: Database["public"]['Enums']["txn_status"],"updated_at"?: string,"user_id"?: string
+                    "account_id": string,"amount_centavos": number,"category_id"?: string | null,"confirmed_at"?: string | null,"created_at"?: string,"duplicate_of"?: string | null,"id"?: string,"merchant"?: string | null,"note"?: string | null,"occurred_at": string,"raw_email_id"?: string | null,"recurring_rule_id"?: string | null,"source"?: Database["public"]['Enums']["txn_source"],"status"?: Database["public"]['Enums']["txn_status"],"transfer_id"?: string | null,"updated_at"?: string,"user_id"?: string
                   }
                   Update: {
-                    "account_id"?: string,"amount_centavos"?: number,"category_id"?: string | null,"confirmed_at"?: string | null,"created_at"?: string,"duplicate_of"?: string | null,"id"?: string,"merchant"?: string | null,"note"?: string | null,"occurred_at"?: string,"raw_email_id"?: string | null,"recurring_rule_id"?: string | null,"source"?: Database["public"]['Enums']["txn_source"],"status"?: Database["public"]['Enums']["txn_status"],"updated_at"?: string,"user_id"?: string
+                    "account_id"?: string,"amount_centavos"?: number,"category_id"?: string | null,"confirmed_at"?: string | null,"created_at"?: string,"duplicate_of"?: string | null,"id"?: string,"merchant"?: string | null,"note"?: string | null,"occurred_at"?: string,"raw_email_id"?: string | null,"recurring_rule_id"?: string | null,"source"?: Database["public"]['Enums']["txn_source"],"status"?: Database["public"]['Enums']["txn_status"],"transfer_id"?: string | null,"updated_at"?: string,"user_id"?: string
                   }
                   Relationships: [
                     {
+      foreignKeyName: "transactions_account_id_user_id_fkey"
+      columns: ["account_id","user_id"]
+isOneToOne: false
+      referencedRelation: "account_balances"
+      referencedColumns: ["account_id","user_id"]
+    },{
       foreignKeyName: "transactions_account_id_user_id_fkey"
       columns: ["account_id","user_id"]
 isOneToOne: false
@@ -330,11 +366,25 @@ isOneToOne: false
                 }
           }
           Views: {
-            [_ in never]: never
+            "account_balances": {
+                  Row: {
+                    "account_id": string | null,"balance_centavos": number | null,"pending_count": number | null,"user_id": string | null
+                  }
+                  ComputedFields: never
+                  Relationships: [
+                    
+                  ]
+                }
           }
           Functions: {
-            "confirm_transaction":
-{ Args: { "p_id": string }; Returns: {
+            "confirm_as_transfer":
+{ Args: { "p_in_id": string,"p_out_id": string }; Returns: string
+                           },
+"confirm_one_sided_transfer":
+{ Args: { "p_id": string,"p_other_account": string }; Returns: string
+                           },
+"confirm_transaction":
+{ Args: { "p_category_id"?: string,"p_id": string }; Returns: {
               "account_id": string,
 "amount_centavos": number,
 "category_id": string | null,
@@ -349,6 +399,7 @@ isOneToOne: false
 "recurring_rule_id": string | null,
 "source": Database["public"]['Enums']["txn_source"],
 "status": Database["public"]['Enums']["txn_status"],
+"transfer_id": string | null,
 "updated_at": string,
 "user_id": string
             }
@@ -358,6 +409,9 @@ isOneToOne: false
         isOneToOne: true
         isSetofReturn: false
       } },
+"create_transfer":
+{ Args: { "p_amount_centavos": number,"p_fee_centavos"?: number,"p_from_account": string,"p_note"?: string,"p_occurred_at": string,"p_to_account": string }; Returns: string
+                           },
 "generate_inbound_alias":
 { Args: Record<PropertyKey, never>; Returns: string
                            },
@@ -377,6 +431,7 @@ isOneToOne: false
 "recurring_rule_id": string | null,
 "source": Database["public"]['Enums']["txn_source"],
 "status": Database["public"]['Enums']["txn_status"],
+"transfer_id": string | null,
 "updated_at": string,
 "user_id": string
             }
@@ -402,6 +457,33 @@ isOneToOne: false
 "recurring_rule_id": string | null,
 "source": Database["public"]['Enums']["txn_source"],
 "status": Database["public"]['Enums']["txn_status"],
+"transfer_id": string | null,
+"updated_at": string,
+"user_id": string
+            }
+                          SetofOptions: {
+        from: "*"
+        to: "transactions"
+        isOneToOne: true
+        isSetofReturn: false
+      } },
+"reopen_transaction":
+{ Args: { "p_id": string }; Returns: {
+              "account_id": string,
+"amount_centavos": number,
+"category_id": string | null,
+"confirmed_at": string | null,
+"created_at": string,
+"duplicate_of": string | null,
+"id": string,
+"merchant": string | null,
+"note": string | null,
+"occurred_at": string,
+"raw_email_id": string | null,
+"recurring_rule_id": string | null,
+"source": Database["public"]['Enums']["txn_source"],
+"status": Database["public"]['Enums']["txn_status"],
+"transfer_id": string | null,
 "updated_at": string,
 "user_id": string
             }

@@ -7,6 +7,8 @@ export default defineConfig({
   fullyParallel: false,
   workers: 1,
   reporter: "list",
+  // The dev server compiles each route on first visit.
+  expect: { timeout: 15_000 },
   use: {
     baseURL: "http://localhost:3000",
     channel: "chrome",
