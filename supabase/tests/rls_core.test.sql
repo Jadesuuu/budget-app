@@ -30,7 +30,7 @@ insert into public.transactions (id, user_id, account_id, amount_centavos, occur
 select is((select count(*)::int from public.profiles where inbound_alias ~ '^u_[a-z0-9]{10}$'), 2,
   'signup creates a profile with a valid inbound alias');
 select is((select count(distinct inbound_alias)::int from public.profiles), 2, 'inbound aliases are unique');
-select is((select count(*)::int from public.institutions where user_id is null), 20, 'shared institutions seeded');
+select is((select count(*)::int from public.institutions where user_id is null), 21, 'shared institutions seeded');
 select is((select count(*)::int from public.categories where user_id is null), 18, 'shared categories seeded');
 
 -- ---------------------------------------------------------------------------
@@ -43,7 +43,7 @@ select is((select count(*)::int from public.accounts), 1, 'A sees own account');
 select is((select count(*)::int from public.transactions), 2, 'A sees own transactions');
 select is((select count(*)::int from public.raw_emails), 1, 'A sees own raw email');
 select is((select count(*)::int from public.profiles), 1, 'A sees only own profile');
-select is((select count(*)::int from public.institutions), 21, 'A sees shared + own institutions');
+select is((select count(*)::int from public.institutions), 22, 'A sees shared + own institutions');
 select is((select count(*)::int from public.categories), 19, 'A sees shared + own categories');
 select is((select status::text from public.confirm_transaction('aaaaaaaa-5555-4000-8000-000000000001')),
   'confirmed', 'A can confirm own pending transaction');
@@ -57,7 +57,7 @@ select is((select count(*)::int from public.accounts), 0, 'B cannot see A accoun
 select is((select count(*)::int from public.transactions), 0, 'B cannot see A transactions');
 select is((select count(*)::int from public.raw_emails), 0, 'B cannot see A raw emails');
 select is((select user_id from public.profiles), 'bbbbbbbb-0000-4000-8000-000000000002'::uuid, 'B sees only own profile');
-select is((select count(*)::int from public.institutions), 20, 'B cannot see A private institution');
+select is((select count(*)::int from public.institutions), 21, 'B cannot see A private institution');
 select is((select count(*)::int from public.categories), 18, 'B cannot see A private category');
 
 select throws_ok(

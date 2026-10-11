@@ -37,6 +37,15 @@ in a review inbox.
   Remote: `git@github-personal:jadesuuu/budget-app.git`. Never change the global gh CLI login
   (that is a work account) and never push or create repos with it.
 
+## Auth & app structure
+- Magic-link sign-in (Supabase OTP, PKCE) -> `/auth/callback`. Invite-only: `ALLOWED_SIGNUP_EMAILS`;
+  the login reply is identical for unknown addresses (no account enumeration).
+- `src/proxy.ts` refreshes the session and redirects signed-out visitors to `/login`.
+- `cacheComponents` is on: anything reading the session sits inside `<Suspense>`; `requireUser()` in
+  `src/lib/auth.ts` is the only entry point and calls `connection()` first.
+- Theme/mode live on `profiles` and are mirrored in `bp-theme`/`bp-mode` cookies so the pre-paint
+  script in the root layout applies them without a flash. Tokens: `src/app/themes.css`.
+
 ## Data access
 - supabase-js with the user's session, so RLS always applies. No Prisma (it connects as a
   privileged role and bypasses RLS).
@@ -107,6 +116,8 @@ Package manager: pnpm. Docker Desktop must be running for any `db:*` command.
 - `pnpm typecheck`: `next typegen` + `tsc --noEmit`
 - `pnpm lint`: ESLint
 - `pnpm test`: Vitest unit tests (`src/**/*.test.ts`)
+- `pnpm test:e2e`: Playwright against local stack, installed Chrome (phone + desktop); reads magic links from Mailpit
+- After editing `supabase/config.toml` auth settings: `pnpm db:stop && pnpm db:start` (db:reset does not reload auth config)
 - `pnpm db:start` / `pnpm db:stop`: local Supabase (Studio at http://127.0.0.1:54323)
 - `pnpm db:reset`: re-apply all migrations + seed locally
 - `pnpm db:test`: pgTAP tests in `supabase/tests` (RLS isolation tests live here)
