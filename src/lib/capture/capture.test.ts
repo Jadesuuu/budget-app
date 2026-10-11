@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { classifyCapture, normalizeSmsSender, type CaptureContext } from "./classify";
-import { dedupeKey, readCaptureMessage, readCapturePayload, type CapturedMessage } from "./payload";
+import { dedupeKey, readCaptureMessage, readCapturePayload, type CapturedMessage, readEventId } from "./payload";
 import type { MessageParser } from "./parsers";
 import { generateCaptureToken, hashCaptureToken, isCaptureToken } from "./token";
 
@@ -33,6 +33,13 @@ describe("readCapturePayload", () => {
       JSON.stringify({ schema_version: 1, event_id: "e1", message_type: "sms", source: "android", source_name: "Android", sender: "GCash", text: "Paid", occurred_at: "2026-10-11T04:00:00Z" }),
     );
     expect(msg).toEqual({ channel: "sms", sender: "GCash", title: null, body: "Paid", receivedAt: "2026-10-11T04:00:00.000Z" });
+  });
+
+  it("finds Message487's event_id so the reply can confirm it", () => {
+    expect(readEventId("application/json", JSON.stringify({ event_id: "evt-1a2b:3", text: "x" }))).toBe("evt-1a2b:3");
+    expect(readEventId("application/json", JSON.stringify({ text: "x" }))).toBeNull();
+    expect(readEventId("application/json", JSON.stringify({ event_id: "<script>" }))).toBeNull();
+    expect(readEventId("text/plain", "event_id=1")).toBeNull();
   });
 
   it("reads Message487 notification events (source = app package)", () => {

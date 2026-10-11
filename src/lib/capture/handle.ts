@@ -2,7 +2,7 @@ import "server-only";
 import { after, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { classifyCapture, messageInstitution } from "./classify";
-import { dedupeKey, readCaptureMessage } from "./payload";
+import { dedupeKey, readCaptureMessage, readEventId } from "./payload";
 import { loadCaptureInstitutions, processPendingMessages } from "./run";
 import { hashCaptureToken, isCaptureToken } from "./token";
 
@@ -18,8 +18,14 @@ export async function handleCapture(request: Request, token: string | null): Pro
 
   const raw = await request.text();
   if (raw.length > MAX_REQUEST_BYTES) return NextResponse.json({ error: "too large" }, { status: 413 });
-  const msg = readCaptureMessage(request.headers.get("content-type") ?? "", raw);
-  if (!msg) return NextResponse.json({ error: "no message text found" }, { status: 400 });
+  const contentType = request.headers.get("content-type") ?? "";
+  const eventId = readEventId(contentType, raw);
+  const msg = readCaptureMessage(contentType, raw);
+  if (!msg) {
+    // A forwarder's connection test may carry no text; acknowledge it so the app reports success, store nothing.
+    if (eventId) return NextResponse.json({ status: "accepted", event_id: eventId, result: "empty" });
+    return NextResponse.json({ error: "no message text found" }, { status: 400 });
+  }
 
   const db = createAdminClient();
   const institutions = await loadCaptureInstitutions(db);
@@ -46,7 +52,9 @@ export async function handleCapture(request: Request, token: string | null): Pro
     const userId = result.user_id;
     after(() => processPendingMessages({ userId, limit: 20 }).then(() => undefined));
   }
-  return NextResponse.json({ status: known ? result.result : "ignored" });
+  const status = known ? result.result : "ignored";
+  // Message487 wants its event echoed back as accepted; "result" keeps what Budget did with it.
+  return NextResponse.json(eventId ? { status: "accepted", event_id: eventId, result: status } : { status });
 }
 
 /** "Authorization: Bearer cap_..." -> the token, or null. */

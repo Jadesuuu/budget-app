@@ -152,7 +152,9 @@ function NoForwardingButton({ script }: { script: string }) {
           <a href="https://script.google.com/home/projects/create" target="_blank" rel="noreferrer">
             script.google.com
           </a>{" "}
-          signed in to the Gmail your bank emails go to. A new project opens.
+          signed in to the Gmail your bank emails go to. A new project opens. If you use several Google accounts and
+          Google says it can&apos;t open the file, use a private window signed in to only that account, then click{" "}
+          <b>New project</b>.
         </li>
         <li>Delete what&apos;s in the editor, then paste the script (Copy script below).</li>
         <li>Click Save, choose <b>setup</b> in the function menu at the top, and click <b>Run</b>.</li>

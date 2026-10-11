@@ -1,1 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="112" fill="#C2306A"/><path fill="#FFF4F7" d="M176 128h112c53 0 92 33 92 82 0 31-15 54-40 66 34 11 56 38 56 75 0 54-43 89-102 89H176zm64 56v72h44c24 0 38-13 38-36s-14-36-38-36zm0 124v80h54c27 0 43-15 43-40s-16-40-43-40z"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="116" fill="#C2306A"/>
+  <defs>
+    <filter id="lift" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="6" dy="16" stdDeviation="16" flood-color="#3D0F24" flood-opacity=".42"/>
+    </filter>
+  </defs>
+  <path d="M-32 -164H114Q128 -164 128 -150V68Q128 164 32 164H-114Q-128 164 -128 150V-68Q-128 -164 -32 -164Z" fill="#F08DB0" transform="translate(222 262) rotate(-13)"/>
+  <g transform="translate(272 258) rotate(8)" filter="url(#lift)">
+    <path d="M-32 -164H114Q128 -164 128 -150V68Q128 164 32 164H-114Q-128 164 -128 150V-68Q-128 -164 -32 -164Z" fill="#FFF4F7"/>
+    <g fill="none" stroke="#3D1F33" stroke-linecap="round" stroke-linejoin="round" transform="translate(-6 0) scale(1.18)">
+      <path d="M-36 -64V68" stroke-width="36"/>
+      <path d="M-36 -64H8A44 44 0 0 1 8 24H-36" stroke-width="36"/>
+      <path d="M-66 -34H72M-66 -4H72" stroke-width="15"/>
+    </g>
+  </g></svg>

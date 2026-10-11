@@ -82,6 +82,21 @@ export function dedupeKey(msg: CapturedMessage, now: Date = new Date()): string 
   return sha256Hex([msg.channel, msg.sender.toLowerCase(), msg.title ?? "", msg.body, when].join("\u0000"));
 }
 
+/**
+ * Message487 (in its "n8n confirmation" mode) only counts a send as delivered when the reply echoes its event_id
+ * with status "accepted". Returns that id, or null for senders that don't use one.
+ */
+export function readEventId(contentType: string, raw: string): string | null {
+  if (!contentType.toLowerCase().includes("json") && !raw.trimStart().startsWith("{")) return null;
+  try {
+    const parsed: unknown = JSON.parse(raw);
+    const id = parsed && typeof parsed === "object" ? (parsed as Record<string, unknown>).event_id : null;
+    return typeof id === "string" && /^[\w.:-]{1,128}$/.test(id) ? id : null;
+  } catch {
+    return null;
+  }
+}
+
 export const captureLinkLabelSchema = z.string().trim().min(1, "Give this link a name, like My Android.").max(60);
 
 /**

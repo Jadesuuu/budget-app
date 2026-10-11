@@ -58,7 +58,9 @@ test("Message487-style capture: URL plus Bearer token, its own event format", as
     text: "You have paid P116.00 GCash to MCDO 330 VA on 10-06-26 07:38:27 AM. Your new balance is P546.88. Ref. No. 4000000000001.",
     occurred_at: "2026-10-05T23:38:30Z",
   };
-  expect(await (await send(sms)).json()).toEqual({ status: "stored" });
+  // Message487's "n8n confirmation" mode needs its event echoed back as accepted.
+  expect(await (await send(sms)).json()).toEqual({ status: "accepted", event_id: "evt-1", result: "stored" });
+  expect(await (await send({ schema_version: 1, event_id: "evt-test" })).json()).toEqual({ status: "accepted", event_id: "evt-test", result: "empty" });
   expect((await send(sms, "Bearer cap_" + "x".repeat(32))).status()).toBe(404);
   expect((await send(sms, "")).status()).toBe(404);
 
