@@ -46,6 +46,14 @@ test("a GCash text with a balance exposes a gap, and typing the app's balance up
   await page.getByRole("button", { name: "Check against Budget" }).click();
   await expect(page.locator('[aria-labelledby="check-h"] .check-chip')).toContainText("Matches GCash once you review");
   await page.screenshot({ path: `.impeccable/review/app-account-check-${testInfo.project.name}.png`, fullPage: true });
+
+  // A balance that doesn't match: one tap makes Budget start from the bank's figure.
+  await page.getByLabel("Balance GCash shows now").fill("2,000.00");
+  await page.getByRole("button", { name: "Check against Budget" }).click();
+  await expect(page.locator('[aria-labelledby="check-h"] .check-chip')).toContainText("unaccounted");
+  await page.getByRole("button", { name: "Use GCash's balance" }).click();
+  await expect(page.locator('[aria-labelledby="check-h"] .check-chip')).toContainText("Matches GCash");
+  await expect(page.locator(".balance-value")).toContainText("₱2,000.00");
 });
 
 test("importing a history adds only what's missing, and can be undone", async ({ page }) => {

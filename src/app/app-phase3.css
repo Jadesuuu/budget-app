@@ -197,3 +197,4 @@ select.input { appearance: auto; }
   margin: 12px 0 0; max-height: 220px; overflow: auto; padding: 12px; border-radius: var(--radius-ctl);
   background: var(--surface-2); font-size: 12px; line-height: 1.5; white-space: pre;
 }
+.adopt-balance { display: grid; gap: 8px; margin-bottom: 4px; }

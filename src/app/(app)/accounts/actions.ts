@@ -145,3 +145,30 @@ export async function recordBankBalance(_prev: CheckState, formData: FormData): 
   userDataChanged();
   return { status: "saved" };
 }
+
+/**
+ * "Use the bank's balance": the latest balance check becomes the account's starting point, so Budget agrees with
+ * the bank from that moment on. Transactions before it stay in history but no longer move this balance.
+ */
+export async function adoptBankBalance(formData: FormData) {
+  const id = z.uuid().parse(formData.get("accountId"));
+  const { supabase } = await requireUser();
+  const check = await supabase.from("account_reconciliation").select("reported_centavos, as_of").eq("account_id", id).maybeSingle();
+  if (check.error) throw check.error;
+  if (!check.data?.as_of || check.data.reported_centavos === null) return;
+  // Items stamped at exactly that moment (the payment a "new balance" text reports) are already in the bank's figure.
+  const same = await supabase
+    .from("transactions")
+    .select("amount_centavos")
+    .eq("account_id", id)
+    .eq("occurred_at", check.data.as_of)
+    .in("status", ["confirmed", "pending"]);
+  if (same.error) throw same.error;
+  const atThatMoment = same.data.reduce((sum, t) => sum + t.amount_centavos, 0);
+  const { error } = await supabase
+    .from("accounts")
+    .update({ opening_balance_centavos: check.data.reported_centavos - atThatMoment, opening_balance_at: check.data.as_of })
+    .eq("id", id);
+  if (error) throw error;
+  userDataChanged();
+}

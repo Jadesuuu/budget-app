@@ -15,7 +15,7 @@ import { formatPeso } from "@/lib/money";
 import { Private } from "@/components/private-amount";
 import { centavosToInput } from "@/lib/money-input";
 import { AccountForm } from "../account-form";
-import { archiveAccount } from "../actions";
+import { adoptBankBalance, archiveAccount } from "../actions";
 import { BalanceForm } from "./balance-form";
 
 export const metadata: Metadata = { title: "Account" };
@@ -96,6 +96,16 @@ async function AccountView({ id }: { id: string }) {
             ? describeCheck(balanceCheck, bank, owed)
             : `No balance from ${bank} yet. Texts that state your balance, statements and imports check it automatically; you can also type what your app shows.`}
         </p>
+        {balanceCheck?.state === "off" && (
+          <form action={adoptBankBalance} className="adopt-balance">
+            <input type="hidden" name="accountId" value={a.id} />
+            <button className="btn primary" type="submit">Use {bank}&apos;s balance</button>
+            <p className="hint">
+              Budget starts counting from <Private>{formatPeso(owed ? -balanceCheck.reportedCentavos : balanceCheck.reportedCentavos)}</Private>{" "}
+              ({describeWhen(balanceCheck.asOf)}). Earlier transactions stay in your history but no longer change this balance.
+            </p>
+          </form>
+        )}
         <BalanceForm accountId={a.id} owed={owed} bank={bank} />
         <Link href={`/accounts/${a.id}/import`} className="btn">
           <FileUp aria-hidden />
