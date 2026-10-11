@@ -57,6 +57,92 @@ isOneToOne: false
                   Relationships: [
                     
                   ]
+                },"credit_cards": {
+                  Row: {
+                    "account_id": string,"created_at": string,"credit_limit_centavos": number | null,"due_day": number,"min_payment_bps": number,"min_payment_floor_centavos": number,"monthly_interest_bps": number,"statement_day": number,"updated_at": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "account_id": string,"created_at"?: string,"credit_limit_centavos"?: number | null,"due_day": number,"min_payment_bps": number,"min_payment_floor_centavos"?: number,"monthly_interest_bps": number,"statement_day": number,"updated_at"?: string,"user_id"?: string
+                  }
+                  Update: {
+                    "account_id"?: string,"created_at"?: string,"credit_limit_centavos"?: number | null,"due_day"?: number,"min_payment_bps"?: number,"min_payment_floor_centavos"?: number,"monthly_interest_bps"?: number,"statement_day"?: number,"updated_at"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "credit_cards_account_id_user_id_fkey"
+      columns: ["account_id","user_id"]
+isOneToOne: true
+      referencedRelation: "accounts"
+      referencedColumns: ["id","user_id"]
+    }
+                  ]
+                },"income_sources": {
+                  Row: {
+                    "account_id": string | null,"active": boolean,"amount_centavos": number,"created_at": string,"frequency": Database["public"]['Enums']["pay_frequency"],"id": string,"name": string,"updated_at": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "account_id"?: string | null,"active"?: boolean,"amount_centavos": number,"created_at"?: string,"frequency": Database["public"]['Enums']["pay_frequency"],"id"?: string,"name": string,"updated_at"?: string,"user_id"?: string
+                  }
+                  Update: {
+                    "account_id"?: string | null,"active"?: boolean,"amount_centavos"?: number,"created_at"?: string,"frequency"?: Database["public"]['Enums']["pay_frequency"],"id"?: string,"name"?: string,"updated_at"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "income_sources_account_id_user_id_fkey"
+      columns: ["account_id","user_id"]
+isOneToOne: false
+      referencedRelation: "accounts"
+      referencedColumns: ["id","user_id"]
+    }
+                  ]
+                },"installment_payments": {
+                  Row: {
+                    "amount_centavos": number,"created_at": string,"due_date": string,"id": string,"paid_at": string | null,"plan_id": string,"seq": number,"transaction_id": string | null,"updated_at": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "amount_centavos": number,"created_at"?: string,"due_date": string,"id"?: string,"paid_at"?: string | null,"plan_id": string,"seq": number,"transaction_id"?: string | null,"updated_at"?: string,"user_id": string
+                  }
+                  Update: {
+                    "amount_centavos"?: number,"created_at"?: string,"due_date"?: string,"id"?: string,"paid_at"?: string | null,"plan_id"?: string,"seq"?: number,"transaction_id"?: string | null,"updated_at"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "installment_payments_plan_id_user_id_fkey"
+      columns: ["plan_id","user_id"]
+isOneToOne: false
+      referencedRelation: "installment_plans"
+      referencedColumns: ["id","user_id"]
+    },{
+      foreignKeyName: "installment_payments_transaction_id_user_id_fkey"
+      columns: ["transaction_id","user_id"]
+isOneToOne: false
+      referencedRelation: "transactions"
+      referencedColumns: ["id","user_id"]
+    }
+                  ]
+                },"installment_plans": {
+                  Row: {
+                    "account_id": string,"created_at": string,"description": string,"first_due_date": string,"frequency": Database["public"]['Enums']["installment_frequency"],"id": string,"installments": number,"total_centavos": number,"updated_at": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "account_id": string,"created_at"?: string,"description": string,"first_due_date": string,"frequency"?: Database["public"]['Enums']["installment_frequency"],"id"?: string,"installments": number,"total_centavos": number,"updated_at"?: string,"user_id"?: string
+                  }
+                  Update: {
+                    "account_id"?: string,"created_at"?: string,"description"?: string,"first_due_date"?: string,"frequency"?: Database["public"]['Enums']["installment_frequency"],"id"?: string,"installments"?: number,"total_centavos"?: number,"updated_at"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "installment_plans_account_id_user_id_fkey"
+      columns: ["account_id","user_id"]
+isOneToOne: false
+      referencedRelation: "accounts"
+      referencedColumns: ["id","user_id"]
+    }
+                  ]
                 },"institutions": {
                   Row: {
                     "created_at": string,"email_domains": (string)[],"id": string,"kind": Database["public"]['Enums']["institution_kind"],"name": string,"slug": string | null,"updated_at": string,"user_id": string | null
@@ -70,6 +156,52 @@ isOneToOne: false
                   }
                   Relationships: [
                     
+                  ]
+                },"loan_payments": {
+                  Row: {
+                    "amount_centavos": number | null,"created_at": string,"due_date": string,"id": string,"interest_centavos": number,"loan_id": string,"paid_at": string | null,"principal_centavos": number,"seq": number,"transaction_id": string | null,"updated_at": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "amount_centavos"?: never,"created_at"?: string,"due_date": string,"id"?: string,"interest_centavos": number,"loan_id": string,"paid_at"?: string | null,"principal_centavos": number,"seq": number,"transaction_id"?: string | null,"updated_at"?: string,"user_id": string
+                  }
+                  Update: {
+                    "amount_centavos"?: never,"created_at"?: string,"due_date"?: string,"id"?: string,"interest_centavos"?: number,"loan_id"?: string,"paid_at"?: string | null,"principal_centavos"?: number,"seq"?: number,"transaction_id"?: string | null,"updated_at"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "loan_payments_loan_id_user_id_fkey"
+      columns: ["loan_id","user_id"]
+isOneToOne: false
+      referencedRelation: "loans"
+      referencedColumns: ["id","user_id"]
+    },{
+      foreignKeyName: "loan_payments_transaction_id_user_id_fkey"
+      columns: ["transaction_id","user_id"]
+isOneToOne: false
+      referencedRelation: "transactions"
+      referencedColumns: ["id","user_id"]
+    }
+                  ]
+                },"loans": {
+                  Row: {
+                    "account_id": string,"created_at": string,"first_due_date": string,"id": string,"interest_method": Database["public"]['Enums']["interest_method"],"monthly_rate_bps": number,"payment_centavos": number | null,"principal_centavos": number,"start_date": string,"term_months": number,"updated_at": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "account_id": string,"created_at"?: string,"first_due_date": string,"id"?: string,"interest_method"?: Database["public"]['Enums']["interest_method"],"monthly_rate_bps": number,"payment_centavos"?: number | null,"principal_centavos": number,"start_date": string,"term_months": number,"updated_at"?: string,"user_id"?: string
+                  }
+                  Update: {
+                    "account_id"?: string,"created_at"?: string,"first_due_date"?: string,"id"?: string,"interest_method"?: Database["public"]['Enums']["interest_method"],"monthly_rate_bps"?: number,"payment_centavos"?: number | null,"principal_centavos"?: number,"start_date"?: string,"term_months"?: number,"updated_at"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "loans_account_id_user_id_fkey"
+      columns: ["account_id","user_id"]
+isOneToOne: false
+      referencedRelation: "accounts"
+      referencedColumns: ["id","user_id"]
+    }
                   ]
                 },"profiles": {
                   Row: {
@@ -99,16 +231,68 @@ isOneToOne: false
                   Relationships: [
                     
                   ]
-                },"transactions": {
+                },"recurring_rules": {
                   Row: {
-                    "account_id": string,"amount_centavos": number,"category_id": string | null,"confirmed_at": string | null,"created_at": string,"duplicate_of": string | null,"id": string,"merchant": string | null,"note": string | null,"occurred_at": string,"raw_email_id": string | null,"source": Database["public"]['Enums']["txn_source"],"status": Database["public"]['Enums']["txn_status"],"updated_at": string,"user_id": string
+                    "account_id": string,"active": boolean,"amount_centavos": number,"category_id": string | null,"created_at": string,"day_of_month": number | null,"ends_on": string | null,"frequency": Database["public"]['Enums']["pay_frequency"],"id": string,"income_source_id": string | null,"name": string,"next_due_on": string,"updated_at": string,"user_id": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "account_id": string,"amount_centavos": number,"category_id"?: string | null,"confirmed_at"?: string | null,"created_at"?: string,"duplicate_of"?: string | null,"id"?: string,"merchant"?: string | null,"note"?: string | null,"occurred_at": string,"raw_email_id"?: string | null,"source"?: Database["public"]['Enums']["txn_source"],"status"?: Database["public"]['Enums']["txn_status"],"updated_at"?: string,"user_id"?: string
+                    "account_id": string,"active"?: boolean,"amount_centavos": number,"category_id"?: string | null,"created_at"?: string,"day_of_month"?: number | null,"ends_on"?: string | null,"frequency": Database["public"]['Enums']["pay_frequency"],"id"?: string,"income_source_id"?: string | null,"name": string,"next_due_on": string,"updated_at"?: string,"user_id"?: string
                   }
                   Update: {
-                    "account_id"?: string,"amount_centavos"?: number,"category_id"?: string | null,"confirmed_at"?: string | null,"created_at"?: string,"duplicate_of"?: string | null,"id"?: string,"merchant"?: string | null,"note"?: string | null,"occurred_at"?: string,"raw_email_id"?: string | null,"source"?: Database["public"]['Enums']["txn_source"],"status"?: Database["public"]['Enums']["txn_status"],"updated_at"?: string,"user_id"?: string
+                    "account_id"?: string,"active"?: boolean,"amount_centavos"?: number,"category_id"?: string | null,"created_at"?: string,"day_of_month"?: number | null,"ends_on"?: string | null,"frequency"?: Database["public"]['Enums']["pay_frequency"],"id"?: string,"income_source_id"?: string | null,"name"?: string,"next_due_on"?: string,"updated_at"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "recurring_rules_account_id_user_id_fkey"
+      columns: ["account_id","user_id"]
+isOneToOne: false
+      referencedRelation: "accounts"
+      referencedColumns: ["id","user_id"]
+    },{
+      foreignKeyName: "recurring_rules_category_id_fkey"
+      columns: ["category_id"]
+isOneToOne: false
+      referencedRelation: "categories"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "recurring_rules_income_source_id_user_id_fkey"
+      columns: ["income_source_id","user_id"]
+isOneToOne: false
+      referencedRelation: "income_sources"
+      referencedColumns: ["id","user_id"]
+    }
+                  ]
+                },"statements": {
+                  Row: {
+                    "account_id": string,"amount_paid_centavos": number,"created_at": string,"due_date": string,"id": string,"minimum_due_centavos": number,"period_end": string,"period_start": string,"statement_balance_centavos": number,"updated_at": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "account_id": string,"amount_paid_centavos"?: number,"created_at"?: string,"due_date": string,"id"?: string,"minimum_due_centavos"?: number,"period_end": string,"period_start": string,"statement_balance_centavos": number,"updated_at"?: string,"user_id"?: string
+                  }
+                  Update: {
+                    "account_id"?: string,"amount_paid_centavos"?: number,"created_at"?: string,"due_date"?: string,"id"?: string,"minimum_due_centavos"?: number,"period_end"?: string,"period_start"?: string,"statement_balance_centavos"?: number,"updated_at"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "statements_account_id_user_id_fkey"
+      columns: ["account_id","user_id"]
+isOneToOne: false
+      referencedRelation: "credit_cards"
+      referencedColumns: ["account_id","user_id"]
+    }
+                  ]
+                },"transactions": {
+                  Row: {
+                    "account_id": string,"amount_centavos": number,"category_id": string | null,"confirmed_at": string | null,"created_at": string,"duplicate_of": string | null,"id": string,"merchant": string | null,"note": string | null,"occurred_at": string,"raw_email_id": string | null,"recurring_rule_id": string | null,"source": Database["public"]['Enums']["txn_source"],"status": Database["public"]['Enums']["txn_status"],"updated_at": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "account_id": string,"amount_centavos": number,"category_id"?: string | null,"confirmed_at"?: string | null,"created_at"?: string,"duplicate_of"?: string | null,"id"?: string,"merchant"?: string | null,"note"?: string | null,"occurred_at": string,"raw_email_id"?: string | null,"recurring_rule_id"?: string | null,"source"?: Database["public"]['Enums']["txn_source"],"status"?: Database["public"]['Enums']["txn_status"],"updated_at"?: string,"user_id"?: string
+                  }
+                  Update: {
+                    "account_id"?: string,"amount_centavos"?: number,"category_id"?: string | null,"confirmed_at"?: string | null,"created_at"?: string,"duplicate_of"?: string | null,"id"?: string,"merchant"?: string | null,"note"?: string | null,"occurred_at"?: string,"raw_email_id"?: string | null,"recurring_rule_id"?: string | null,"source"?: Database["public"]['Enums']["txn_source"],"status"?: Database["public"]['Enums']["txn_status"],"updated_at"?: string,"user_id"?: string
                   }
                   Relationships: [
                     {
@@ -135,6 +319,12 @@ isOneToOne: false
 isOneToOne: false
       referencedRelation: "raw_emails"
       referencedColumns: ["id","user_id"]
+    },{
+      foreignKeyName: "transactions_recurring_rule_id_user_id_fkey"
+      columns: ["recurring_rule_id","user_id"]
+isOneToOne: false
+      referencedRelation: "recurring_rules"
+      referencedColumns: ["id","user_id"]
     }
                   ]
                 }
@@ -156,6 +346,7 @@ isOneToOne: false
 "note": string | null,
 "occurred_at": string,
 "raw_email_id": string | null,
+"recurring_rule_id": string | null,
 "source": Database["public"]['Enums']["txn_source"],
 "status": Database["public"]['Enums']["txn_status"],
 "updated_at": string,
@@ -183,6 +374,7 @@ isOneToOne: false
 "note": string | null,
 "occurred_at": string,
 "raw_email_id": string | null,
+"recurring_rule_id": string | null,
 "source": Database["public"]['Enums']["txn_source"],
 "status": Database["public"]['Enums']["txn_status"],
 "updated_at": string,
@@ -207,6 +399,7 @@ isOneToOne: false
 "note": string | null,
 "occurred_at": string,
 "raw_email_id": string | null,
+"recurring_rule_id": string | null,
 "source": Database["public"]['Enums']["txn_source"],
 "status": Database["public"]['Enums']["txn_status"],
 "updated_at": string,
@@ -220,7 +413,7 @@ isOneToOne: false
       } }
           }
           Enums: {
-            "account_type": "ewallet"|"savings"|"debit"|"credit"|"bnpl"|"loan","category_kind": "expense"|"income"|"transfer","institution_kind": "bank"|"ewallet"|"bnpl"|"other","raw_email_status": "pending"|"parsed"|"failed"|"flagged","txn_source": "manual"|"email"|"sms"|"recurring"|"statement","txn_status": "pending"|"confirmed"|"ignored"
+            "account_type": "ewallet"|"savings"|"debit"|"credit"|"bnpl"|"loan","category_kind": "expense"|"income"|"transfer","installment_frequency": "monthly"|"biweekly","institution_kind": "bank"|"ewallet"|"bnpl"|"other","interest_method": "diminishing"|"add_on","pay_frequency": "weekly"|"biweekly"|"semi_monthly"|"monthly"|"quarterly"|"yearly","raw_email_status": "pending"|"parsed"|"failed"|"flagged","txn_source": "manual"|"email"|"sms"|"recurring"|"statement","txn_status": "pending"|"confirmed"|"ignored"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -340,7 +533,7 @@ export const Constants = {
           }
         },"public": {
           Enums: {
-            "account_type": ["ewallet", "savings", "debit", "credit", "bnpl", "loan"],"category_kind": ["expense", "income", "transfer"],"institution_kind": ["bank", "ewallet", "bnpl", "other"],"raw_email_status": ["pending", "parsed", "failed", "flagged"],"txn_source": ["manual", "email", "sms", "recurring", "statement"],"txn_status": ["pending", "confirmed", "ignored"]
+            "account_type": ["ewallet", "savings", "debit", "credit", "bnpl", "loan"],"category_kind": ["expense", "income", "transfer"],"installment_frequency": ["monthly", "biweekly"],"institution_kind": ["bank", "ewallet", "bnpl", "other"],"interest_method": ["diminishing", "add_on"],"pay_frequency": ["weekly", "biweekly", "semi_monthly", "monthly", "quarterly", "yearly"],"raw_email_status": ["pending", "parsed", "failed", "flagged"],"txn_source": ["manual", "email", "sms", "recurring", "statement"],"txn_status": ["pending", "confirmed", "ignored"]
           }
         }
 } as const
