@@ -12,11 +12,14 @@ email Worker). Steps marked **you** need the owner's own accounts; never use the
    `pnpm exec supabase link --project-ref <ref>` and enter the database password.
    The ref is in the dashboard URL: `supabase.com/dashboard/project/<ref>`.
 3. `pnpm exec supabase db push --dry-run`, check the list, then `pnpm exec supabase db push`.
-4. Dashboard → Authentication → URL Configuration:
-   - Site URL: `https://budget.jadebonifacio.dev`
-   - Redirect URLs: `https://budget.jadebonifacio.dev/**` and the Vercel preview URL `https://*.vercel.app/**`
-5. Dashboard → Authentication → Emails → SMTP: required before friends can sign in (the built-in sender
-   only delivers to project team members). Use the chosen provider's SMTP host, user and key.
+4. Auth settings (site URL, redirect URLs, Resend SMTP, sign-in email template) live in
+   `supabase/production/supabase/config.toml`. Put the Resend API key in the gitignored
+   `supabase/production/supabase/.env` as `RESEND_API_KEY=re_...` (domain must be verified in Resend first), then:
+   `pnpm exec supabase config diff --workdir supabase/production --project-ref <ref>` to preview and
+   `pnpm exec supabase config push --workdir supabase/production --project-ref <ref>` to apply.
+   Only declared settings change. **Never** push the main `supabase/config.toml` to production: it holds
+   local-development values (localhost URLs, relaxed limits).
+5. Invite people by adding their emails to `ALLOWED_SIGNUP_EMAILS` in Vercel, then redeploy.
 6. Dashboard → Project Settings → API keys: copy the **publishable** key and the **secret** key for step 2.
 
 ## 2. Vercel

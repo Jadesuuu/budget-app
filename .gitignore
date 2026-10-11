@@ -55,3 +55,6 @@ supabase/.branches/
 # wrangler
 .dev.vars
 .wrangler/
+
+# production Supabase secrets (Resend key etc.)
+supabase/production/supabase/.env

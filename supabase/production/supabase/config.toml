@@ -1,0 +1,26 @@
+# Production auth settings ONLY. Pushed with:
+#   pnpm exec supabase config diff --workdir supabase/production --project-ref klosewjdbgkenswqtvdy
+#   pnpm exec supabase config push --workdir supabase/production --project-ref klosewjdbgkenswqtvdy
+# Only what is declared here changes; everything else on the project is left as is. Never push the main
+# supabase/config.toml to production: it holds local-development values.
+# Secrets come from supabase/production/supabase/.env (gitignored), e.g. RESEND_API_KEY=re_...
+
+project_id = "budget-app"
+
+[auth]
+site_url = "https://budget.jadebonifacio.dev"
+additional_redirect_urls = ["https://budget.jadebonifacio.dev/**", "https://budget-app-five-gray.vercel.app/**"]
+
+# Sign-in emails go through Resend so they reach anyone invited, not just Supabase team members.
+[auth.email.smtp]
+enabled = true
+host = "smtp.resend.com"
+port = 465
+user = "resend"
+pass = "env(RESEND_API_KEY)"
+admin_email = "no-reply@jadebonifacio.dev"
+sender_name = "Budget"
+
+[auth.email.template.magic_link]
+subject = "Your Budget sign-in link"
+content_path = "./supabase/templates/magic-link.html"
