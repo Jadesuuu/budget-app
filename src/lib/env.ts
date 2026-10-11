@@ -1,14 +1,19 @@
 import "server-only";
 import { z } from "zod";
 
+// Values pasted into a hosting dashboard often carry stray spaces or newlines; trim them all.
 const schema = z.object({
-  NEXT_PUBLIC_SUPABASE_URL: z.url(),
-  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: z.string().min(1),
-  INBOUND_EMAIL_DOMAIN: z.string().min(3),
+  NEXT_PUBLIC_SUPABASE_URL: z.string().trim().pipe(z.url()),
+  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: z.string().trim().min(1),
+  INBOUND_EMAIL_DOMAIN: z
+    .string()
+    .trim()
+    .toLowerCase()
+    .regex(/^[a-z0-9-]+(\.[a-z0-9-]+)+$/, "INBOUND_EMAIL_DOMAIN must be a bare domain like in.example.com"),
   ALLOWED_SIGNUP_EMAILS: z.string().default(""),
   // Server-only secrets for background jobs; optional so the app runs without them.
-  SUPABASE_SECRET_KEY: z.string().min(1).optional(),
-  PARSE_JOB_SECRET: z.string().min(24).optional(),
+  SUPABASE_SECRET_KEY: z.string().trim().min(1).optional(),
+  PARSE_JOB_SECRET: z.string().trim().min(24).optional(),
 });
 
 export const env = schema.parse({

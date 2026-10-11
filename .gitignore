@@ -58,3 +58,6 @@ supabase/.branches/
 
 # production Supabase secrets (Resend key etc.)
 supabase/production/supabase/.env
+
+# Production Worker secrets, uploaded with `wrangler secret bulk`
+.prod.vars

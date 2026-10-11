@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { PageHeader } from "@/components/page-header";
 import { getProfile } from "@/lib/auth";
 import { getEmailSetupStatus, getFilterCoverage } from "@/lib/data/email-setup";
+import { buildForwardingScript } from "@/lib/email/apps-script";
 import { env } from "@/lib/env";
 import { EmailSetupWizard } from "./wizard";
 
@@ -28,11 +29,13 @@ async function Wizard() {
   "use cache: private";
   cachedUserData();
   const [profile, status, coverage] = await Promise.all([getProfile(), getEmailSetupStatus(), getFilterCoverage()]);
+  const address = `${profile.inbound_alias}@${env.INBOUND_EMAIL_DOMAIN}`;
   return (
     <EmailSetupWizard
-      address={`${profile.inbound_alias}@${env.INBOUND_EMAIL_DOMAIN}`}
+      address={address}
       initial={status}
       coverage={coverage.names}
+      script={coverage.domains.length > 0 ? buildForwardingScript({ forwardTo: address, domains: coverage.domains }) : null}
     />
   );
 }

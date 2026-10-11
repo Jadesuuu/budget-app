@@ -1,8 +1,8 @@
 "use server";
 
-import { headers } from "next/headers";
 import { userDataChanged } from "@/lib/user-data";
 import { z } from "zod";
+import { siteOrigin } from "@/lib/site";
 import { requireUser } from "@/lib/auth";
 import { captureLinkLabelSchema } from "@/lib/capture/payload";
 import { generateCaptureToken, hashCaptureToken } from "@/lib/capture/token";
@@ -19,7 +19,7 @@ export async function createCaptureLink(_prev: CreateLinkState, formData: FormDa
   const token = generateCaptureToken();
   const { error } = await supabase.from("capture_links").insert({ label: label.data, token_hash: hashCaptureToken(token) });
   if (error) return { status: "error", message: "Couldn't create the link. Try again." };
-  const origin = (await headers()).get("origin") ?? "http://localhost:3000";
+  const origin = await siteOrigin();
   userDataChanged();
   // The only time the secret leaves the server: it is not stored, only its hash is.
   return { status: "created", url: `${origin}/api/capture/${token}`, endpoint: `${origin}/api/capture`, token, label: label.data };

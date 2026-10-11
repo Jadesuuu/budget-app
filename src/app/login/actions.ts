@@ -1,7 +1,7 @@
 "use server";
 
-import { headers } from "next/headers";
 import { z } from "zod";
+import { siteOrigin } from "@/lib/site";
 import { allowedSignupEmails } from "@/lib/env";
 import { createClient } from "@/lib/supabase/server";
 
@@ -20,7 +20,7 @@ export async function sendMagicLink(_prev: LoginState, formData: FormData): Prom
   if (!parsed.success) return { status: "error", message: "Enter a valid email address." };
 
   const email = parsed.data.email.toLowerCase();
-  const origin = (await headers()).get("origin") ?? "http://localhost:3000";
+  const origin = await siteOrigin();
   const supabase = await createClient();
   const { error } = await supabase.auth.signInWithOtp({
     email,

@@ -72,7 +72,7 @@ async function SettingsContent() {
         </div>
         <ol className="steps">
           <li>In Gmail, open Settings, then Forwarding and POP/IMAP, then Add a forwarding address. Paste the address above.</li>
-          <li>Gmail sends a confirmation code to Budget. It appears next to that mailbox below within a minute.</li>
+          <li>Gmail sends a confirmation to Budget. The setup guide shows it within a minute, with a Confirm button.</li>
           <li>Create a Gmail filter for your banks&apos; sender addresses and choose Forward it to this address.</li>
         </ol>
 

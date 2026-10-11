@@ -4,6 +4,9 @@
   "main": "src/index.ts",
   "compatibility_date": "2026-09-01",
   "observability": { "enabled": true },
+  // Reached only through Email Routing and its schedule, so no public workers.dev URL.
+  "workers_dev": false,
+  "preview_urls": false,
   // Safety net + keep-alive: re-runs the parse job and touches Supabase (free projects pause after a week idle).
   "triggers": { "crons": ["*/15 * * * *"] }
 }

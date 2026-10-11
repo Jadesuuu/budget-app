@@ -65,8 +65,18 @@ describe("readMessage", () => {
 describe("Gmail forwarding confirmation", () => {
   it("extracts the code and the mailbox that asked", async () => {
     const msg = await readMessage(fixture("gmail-forwarding-confirmation.eml"));
-    expect(readForwardingConfirmation(msg)).toEqual({ code: "123456789", requestedBy: "someone.example@gmail.com" });
-    expect(classify(msg, ctx)).toEqual({ kind: "gmail_confirmation", code: "123456789", requestedBy: "someone.example@gmail.com" });
+    const expected = { code: "123456789", confirmUrl: "https://mail-settings.google.com/mail/vf-SYNTHETIC", requestedBy: "someone.example@gmail.com" };
+    expect(readForwardingConfirmation(msg)).toEqual(expected);
+    expect(classify(msg, ctx)).toEqual({ kind: "gmail_confirmation", ...expected });
+  });
+
+  it("reads today's link-only confirmation, offering the confirm link and never the cancel link", async () => {
+    const msg = await readMessage(fixture("gmail-forwarding-confirmation-link.eml"));
+    expect(readForwardingConfirmation(msg)).toEqual({
+      code: null,
+      confirmUrl: "https://mail-settings.google.com/mail/vf-%5BSYNTHETICverifyTOKEN%5D-SYNTHETICsuffix",
+      requestedBy: "someone.example@gmail.com",
+    });
   });
 
   it("ignores look-alikes that are not from Google", async () => {

@@ -16,7 +16,7 @@ export type ClassifyContext = {
 
 /** What should happen to one raw email. Pure: the job runner performs the writes. */
 export type Outcome =
-  | { kind: "gmail_confirmation"; code: string; requestedBy: string }
+  | { kind: "gmail_confirmation"; code: string | null; confirmUrl: string | null; requestedBy: string }
   | { kind: "transaction"; parser: string; parserVersion: number; accountId: string; transaction: ParsedTransaction }
   | { kind: "statement"; parser: string; parserVersion: number; accountId: string; statement: ParsedStatement }
   | { kind: "info"; note: string; parser: string; parserVersion: number }

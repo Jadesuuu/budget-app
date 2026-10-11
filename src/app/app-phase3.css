@@ -188,3 +188,12 @@ select.input { appearance: auto; }
 .icon-btn svg { width: 20px; height: 20px; }
 :root[data-hide-balances] .private-value { display: none; }
 :root[data-hide-balances] .private::after { content: "₱•••••" / "Amount hidden"; letter-spacing: 0.08em; }
+
+/* Email setup: Gmail confirm link and the no-forwarding-button script */
+.confirm-url { word-break: break-all; font-size: 12px; }
+.no-fwd { margin-top: 4px; }
+.no-fwd p, .no-fwd .steps { margin-bottom: 12px; }
+.script-preview {
+  margin: 12px 0 0; max-height: 220px; overflow: auto; padding: 12px; border-radius: var(--radius-ctl);
+  background: var(--surface-2); font-size: 12px; line-height: 1.5; white-space: pre;
+}

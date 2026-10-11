@@ -94,7 +94,7 @@ export async function processPendingEmails(options: { limit?: number; userId?: s
       contexts.delete(email.user_id);
       await db
         .from("raw_emails")
-        .update({ ...base, status: "parsed", kind: "gmail_confirmation", note: `Gmail confirmation code for ${outcome.requestedBy}` })
+        .update({ ...base, status: "parsed", kind: "gmail_confirmation", note: `Gmail forwarding confirmation for ${outcome.requestedBy}` })
         .eq("id", email.id);
       summary.confirmations++;
     } else if (outcome.kind === "transaction") {

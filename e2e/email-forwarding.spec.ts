@@ -54,8 +54,11 @@ test("the setup wizard picks up Gmail's code and the first email by itself", asy
   await expect(page.getByRole("link", { name: "Download your filter" })).toBeVisible();
   await expect(page.getByText("leave Disable forwarding selected")).toBeVisible();
 
-  sendEmail("gmail-forwarding-confirmation.eml");
-  await expect(page.locator(".big-code code")).toHaveText("123456789", { timeout: 30_000 });
+  // Today's Gmail sends only a link; the guide turns it into a Confirm button (never the cancel link).
+  sendEmail("gmail-forwarding-confirmation-link.eml");
+  const confirm = page.getByRole("link", { name: "Confirm in Gmail" });
+  await expect(confirm).toHaveAttribute("href", /^https:\/\/mail-settings\.google\.com\/mail\/vf-/, { timeout: 30_000 });
+  await expect(page.getByText("signed in to someone.example@gmail.com").first()).toBeVisible();
   await expect(page.locator(".wizard-step").nth(1)).toHaveClass(/complete/);
   await expect(page.locator(".wizard-step").nth(2)).not.toHaveClass(/complete/);
 
@@ -68,4 +71,9 @@ test("the setup wizard picks up Gmail's code and the first email by itself", asy
   const xml = await filter.text();
   expect(xml).toContain("value='atome.ph OR bpi.com.ph OR eastwestbanker.com OR gcash.com'");
   expect(xml).toMatch(/name='forwardTo' value='u_[a-z0-9]{10}@in.jadebonifacio.dev'/);
+
+  // Gmail accounts without "Add a forwarding address" get a ready-made script instead.
+  await page.getByText("No \"Add a forwarding address\" button in Gmail?").click();
+  await expect(page.locator(".script-preview")).toContainText(/const BUDGET_ADDRESS = "u_[a-z0-9]{10}@in\.jadebonifacio\.dev";/);
+  await expect(page.getByRole("button", { name: "Copy script" })).toBeVisible();
 });
