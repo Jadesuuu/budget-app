@@ -153,3 +153,7 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
   .shell-2col .main { max-width: 880px; width: 100%; }
   .rail .brand { color: var(--accent); }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+}

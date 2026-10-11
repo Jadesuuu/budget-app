@@ -51,7 +51,7 @@ async function HomeContent() {
               </Link>
             </li>
             <li>
-              <Link href="/settings#forwarding">
+              <Link href="/settings/email-setup">
                 <span>Forward your bank emails to your Budget address</span>
                 <ChevronRight aria-hidden />
               </Link>

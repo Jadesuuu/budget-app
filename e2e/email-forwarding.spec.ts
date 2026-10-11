@@ -43,3 +43,24 @@ test("an email from an unknown sender is held back, not imported", async ({ page
   await page.goto("/review");
   await expect(page.locator(".txn-card", { hasText: /JOLLIBEE KATIPUNAN/ })).toHaveCount(0);
 });
+
+test("the setup wizard picks up Gmail's code and the first email by itself", async ({ page }, testInfo) => {
+  resetDemoData();
+  await signIn(page);
+  await page.goto("/settings/email-setup");
+  await expect(page.getByText("Waiting for Gmail")).toBeVisible();
+  await expect(page.getByText("Not ready yet")).toBeVisible();
+  await expect(page.getByText("leave Disable forwarding selected")).toBeVisible();
+
+  sendEmail("gmail-forwarding-confirmation.eml");
+  await expect(page.locator(".big-code code")).toHaveText("123456789", { timeout: 30_000 });
+  await expect(page.locator(".wizard-step").nth(1)).toHaveClass(/complete/);
+  await expect(page.locator(".wizard-step").nth(2)).not.toHaveClass(/complete/);
+
+  sendEmail("auto-forward.eml");
+  await expect(page.getByText("Got it:")).toBeVisible({ timeout: 30_000 });
+  await page.screenshot({ path: `.impeccable/review/app-email-setup-${testInfo.project.name}.png`, fullPage: true });
+
+  const filter = await page.request.get("/settings/email-setup/filter");
+  expect(filter.status()).toBe(409);
+});

@@ -50,6 +50,9 @@ async function SettingsContent() {
           Forward bank and e-wallet emails to this address and they show up in Review. Budget only sees what you
           forward.
         </p>
+        <Link href="/settings/email-setup" className="btn primary">
+          Set up with a guide
+        </Link>
         <div className="alias-box">
           <code>{address}</code>
           <CopyButton value={address} label="Copy address" />

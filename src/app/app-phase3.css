@@ -118,3 +118,35 @@ select.input { appearance: auto; }
 .email-main { min-width: 0; display: grid; gap: 2px; }
 .email-main .row-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .email-status { font-size: 13px; font-weight: 500; }
+
+/* email setup wizard */
+.wizard { list-style: none; display: grid; gap: 0; max-width: 640px; }
+.wizard-step { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; position: relative; padding-bottom: 28px; }
+.wizard-step:not(:last-child)::before {
+  content: ""; position: absolute; left: 17px; top: 40px; bottom: 4px; width: 2px; background: var(--line);
+}
+.wizard-step.complete:not(:last-child)::before { background: var(--accent); }
+.wizard-marker {
+  width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font-weight: 700;
+  background: var(--surface); border: 2px solid var(--line-strong); color: var(--ink);
+}
+.wizard-step.complete .wizard-marker { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.wizard-marker svg { width: 18px; height: 18px; }
+.wizard-body { display: grid; gap: 12px; padding-top: 5px; min-width: 0; }
+.wizard-body h2 { font-family: var(--tf-display); font-weight: var(--display-weight); letter-spacing: var(--display-tracking); font-size: 18px; line-height: 1.25; }
+.wizard-body p { font-size: 14.5px; }
+.wizard-body .btn { justify-self: start; }
+.wizard-body a:not(.btn) { color: var(--accent); font-weight: 600; text-underline-offset: 3px; }
+.big-code {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 16px; border-radius: var(--radius-card); background: var(--surface); border: var(--card-border);
+}
+.big-code code { font-size: 28px; font-weight: 800; letter-spacing: .12em; font-variant-numeric: tabular-nums; }
+.waiting { display: flex; gap: 10px; align-items: center; color: var(--muted); }
+.spin { width: 18px; height: 18px; animation: spin 1s linear infinite; flex: none; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.warning-box {
+  display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: var(--radius-ctl);
+  background: var(--danger-soft); color: var(--ink); font-size: 14px;
+}
+.warning-box svg { color: var(--danger); width: 20px; height: 20px; flex: none; margin-top: 1px; }
