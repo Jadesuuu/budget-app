@@ -1,0 +1,65 @@
+From: <someone.example@gmail.com>
+To: u_test000000@in.jadebonifacio.dev
+Subject: Fwd: Pay via QR Notification
+Date: Mon, 12 Oct 2026 05:43:02 +0000
+Message-ID: <fixture-fixtures-emails-bpi-qr-pay-notification-possible-error-eml@budget.test>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="fixture-boundary"
+
+--fixture-boundary
+Content-Type: text/plain; charset=utf-8
+
+---------- Forwarded message ---------
+From: BPI Online <onlinebanking@bpi.com.ph>
+Date: Mon, 12 Oct 2026 05:34:01 +0000
+Subject: Pay via QR Notification
+To: someone.example@gmail.com
+
+Pay To Merchant Confirmation
+
+Dear JUAN,
+
+Your Pay via QR transaction was processed by BPI and should have been
+credited to the merchant in real time. However, our system has detected a
+possible error during the time of transaction thus the payment may not have
+been credited to the receiving account.
+
+If the payment did not reflect on the merchant's account, please expect a
+refund to be credited to your account within 1-2 banking days.
+
+If the money is not refunded after 1-2 banking days, kindly advise the
+recipient to coordinate with their bank for checking. You may also visit
+the Contact Us page on the BPI website or call our 24-hour BPI Contact
+Center at (+632) 889-10000.
+*Pay via QR Transaction Details*
+Transaction Date and Time Monday, Oct 12 2026; 01:33:20 PM (GMT+8)
+Confirmation Number R***************0001
+Pay From XXXX-XXX-123 (SAVINGS ACCOUNT)
+Pay To SeaMoney Credit PH
+Amount PHP 4,406.47
+Notes
+
+*Important Reminders:*
+
+• We will never ask for your bank details in exchange for these commonly
+used credit card perks and benefits such as: annual fee waiver, card
+upgrade, rewards points redemption and credit card limit increase.
+
+• Never give your OTP, username, account number, birthdate and credit card
+details such as CVV and expiry date.
+
+• Always check your SMS and email alerts. If you notice any suspicious
+activity, please lock your access or change your password immediately.
+
+Thank you for using BPI.
+
+BPI Digital Channels Team
+
+*** This is a system generated message. *DO NOT REPLY TO THIS EMAIL.* ***
+
+--fixture-boundary
+Content-Type: text/html; charset=utf-8
+
+<div>---------- Forwarded message ---------<br>From: BPI Online &lt;<a href="mailto:onlinebanking@bpi.com.ph">onlinebanking@bpi.com.ph</a>&gt;<br>Date: Mon, 12 Oct 2026 05:34:01 +0000<br>Subject: Pay via QR Notification<br>To: <a href="mailto:someone.example@gmail.com">someone.example@gmail.com</a></div><br><html><head><title>Pay To Merchant Confirmation</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link href="https://example.com/redacted" rel="stylesheet" type="text/css"><style>body{font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;font-size:12px}body,html{padding:0 100px;line-height:20px}.content{font-size:10pt}.th-title{text-align:center}table{margin:0 auto}table,td,th{border:1.5px solid #000;border-collapse:collapse}td,th{padding:5px;text-align:left}.reminder-section{font-size:10pt}</style></head><body style="margin:0;padding:0"><p><span class="">Dear <span>JUAN</span>,</span></p><p>Your Pay via QR transaction was processed by BPI and should have been credited to the merchant in real time. However, our system has detected a possible error during the time of transaction thus the payment may not have been credited to the receiving account.</p><p>If the payment did not reflect on the merchant&#39;s account, please expect a refund to be credited to your account within 1-2 banking days.</p><p>If the money is not refunded after 1-2 banking days, kindly advise the recipient to coordinate with their bank for checking. You may also visit the Contact Us page on the BPI website or call our 24-hour BPI Contact Center at (+632) 889-10000.</p><table class="table-content"><tr><th class="th-title" colspan="2"><strong>Pay via QR Transaction Details</strong></th></tr><tr><td>Transaction Date and Time</td><td>Monday, Oct 12 2026; 01:33:20 PM (GMT+8)</td></tr><tr><td>Confirmation Number</td><td>R***************0001</td></tr><tr><td>Pay From</td><td>XXXX-XXX-123 (SAVINGS ACCOUNT)</td></tr><tr><td>Pay To</td><td>SeaMoney Credit PH</td></tr><tr><td>Amount</td><td>PHP 4,406.47</td></tr><tr><td>Notes</td><td></td></tr></table><br><br><center><table><tbody><tr><td class="reminder-section"><b>Important Reminders:</b><br><br>• We will never ask for your bank details in exchange for these commonly used credit card perks and benefits such as: annual fee waiver, card upgrade, rewards points redemption and credit card limit increase.<br><br>• Never give your OTP, username, account number, birthdate and credit card details such as CVV and expiry date.<br><br>• Always check your SMS and email alerts. If you notice any suspicious activity, please lock your access or change your password immediately.</td></tr></tbody></table></center><br><p>Thank you for using BPI.</p><p>BPI Digital Channels Team</p><p>*** This is a system generated message. <b>DO NOT REPLY TO THIS EMAIL.</b> ***</p></body></html>
+
+--fixture-boundary--

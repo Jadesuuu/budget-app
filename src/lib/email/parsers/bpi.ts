@@ -50,23 +50,29 @@ export const bpiInstapayOutgoing: TemplateParser = {
   },
 };
 
-/** "Pay ... via QR" (QR Ph payment from a BPI account, e.g. "Pay TikTok PayLater Repayment via QR"). */
+/**
+ * QR Ph payment from a BPI account: "Pay TikTok PayLater Repayment via QR" (completed), or "Pay via QR
+ * Notification" (processed, but BPI flags a possible error and refunds within 1-2 banking days if needed).
+ */
 export const bpiQrPayment: TemplateParser = {
   id: "bpi.qr-payment",
-  version: 1,
+  version: 2,
   institution: "bpi",
-  matches: (m) => m.from === BPI_ONLINE && /^pay .+ via qr$/i.test(m.subject),
+  matches: (m) => m.from === BPI_ONLINE && /^pay (.+ )?via qr\b/i.test(m.subject),
   parse: (m) => {
     // The email opens with a "Pay To Merchant Confirmation" heading; read only the details block.
-    const start = m.text.search(/Pay via QR Details/i);
+    const start = m.text.search(/Pay via QR (Transaction )?Details/i);
     const text = start >= 0 ? m.text.slice(start) : m.text;
     const amount = pesoAmount(field(text, "Amount") ?? "");
-    const occurredAt = manilaDateTime(field(text, "Date and Time") ?? "") ?? m.date;
+    const when = field(text, "Transaction Date and Time") ?? field(text, "Date and Time") ?? "";
+    const occurredAt = manilaDateTime(when) ?? m.date;
     if (!amount || !occurredAt) return null;
+    const payee = field(text, "Pay To") ?? "QR payment";
+    const maybeFailed = /possible error/i.test(m.text);
     return {
       amountCentavos: -amount,
       occurredAt,
-      merchant: field(text, "Pay To") ?? "QR payment",
+      merchant: maybeFailed ? `${payee} (BPI: may not have gone through)` : payee,
       last4: maskedLast4(field(text, "Pay From")?.replace(/\s*\(.*$/, "") ?? null),
       accountType: "savings",
     };
