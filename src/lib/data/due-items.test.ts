@@ -12,13 +12,22 @@ const sources: DueSources = {
 };
 
 describe("mergeDueItems", () => {
-  it("sorts by due date and drops statements paid to the minimum", () => {
+  it("sorts by due date and keeps a statement paid to its minimum as the rest to pay in full", () => {
     expect(mergeDueItems(sources).map((i) => i.key)).toEqual([
       "installment:i1",
       "statement:s1",
+      "statement:s2",
       "statement:s3",
       "loan:l1",
     ]);
+    const s2 = mergeDueItems(sources).find((i) => i.key === "statement:s2");
+    expect(s2).toMatchObject({ amount: 450000, amountLabel: "Left to pay in full", minimumMet: true, minimumLeft: 0 });
+  });
+
+  it("drops a minimum-paid statement after its due date, and a fully paid one at once", () => {
+    expect(mergeDueItems(sources, "2026-10-21").some((i) => i.key === "statement:s2")).toBe(false);
+    const paid = { ...sources, statements: [{ ...sources.statements[0], paid: 1845020 }] };
+    expect(mergeDueItems(paid).some((i) => i.key === "statement:s1")).toBe(false);
   });
 
   it("shows the remaining minimum on part-paid statements", () => {
@@ -30,5 +39,13 @@ describe("mergeDueItems", () => {
     const items = mergeDueItems(sources);
     expect(items.find((i) => i.key === "statement:s1")?.name).toBe("BPI Credit ••4417");
     expect(items.find((i) => i.key === "loan:l1")?.detail).toBe("Payment 2 of 12");
+  });
+});
+
+describe("fullAmount", () => {
+  it("is a statement's unpaid balance, or the payment itself", () => {
+    const items = mergeDueItems(sources);
+    expect(items.find((i) => i.key === "statement:s3")?.fullAmount).toBe(280000);
+    expect(items.find((i) => i.key === "loan:l1")?.fullAmount).toBe(888488);
   });
 });

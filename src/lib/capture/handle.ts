@@ -5,6 +5,7 @@ import { classifyCapture, isOneTimeCode, messageInstitution } from "./classify";
 import { dedupeKey, readCaptureMessage, readEventId } from "./payload";
 import { loadCaptureInstitutions, processPendingMessages } from "./run";
 import { hashCaptureToken, isCaptureToken } from "./token";
+import { runNotifications } from "@/lib/notify/run";
 
 const MAX_REQUEST_BYTES = 16_000;
 
@@ -54,7 +55,12 @@ export async function handleCapture(request: Request, token: string | null): Pro
 
   if (result.result === "stored" && known && result.user_id) {
     const userId = result.user_id;
-    after(() => processPendingMessages({ userId, limit: 20 }).then(() => undefined));
+    // Read it, then alert right away if it pushed today over (instead of waiting for the next scheduled run).
+    after(() =>
+      processPendingMessages({ userId, limit: 20 })
+        .then(() => runNotifications({ userId }))
+        .then(() => undefined),
+    );
   }
   const status = known ? result.result : "ignored";
   // Message487 wants its event echoed back as accepted; "result" keeps what Budget did with it.

@@ -15,6 +15,8 @@ import { Private } from "@/components/private-amount";
 import { CircleAlert } from "lucide-react";
 import { ReviewInbox } from "@/components/review-inbox";
 import { monthName, todayInManila } from "@/lib/dates";
+import { getBudgetToday } from "@/lib/data/spending";
+import { TodayStrip } from "@/components/today-strip";
 
 export default function HomePage() {
   return (
@@ -38,12 +40,13 @@ async function HomeContent() {
   "use cache: private";
   cachedUserData();
   const { supabase } = await getSession();
-  const [inbox, accounts, due, checks, accountList] = await Promise.all([
+  const [inbox, accounts, due, checks, accountList, budget] = await Promise.all([
     getInbox(),
     supabase.from("accounts").select("id", { count: "exact", head: true }).is("archived_at", null),
     getDueSoon(),
     getBalanceChecks(),
     getAccountsWithBalances(),
+    getBudgetToday(),
   ]);
   const offBalance = accountList.flatMap((a) => {
     const check = checks.get(a.id);
@@ -52,6 +55,8 @@ async function HomeContent() {
   if (accounts.error) throw accounts.error;
   const pendingCount = inbox.items.length;
   const hasAccounts = (accounts.count ?? 0) > 0;
+  const cashShort = hasAccounts && budget.safe.cash !== 0 && budget.safe.safe < 0;
+  const overLimits = budget.limits.filter((l) => l.state === "over");
 
   return (
     <>
@@ -78,10 +83,34 @@ async function HomeContent() {
         </section>
       )}
 
-      {offBalance.length > 0 && (
+      {hasAccounts && <TodayStrip budget={budget} />}
+
+      {(offBalance.length > 0 || cashShort || overLimits.length > 0) && (
         <section className="attention" aria-labelledby="attention-h">
           <h2 id="attention-h">Needs a look</h2>
           <ul>
+            {cashShort && (
+              <li>
+                <Link href="/spending">
+                  <CircleAlert aria-hidden />
+                  <span>
+                    Bills before payday are <Private>{formatPeso(-budget.safe.safe)}</Private> more than your accounts hold
+                  </span>
+                  <ChevronRight aria-hidden />
+                </Link>
+              </li>
+            )}
+            {overLimits.map((l) => (
+              <li key={l.id}>
+                <Link href="/spending">
+                  <CircleAlert aria-hidden />
+                  <span>
+                    <b>{l.name}</b> is {formatPeso(l.spent - l.limit)} over its {formatPeso(l.limit)} limit
+                  </span>
+                  <ChevronRight aria-hidden />
+                </Link>
+              </li>
+            ))}
             {offBalance.map((a) => (
               <li key={a.id}>
                 <Link href={`/accounts/${a.id}`}>

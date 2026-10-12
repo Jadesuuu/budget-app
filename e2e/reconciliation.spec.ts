@@ -86,6 +86,6 @@ test("an EastWest statement email fills in the due date and minimum", async ({ p
   await expect(page.locator(".due-row", { hasText: "₱911.21" })).toContainText("EastWest ••8830");
 
   await openAccount(page, "EastWest");
-  await expect(page.locator(".due-row", { hasText: "Due 2026-10-21" })).toContainText("₱26,034.58");
+  await expect(page.locator(".due-row", { hasText: "Due Oct 21, 2026" })).toContainText("₱26,034.58");
   await expect(page.getByText("EastWest said you owed ₱26,034.58")).toBeVisible();
 });

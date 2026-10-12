@@ -17,6 +17,7 @@ import { centavosToInput } from "@/lib/money-input";
 import { AccountForm } from "../account-form";
 import { adoptBankBalance, archiveAccount } from "../actions";
 import { BalanceForm } from "./balance-form";
+import { BillForm } from "./bill-form";
 import { UndoAutoConfirm } from "./undo-auto-confirm";
 
 export const metadata: Metadata = { title: "Account" };
@@ -119,32 +120,47 @@ async function AccountView({ id }: { id: string }) {
         </Link>
       </section>
 
-      {statements.data.length > 0 && (
+      {owed && (
         <section aria-labelledby="statements-h">
-          <div className="sec-head"><h2 id="statements-h">Statements</h2></div>
-          <ul className="due-list">
-            {statements.data.map((s) => {
-              const { day, month } = dayAndMonth(s.due_date);
-              return (
-                <li key={s.id} className="due-row">
-                  <div className="due-tile" aria-hidden>
-                    <span className="d">{day}</span>
-                    <span className="m">{month}</span>
-                  </div>
-                  <div>
-                    <p className="due-name">Due {s.due_date}</p>
-                    <p className="due-sub">
-                      {s.minimum_due_centavos > 0 ? `Minimum ${formatPeso(s.minimum_due_centavos)}, ` : ""}from {s.source === "sms" ? "a text" : s.source}
-                    </p>
-                  </div>
-                  <div className="due-amt">
-                    <p className="v"><Private>{formatPeso(s.statement_balance_centavos)}</Private></p>
-                    <p className="l">{s.amount_paid_centavos >= s.statement_balance_centavos ? "Paid" : "Statement"}</p>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
+          <div className="sec-head"><h2 id="statements-h">{a.type === "credit" ? "Statements" : "Bills"}</h2></div>
+          {statements.data.length === 0 ? (
+            <p className="quiet-empty">No bills yet. They come in from your bank&apos;s emails and texts, or add one below.</p>
+          ) : (
+            <ul className="due-list">
+              {statements.data.map((s) => {
+                const { day, month } = dayAndMonth(s.due_date);
+                const paid =
+                  s.amount_paid_centavos >= s.statement_balance_centavos
+                    ? "Paid"
+                    : s.amount_paid_centavos >= s.minimum_due_centavos && s.amount_paid_centavos > 0
+                      ? "Minimum paid"
+                      : "Statement";
+                return (
+                  <li key={s.id} className="due-row">
+                    <div className="due-tile" aria-hidden>
+                      <span className="d">{day}</span>
+                      <span className="m">{month}</span>
+                    </div>
+                    <div>
+                      <p className="due-name">Due {month} {Number(day)}, {s.due_date.slice(0, 4)}</p>
+                      <p className="due-sub">
+                        {s.minimum_due_centavos > 0 ? `Minimum ${formatPeso(s.minimum_due_centavos)}, ` : ""}
+                        {s.source === "manual" ? "added by hand" : `from ${s.source === "sms" ? "a text" : `an ${s.source}`}`}
+                      </p>
+                    </div>
+                    <div className="due-amt">
+                      <p className="v"><Private>{formatPeso(s.statement_balance_centavos)}</Private></p>
+                      <p className="l">{paid}</p>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+          <details className="edit-details bill-details">
+            <summary>Add a bill by hand</summary>
+            <BillForm accountId={a.id} today={todayInManila()} isCard={a.type === "credit"} />
+          </details>
         </section>
       )}
 

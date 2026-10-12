@@ -29,7 +29,7 @@ export const getProfile = cache(async () => {
   const { supabase, userId, email } = await getSession();
   const { data, error } = await supabase
     .from("profiles")
-    .select("display_name, theme, mode, inbound_alias")
+    .select("display_name, theme, mode, inbound_alias, monthly_income_centavos, spending_limit_centavos, paydays, notify_bills, notify_spending")
     .eq("user_id", userId)
     .single();
   if (error) throw error;

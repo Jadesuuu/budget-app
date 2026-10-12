@@ -9,6 +9,7 @@ import { env } from "@/lib/env";
 import { modeSchema, themeIdSchema, DEFAULT_MODE, DEFAULT_THEME } from "@/lib/themes";
 import { signOut } from "./actions";
 import { AppearanceForm } from "./appearance-form";
+import { AlertsForm } from "./alerts/alerts-form";
 import { removeForwardingSource } from "./email-actions";
 import { NameForm } from "./name-form";
 import { SourceForm } from "./source-form";
@@ -31,11 +32,12 @@ async function SettingsContent() {
   cachedUserData();
   const profile = await getProfile();
   const { supabase } = await getSession();
-  const { data: sources, error } = await supabase
-    .from("forwarding_sources")
-    .select("id, email, added_by, confirmation_code")
-    .order("created_at");
+  const [{ data: sources, error }, devices] = await Promise.all([
+    supabase.from("forwarding_sources").select("id, email, added_by, confirmation_code").order("created_at"),
+    supabase.from("push_subscriptions").select("id", { count: "exact", head: true }),
+  ]);
   if (error) throw error;
+  if (devices.error) throw devices.error;
   const address = `${profile.inbound_alias}@${env.INBOUND_EMAIL_DOMAIN}`;
   const theme = themeIdSchema.catch(DEFAULT_THEME).parse(profile.theme);
   const mode = modeSchema.catch(DEFAULT_MODE).parse(profile.mode);
@@ -45,6 +47,16 @@ async function SettingsContent() {
       <section className="settings-sec" aria-labelledby="appearance-h">
         <h2 id="appearance-h" className="settings-h">Theme</h2>
         <AppearanceForm initialTheme={theme} initialMode={mode} />
+      </section>
+
+      <section className="settings-sec" id="alerts" aria-labelledby="alerts-h">
+        <h2 id="alerts-h" className="settings-h">Alerts</h2>
+        <p className="settings-p">Get a notification when a bill is coming up or today&apos;s spending runs out.</p>
+        <AlertsForm
+          publicKey={env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? null}
+          prefs={{ bills: profile.notify_bills, spending: profile.notify_spending }}
+          devices={devices.count ?? 0}
+        />
       </section>
 
       <section className="settings-sec" aria-labelledby="phone-h">

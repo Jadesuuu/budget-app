@@ -826,9 +826,18 @@ Shared, theme-independent shapes: pills (999px) for chips, counts, badges, the s
 - **Review count:** 28px accent pill beside "To review", amount face, tabular. Coal & Brass renders it as a brass plate; Bubblegum as a tilted sticker.
 
 ### Due Soon Rows
-- **Row:** surface, card border and radius, 12px padding, three columns (54 by 58px date tile, name and detail, amount and when-label). Ellipsis on long names.
+- **Row:** surface, card border and radius, 12px padding, four columns (54 by 58px date tile, name and detail, amount and when-label, a 44 by 48px "Paid" button in the control radius). Ellipsis on long names.
+- **Paid:** loans and installments save on one tap; card statements open full-width choices under the row ("Minimum ₱X", "In full ₱Y", "Other amount"). Either way it saves at once and the shared toast offers Undo; focus moves to Undo. A statement with its minimum paid stays until its due date as "Left to pay in full", dashed border and recessed tile, never late.
 - **Overdue:** row border turns danger; the tile fills with danger (white text in light, near-black #1A0806 in dark); the when-label becomes danger 600 text preceded by a circle-alert icon ("1 day late"). Barako keeps its stamp transparent and inks it in danger; Courtside's scoreboard shows red digits.
 - **Estimate:** a full-width muted caption under the row with a trending-up icon; the sentence ends with the word "Estimate."
+
+### Today Strip (Home)
+- One line directly under the month title, 48px tall, a hairline below it, no card: "₱2,015.66 left today" (amount in the amount face at 19px) and, muted and right-aligned, "₱6,047.00 until payday", then a chevron. Over today's amount it leads with the circle-alert icon and says "over today". It never grows: anything that needs action (bills more than the accounts hold, a category over its limit) goes to "Needs a look". Review stays the hero below it, Due soon after Review.
+
+### Pay Period Ribbon (Spending)
+- The Spending page leads with today's amount (amount face, 40px phone / 48px desktop, with "left for today" in the display face at 19px, muted), one sentence on the period, one reassurance line, then the ribbon.
+- **Ribbon:** one column per day from payday to the day before the next, 104px tall, 3px gaps, recessed column track. Past days fill with accent mixed 55% into the track; today fills solid accent with a dashed accent outline up to today's amount on the accent wash; days ahead are dashed line-strong outlines at what each can take. A dashed line-strong rule marks the even split, so an over-spent day shows by height, not colour. Labels: first day, every 7th, "Today" (ink, 700), last day. Columns are buttons; the picked one gets a 2px ink outline and its figures show in the line below. "Show as a table" sits under it for screen readers and exact numbers.
+- Below it: Before payday (due rows due by the period's end, then a muted "after these, your accounts have ₱X" line, or a danger-wash flag when they fall short), the month ("October so far" with 44px step buttons, a one-sentence summary, Where it went with limit meters), Subscriptions when found, and a folded "Trends" disclosure (month against last month, top places, last six months; the current month's bar is dashed and marked "so far").
 
 ### Cards / Containers
 - **Month card:** surface, card border and radius, 16px padding; spent figure, "spent of ₱X planned", a 14px pill bar with 2px gaps between series segments, and a legend.

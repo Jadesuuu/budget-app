@@ -36,6 +36,8 @@ email Worker). Steps marked **you** need the owner's own accounts; never use the
    | `INBOUND_EMAIL_DOMAIN` | `in.jadebonifacio.dev` |
    | `ALLOWED_SIGNUP_EMAILS` | comma-separated invited emails |
    | `PARSE_JOB_SECRET` | 48+ random hex chars (`node -e "console.log(require('crypto').randomBytes(24).toString('hex'))"`) |
+   | `NEXT_PUBLIC_VAPID_PUBLIC_KEY` / `VAPID_PRIVATE_KEY` | a fresh pair for production (`node -e "console.log(require('web-push').generateVAPIDKeys())"`); never reuse the local pair. Without them, alerts are off |
+   | `VAPID_SUBJECT` | `mailto:jade@jadebonifacio.dev` (push services contact this if something goes wrong) |
 
 3. Deploy, then Settings → Domains → add `budget.jadebonifacio.dev` (Vercel shows the CNAME to create).
 

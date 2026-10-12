@@ -41,7 +41,7 @@ if (!user) {
 const uid = user.id;
 
 // 2. Clear this user's data (accounts cascade to transactions, cards, statements, loans, plans).
-for (const table of ["accounts", "income_sources", "institutions", "categories", "raw_emails", "raw_messages", "capture_links"] as const) {
+for (const table of ["accounts", "income_sources", "institutions", "categories", "raw_emails", "raw_messages", "capture_links", "savings_goals", "category_settings", "push_subscriptions", "notification_log"] as const) {
   must(await db.from(table).delete().eq("user_id", uid).select("user_id"), `clear ${table}`);
 }
 must(await db.from("forwarding_sources").delete().eq("user_id", uid).neq("added_by", "account").select("user_id"), "clear forwarding sources");
@@ -138,4 +138,70 @@ for (const t of pending) {
   );
 }
 
-console.log(`Demo data ready for ${email}: ${accountRows.length} accounts, ${pending.length} transactions to review.`);
+// 6. Sample spending history (synthetic), a spending plan and savings goals, for the Spending page.
+// History goes on the two credit cards only: the e2e tests check exact cash balances (GCash, Maya, BPI Savings).
+// A fixed pseudo-random sequence so every reset looks the same.
+let seed = 7;
+const rand = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+const everyday = [
+  { account: "BPI Credit", merchant: "7-Eleven", category: "Food", min: 6000, max: 25000 },
+  { account: "EastWest", merchant: "Jollibee", category: "Food", min: 15000, max: 45000 },
+  { account: "BPI Credit", merchant: "SM Supermarket", category: "Groceries", min: 80000, max: 320000 },
+  { account: "BPI Credit", merchant: "Grab ride", category: "Transport", min: 12000, max: 38000 },
+  { account: "EastWest", merchant: "Angkas", category: "Transport", min: 9000, max: 22000 },
+  { account: "BPI Credit", merchant: "Shopee", category: "Shopping", min: 25000, max: 180000 },
+  { account: "EastWest", merchant: "Smart Load", category: "Load & subscriptions", min: 9900, max: 29900 },
+  { account: "BPI Credit", merchant: "Mercury Drug", category: "Health", min: 15000, max: 90000 },
+  { account: "BPI Credit", merchant: "SM Cinema", category: "Entertainment", min: 35000, max: 70000 },
+] as const;
+const history = [];
+for (let daysAgo = 75; daysAgo >= 1; daysAgo--) {
+  const count = Math.floor(rand() * 3) + (rand() < 0.3 ? 1 : 0);
+  for (let k = 0; k < count; k++) {
+    const item = everyday[Math.floor(rand() * everyday.length)];
+    const amount = item.min + Math.round((rand() * (item.max - item.min)) / 100) * 100;
+    const at = ago(daysAgo * DAY + Math.floor(rand() * 10) * 3_600_000);
+    history.push({
+      user_id: uid, account_id: acct(item.account), amount_centavos: -amount, occurred_at: at, merchant: item.merchant,
+      category_id: cat(item.category), status: "confirmed" as const, source: "email" as const, confirmed_at: at,
+    });
+  }
+}
+// Subscriptions: same amount every month, so the Spending page spots them.
+for (const daysAgo of [72, 42, 12]) {
+  for (const sub of [
+    { account: "EastWest", merchant: "NETFLIX.COM", amount: 54900 },
+    { account: "BPI Credit", merchant: "Spotify Premium", amount: 19400 },
+  ]) {
+    const at = ago(daysAgo * DAY + 3 * 3_600_000);
+    history.push({
+      user_id: uid, account_id: acct(sub.account), amount_centavos: -sub.amount, occurred_at: at, merchant: sub.merchant,
+      category_id: cat("Load & subscriptions"), status: "confirmed" as const, source: "email" as const, confirmed_at: at,
+    });
+  }
+}
+must(await db.from("transactions").insert(history).select("id"), "spending history");
+must(
+  await db.from("category_settings").insert([
+    { user_id: uid, category_id: cat("Bills")!, fixed: true },
+    { user_id: uid, category_id: cat("Food")!, fixed: false, monthly_limit_centavos: 300000 },
+    { user_id: uid, category_id: cat("Shopping")!, fixed: false, monthly_limit_centavos: 200000 },
+  ]).select("category_id"),
+  "category settings",
+);
+must(
+  await db.from("profiles").update({ monthly_income_centavos: 4500000, spending_limit_centavos: 2500000, paydays: [15, 31] }).eq("user_id", uid).select("user_id"),
+  "spending plan",
+);
+must(
+  await db.from("savings_goals").insert([
+    { user_id: uid, name: "Emergency fund", target_centavos: 10000000, saved_centavos: 3250000, target_date: manilaDate(240) },
+    { user_id: uid, name: "Japan trip", target_centavos: 6000000, saved_centavos: 850000, target_date: manilaDate(160) },
+  ]).select("id"),
+  "savings goals",
+);
+
+console.log(
+  `Demo data ready for ${email}: ${accountRows.length} accounts, ${pending.length} transactions to review, ` +
+    `${history.length} past transactions, 2 savings goals.`,
+);

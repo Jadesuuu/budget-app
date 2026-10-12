@@ -3,6 +3,7 @@
 @import "./app.css";
 @import "./app-extra.css";
 @import "./app-phase3.css";
+@import "./app-spending.css";
 
 /* Expose theme tokens to Tailwind utilities (bg-surface, text-muted, font-display, ...). */
 @theme inline {

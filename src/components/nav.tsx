@@ -2,21 +2,24 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { House, Inbox, Menu, Plus, Settings, Wallet, type LucideIcon } from "lucide-react";
+import { ChartColumn, House, Inbox, PiggyBank, Plus, Settings, Wallet, type LucideIcon } from "lucide-react";
 
 type Item = { href: string; label: string; icon: LucideIcon };
 
+// Settings and sign out are behind the avatar on every page.
 const TABS: Item[] = [
   { href: "/", label: "Home", icon: House },
   { href: "/review", label: "Review", icon: Inbox },
   { href: "/accounts", label: "Accounts", icon: Wallet },
-  { href: "/more", label: "More", icon: Menu },
+  { href: "/spending", label: "Spending", icon: ChartColumn },
 ];
 
 const RAIL: Item[] = [
   { href: "/", label: "Home", icon: House },
   { href: "/review", label: "Review", icon: Inbox },
   { href: "/accounts", label: "Accounts", icon: Wallet },
+  { href: "/spending", label: "Spending", icon: ChartColumn },
+  { href: "/goals", label: "Savings goals", icon: PiggyBank },
 ];
 
 function isCurrent(pathname: string, href: string) {
@@ -41,7 +44,7 @@ export function TabBarView({ pathname }: { pathname: string }) {
           key={href}
           href={href}
           className="tab"
-          aria-current={isCurrent(pathname, href) || (href === "/more" && pathname.startsWith("/settings")) ? "page" : undefined}
+          aria-current={isCurrent(pathname, href) || (href === "/spending" && pathname.startsWith("/goals")) ? "page" : undefined}
         >
           <Icon aria-hidden />
           {label}

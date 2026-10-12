@@ -42,7 +42,7 @@ test("sign in with a magic link, pick a theme, and keep it after reload", async 
 
 test("sign out returns to the login page", async ({ page }) => {
   await signIn(page);
-  await page.goto("/more");
+  await page.goto("/settings");
   await page.getByRole("button", { name: "Sign out" }).click();
   await expect(page).toHaveURL(/\/login$/);
   await page.goto("/");

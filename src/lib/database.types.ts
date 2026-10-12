@@ -109,6 +109,26 @@ isOneToOne: false
                   Relationships: [
                     
                   ]
+                },"category_settings": {
+                  Row: {
+                    "category_id": string,"created_at": string,"fixed": boolean,"monthly_limit_centavos": number | null,"updated_at": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "category_id": string,"created_at"?: string,"fixed"?: boolean,"monthly_limit_centavos"?: number | null,"updated_at"?: string,"user_id"?: string
+                  }
+                  Update: {
+                    "category_id"?: string,"created_at"?: string,"fixed"?: boolean,"monthly_limit_centavos"?: number | null,"updated_at"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "category_settings_category_id_fkey"
+      columns: ["category_id"]
+isOneToOne: false
+      referencedRelation: "categories"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"credit_cards": {
                   Row: {
                     "account_id": string,"created_at": string,"credit_limit_centavos": number | null,"due_day": number,"min_payment_bps": number,"min_payment_floor_centavos": number,"monthly_interest_bps": number,"statement_day": number,"updated_at": string,"user_id": string
@@ -319,16 +339,44 @@ isOneToOne: false
       referencedColumns: ["id","user_id"]
     }
                   ]
-                },"profiles": {
+                },"notification_log": {
                   Row: {
-                    "created_at": string,"display_name": string | null,"gmail_forward_code": string | null,"gmail_forward_code_at": string | null,"inbound_alias": string,"mode": string,"theme": string,"updated_at": string,"user_id": string
+                    "kind": string,"ref": string,"sent_at": string,"user_id": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "created_at"?: string,"display_name"?: string | null,"gmail_forward_code"?: string | null,"gmail_forward_code_at"?: string | null,"inbound_alias": string,"mode"?: string,"theme"?: string,"updated_at"?: string,"user_id": string
+                    "kind": string,"ref": string,"sent_at"?: string,"user_id": string
                   }
                   Update: {
-                    "created_at"?: string,"display_name"?: string | null,"gmail_forward_code"?: string | null,"gmail_forward_code_at"?: string | null,"inbound_alias"?: string,"mode"?: string,"theme"?: string,"updated_at"?: string,"user_id"?: string
+                    "kind"?: string,"ref"?: string,"sent_at"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    
+                  ]
+                },"profiles": {
+                  Row: {
+                    "created_at": string,"display_name": string | null,"gmail_forward_code": string | null,"gmail_forward_code_at": string | null,"inbound_alias": string,"mode": string,"monthly_income_centavos": number | null,"notify_bills": boolean,"notify_spending": boolean,"paydays": (number)[],"spending_limit_centavos": number | null,"theme": string,"updated_at": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"display_name"?: string | null,"gmail_forward_code"?: string | null,"gmail_forward_code_at"?: string | null,"inbound_alias": string,"mode"?: string,"monthly_income_centavos"?: number | null,"notify_bills"?: boolean,"notify_spending"?: boolean,"paydays"?: (number)[],"spending_limit_centavos"?: number | null,"theme"?: string,"updated_at"?: string,"user_id": string
+                  }
+                  Update: {
+                    "created_at"?: string,"display_name"?: string | null,"gmail_forward_code"?: string | null,"gmail_forward_code_at"?: string | null,"inbound_alias"?: string,"mode"?: string,"monthly_income_centavos"?: number | null,"notify_bills"?: boolean,"notify_spending"?: boolean,"paydays"?: (number)[],"spending_limit_centavos"?: number | null,"theme"?: string,"updated_at"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    
+                  ]
+                },"push_subscriptions": {
+                  Row: {
+                    "auth": string,"created_at": string,"device": string | null,"endpoint": string,"id": string,"p256dh": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "auth": string,"created_at"?: string,"device"?: string | null,"endpoint": string,"id"?: string,"p256dh": string,"user_id"?: string
+                  }
+                  Update: {
+                    "auth"?: string,"created_at"?: string,"device"?: string | null,"endpoint"?: string,"id"?: string,"p256dh"?: string,"user_id"?: string
                   }
                   Relationships: [
                     
@@ -402,6 +450,32 @@ isOneToOne: false
       columns: ["income_source_id","user_id"]
 isOneToOne: false
       referencedRelation: "income_sources"
+      referencedColumns: ["id","user_id"]
+    }
+                  ]
+                },"savings_goals": {
+                  Row: {
+                    "account_id": string | null,"archived_at": string | null,"created_at": string,"id": string,"name": string,"saved_centavos": number,"target_centavos": number,"target_date": string | null,"updated_at": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "account_id"?: string | null,"archived_at"?: string | null,"created_at"?: string,"id"?: string,"name": string,"saved_centavos"?: number,"target_centavos": number,"target_date"?: string | null,"updated_at"?: string,"user_id"?: string
+                  }
+                  Update: {
+                    "account_id"?: string | null,"archived_at"?: string | null,"created_at"?: string,"id"?: string,"name"?: string,"saved_centavos"?: number,"target_centavos"?: number,"target_date"?: string | null,"updated_at"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "savings_goals_account_id_user_id_fkey"
+      columns: ["account_id","user_id"]
+isOneToOne: false
+      referencedRelation: "account_balances"
+      referencedColumns: ["account_id","user_id"]
+    },{
+      foreignKeyName: "savings_goals_account_id_user_id_fkey"
+      columns: ["account_id","user_id"]
+isOneToOne: false
+      referencedRelation: "accounts"
       referencedColumns: ["id","user_id"]
     }
                   ]
@@ -527,7 +601,10 @@ isOneToOne: false
                 }
           }
           Functions: {
-            "auto_confirm_captured":
+            "add_to_goal":
+{ Args: { "p_amount_centavos": number,"p_id": string }; Returns: number
+                           },
+"auto_confirm_captured":
 { Args: { "p_ids": (string)[] }; Returns: undefined
                            },
 "capture_message":

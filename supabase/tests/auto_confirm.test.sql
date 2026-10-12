@@ -1,5 +1,6 @@
 -- Auto-confirm: captured items confirm themselves when two sources agree, and only then.
 begin;
+-- Counts are scoped to the test user: a local database also holds demo data.
 create extension if not exists pgtap with schema extensions;
 set local search_path = public, extensions;
 select plan(12);
@@ -30,13 +31,13 @@ insert into public.transactions (id, user_id, account_id, amount_centavos, occur
 insert into public.balance_checkpoints (user_id, account_id, balance_centavos, as_of, source)
 values ('aaaaaaaa-0000-4000-8000-000000000001', 'aaaaaaaa-4444-4000-8000-000000000002', 2317000, '2026-10-12 19:54+08', 'sms');
 select auto_confirm_captured(array['aaaaaaaa-5555-4000-8000-000000000002'::uuid]);
-select is((select count(*)::int from transactions where transfer_id is not null and status = 'confirmed' and auto_confirmed = 'transfer'), 2,
+select is((select count(*)::int from transactions where user_id = 'aaaaaaaa-0000-4000-8000-000000000001' and transfer_id is not null and status = 'confirmed' and auto_confirmed = 'transfer'), 2,
   'both texts together confirm one transfer');
-select is((select count(distinct transfer_id)::int from transactions where transfer_id is not null), 1, 'the legs share one transfer');
+select is((select count(distinct transfer_id)::int from transactions where user_id = 'aaaaaaaa-0000-4000-8000-000000000001' and transfer_id is not null), 1, 'the legs share one transfer');
 
 -- Undo from either leg reopens both and unpairs them.
 select reopen_transaction('aaaaaaaa-5555-4000-8000-000000000001');
-select is((select count(*)::int from transactions where status = 'pending' and transfer_id is null and auto_confirmed is null), 2,
+select is((select count(*)::int from transactions where user_id = 'aaaaaaaa-0000-4000-8000-000000000001' and status = 'pending' and transfer_id is null and auto_confirmed is null), 2,
   'undo sends both legs back to review');
 
 -- Balance rule: GCash pays PHP 130.83 and says the new balance; Budget agrees once pending items count.
@@ -81,7 +82,7 @@ select is((select status::text from transactions where id = 'aaaaaaaa-5555-4000-
   'an ambiguous match is left for review');
 
 -- Manual entries are never auto-confirmed, and users can't call the function.
-select is((select count(*)::int from transactions where auto_confirmed is not null and source = 'manual'), 0, 'manual rows are never touched');
+select is((select count(*)::int from transactions where user_id = 'aaaaaaaa-0000-4000-8000-000000000001' and auto_confirmed is not null and source = 'manual'), 0, 'manual rows are never touched');
 set local role authenticated;
 select set_config('request.jwt.claims', '{"sub":"aaaaaaaa-0000-4000-8000-000000000001","role":"authenticated"}', true);
 select throws_ok($$select public.auto_confirm_captured(array[]::uuid[])$$, '42501', null, 'only the parse jobs can run auto-confirm');
