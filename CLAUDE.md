@@ -45,7 +45,8 @@ in a review inbox.
 - Instant navigation: each page's data component is `"use cache: private"` + `cachedUserData()` and reads the session
   via `getSession()` (kept in that browser only, prefetched by the router). Server Actions and Route Handlers use
   `requireUser()` (adds `connection()`), and every write calls `userDataChanged()` (`src/lib/user-data.ts`) or
-  other pages show stale data. `RefreshOnReturn` refetches after a minute away (texts arrive in the background).
+  other pages show stale data. `RefreshOnReturn` refetches whenever the app returns to the screen and polls
+  `/api/changes` every 20s while open, refetching only when the data changed (texts arrive in the background).
 - Hide balances: wrap balance figures in `<Private>`; the eye toggle sets `data-hide-balances` on <html>
   (cookie `bp-hide`, applied by the pre-paint script). Transaction amounts stay visible.
 - Theme/mode live on `profiles` and are mirrored in `bp-theme`/`bp-mode` cookies so the pre-paint
