@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { classifyCapture, normalizeSmsSender, type CaptureContext } from "./classify";
+import { classifyCapture, isOneTimeCode, normalizeSmsSender, type CaptureContext } from "./classify";
 import { dedupeKey, readCaptureMessage, readCapturePayload, type CapturedMessage, readEventId } from "./payload";
 import type { MessageParser } from "./parsers";
 import { generateCaptureToken, hashCaptureToken, isCaptureToken } from "./token";
@@ -152,5 +152,19 @@ describe("timestamps that look like card numbers", () => {
     const msg = readCaptureMessage("application/json", raw);
     expect(msg?.receivedAt).toBe("2026-10-11T12:00:01.000Z");
     expect(msg?.body).toBe("Card ************1111 used");
+  });
+});
+
+describe("isOneTimeCode", () => {
+  const sms = (body: string): CapturedMessage => ({ channel: "sms", sender: "TikTok", title: null, body, receivedAt: null });
+
+  it("spots login and payment codes so their text is never stored", () => {
+    expect(isOneTimeCode(sms("[TikTok] 482913 is your verification code, valid for 5 minutes."))).toBe(true);
+    expect(isOneTimeCode(sms("Your OTP is 123456. Do not share it with anyone."))).toBe(true);
+    expect(isOneTimeCode(sms("Use One-Time PIN 553201 to confirm your transfer."))).toBe(true);
+  });
+
+  it("leaves payment and reminder texts alone", () => {
+    expect(isOneTimeCode(sms("Your TikTok PayLater payment of PHP 1,299.00 is due on 10/15/2026."))).toBe(false);
   });
 });

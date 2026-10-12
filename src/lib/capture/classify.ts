@@ -51,6 +51,11 @@ export function messageInstitution(msg: CapturedMessage, institutions: CaptureIn
   return institutions.find((i) => i.smsSenders.some((s) => normalizeSmsSender(s) === sender)) ?? null;
 }
 
+/** Login and payment codes ("123456 is your TikTok verification code"); never stored, even from known senders. */
+export function isOneTimeCode(msg: CapturedMessage): boolean {
+  return /\b(otp|one[- ]time (pin|password|code)|verification code|security code|passcode|login code)\b/i.test(`${msg.title ?? ""} ${msg.body}`);
+}
+
 export function classifyCapture(msg: CapturedMessage, receivedAt: string, ctx: CaptureContext): CaptureOutcome {
   const institution = messageInstitution(msg, ctx.institutions);
   if (!institution) {

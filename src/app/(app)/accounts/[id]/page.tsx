@@ -17,8 +17,14 @@ import { centavosToInput } from "@/lib/money-input";
 import { AccountForm } from "../account-form";
 import { adoptBankBalance, archiveAccount } from "../actions";
 import { BalanceForm } from "./balance-form";
+import { UndoAutoConfirm } from "./undo-auto-confirm";
 
 export const metadata: Metadata = { title: "Account" };
+
+const AUTO_CONFIRMED: Record<string, string> = {
+  transfer: "Confirmed automatically: both banks reported it",
+  balance: "Confirmed automatically: matches the bank's balance",
+};
 
 export default function AccountPage({ params }: PageProps<"/accounts/[id]">) {
   return (
@@ -51,7 +57,7 @@ async function AccountView({ id }: { id: string }) {
       .maybeSingle(),
     supabase
       .from("transactions")
-      .select("id, merchant, amount_centavos, occurred_at, status, transfer_id, categories(name)")
+      .select("id, merchant, amount_centavos, occurred_at, status, transfer_id, auto_confirmed, categories(name)")
       .eq("account_id", id)
       .neq("status", "ignored")
       .order("occurred_at", { ascending: false })
@@ -154,10 +160,12 @@ async function AccountView({ id }: { id: string }) {
                   <p className="row-title">{t.merchant ?? "Transaction"}</p>
                   <p className="row-sub">
                     {[describeWhen(t.occurred_at), t.transfer_id ? "Transfer" : t.categories?.name, t.status === "pending" && "To review",
+                      t.auto_confirmed && AUTO_CONFIRMED[t.auto_confirmed],
                       t.occurred_at < a.opening_balance_at && "Before your starting balance"]
                       .filter(Boolean)
                       .join(", ")}
                   </p>
+                  {t.auto_confirmed && <UndoAutoConfirm id={t.id} />}
                 </div>
                 <p className={t.amount_centavos > 0 ? "row-amt in" : "row-amt"}>{formatPeso(t.amount_centavos, { signed: true })}</p>
               </li>

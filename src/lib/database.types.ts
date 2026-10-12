@@ -433,14 +433,14 @@ isOneToOne: false
                   ]
                 },"transactions": {
                   Row: {
-                    "account_id": string,"amount_centavos": number,"category_id": string | null,"confirmed_at": string | null,"created_at": string,"duplicate_of": string | null,"id": string,"import_id": string | null,"merchant": string | null,"note": string | null,"occurred_at": string,"raw_email_id": string | null,"raw_message_id": string | null,"recurring_rule_id": string | null,"source": Database["public"]['Enums']["txn_source"],"status": Database["public"]['Enums']["txn_status"],"transfer_id": string | null,"updated_at": string,"user_id": string
+                    "account_id": string,"amount_centavos": number,"auto_confirmed": string | null,"category_id": string | null,"confirmed_at": string | null,"created_at": string,"duplicate_of": string | null,"id": string,"import_id": string | null,"merchant": string | null,"note": string | null,"occurred_at": string,"raw_email_id": string | null,"raw_message_id": string | null,"recurring_rule_id": string | null,"source": Database["public"]['Enums']["txn_source"],"status": Database["public"]['Enums']["txn_status"],"transfer_id": string | null,"updated_at": string,"user_id": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "account_id": string,"amount_centavos": number,"category_id"?: string | null,"confirmed_at"?: string | null,"created_at"?: string,"duplicate_of"?: string | null,"id"?: string,"import_id"?: string | null,"merchant"?: string | null,"note"?: string | null,"occurred_at": string,"raw_email_id"?: string | null,"raw_message_id"?: string | null,"recurring_rule_id"?: string | null,"source"?: Database["public"]['Enums']["txn_source"],"status"?: Database["public"]['Enums']["txn_status"],"transfer_id"?: string | null,"updated_at"?: string,"user_id"?: string
+                    "account_id": string,"amount_centavos": number,"auto_confirmed"?: string | null,"category_id"?: string | null,"confirmed_at"?: string | null,"created_at"?: string,"duplicate_of"?: string | null,"id"?: string,"import_id"?: string | null,"merchant"?: string | null,"note"?: string | null,"occurred_at": string,"raw_email_id"?: string | null,"raw_message_id"?: string | null,"recurring_rule_id"?: string | null,"source"?: Database["public"]['Enums']["txn_source"],"status"?: Database["public"]['Enums']["txn_status"],"transfer_id"?: string | null,"updated_at"?: string,"user_id"?: string
                   }
                   Update: {
-                    "account_id"?: string,"amount_centavos"?: number,"category_id"?: string | null,"confirmed_at"?: string | null,"created_at"?: string,"duplicate_of"?: string | null,"id"?: string,"import_id"?: string | null,"merchant"?: string | null,"note"?: string | null,"occurred_at"?: string,"raw_email_id"?: string | null,"raw_message_id"?: string | null,"recurring_rule_id"?: string | null,"source"?: Database["public"]['Enums']["txn_source"],"status"?: Database["public"]['Enums']["txn_status"],"transfer_id"?: string | null,"updated_at"?: string,"user_id"?: string
+                    "account_id"?: string,"amount_centavos"?: number,"auto_confirmed"?: string | null,"category_id"?: string | null,"confirmed_at"?: string | null,"created_at"?: string,"duplicate_of"?: string | null,"id"?: string,"import_id"?: string | null,"merchant"?: string | null,"note"?: string | null,"occurred_at"?: string,"raw_email_id"?: string | null,"raw_message_id"?: string | null,"recurring_rule_id"?: string | null,"source"?: Database["public"]['Enums']["txn_source"],"status"?: Database["public"]['Enums']["txn_status"],"transfer_id"?: string | null,"updated_at"?: string,"user_id"?: string
                   }
                   Relationships: [
                     {
@@ -527,7 +527,10 @@ isOneToOne: false
                 }
           }
           Functions: {
-            "capture_message":
+            "auto_confirm_captured":
+{ Args: { "p_ids": (string)[] }; Returns: undefined
+                           },
+"capture_message":
 { Args: { "p_body": string,"p_channel": string,"p_dedupe_key": string,"p_flag_note"?: string,"p_received_at": string,"p_sender": string,"p_title": string,"p_token_hash": string }; Returns: {
               "result": string,"user_id": string
             }[]
@@ -542,6 +545,7 @@ isOneToOne: false
 { Args: { "p_category_id"?: string,"p_id": string }; Returns: {
               "account_id": string,
 "amount_centavos": number,
+"auto_confirmed": string | null,
 "category_id": string | null,
 "confirmed_at": string | null,
 "created_at": string,
@@ -576,6 +580,7 @@ isOneToOne: false
 { Args: { "p_id": string }; Returns: {
               "account_id": string,
 "amount_centavos": number,
+"auto_confirmed": string | null,
 "category_id": string | null,
 "confirmed_at": string | null,
 "created_at": string,
@@ -607,6 +612,7 @@ isOneToOne: false
 { Args: { "p_id": string }; Returns: {
               "account_id": string,
 "amount_centavos": number,
+"auto_confirmed": string | null,
 "category_id": string | null,
 "confirmed_at": string | null,
 "created_at": string,
@@ -635,6 +641,7 @@ isOneToOne: false
 { Args: { "p_id": string }; Returns: {
               "account_id": string,
 "amount_centavos": number,
+"auto_confirmed": string | null,
 "category_id": string | null,
 "confirmed_at": string | null,
 "created_at": string,

@@ -34,7 +34,8 @@ async function insertCheckpoint(
 
 /**
  * Writes a parsed transaction (and its fee, if any) as pending items for review, plus a balance checkpoint
- * when the bank stated the balance. Idempotent per raw email or message.
+ * when the bank stated the balance, then lets them confirm themselves where two sources agree
+ * (`auto_confirm_captured`). Idempotent per raw email or message.
  */
 export async function insertParsedTransaction(
   db: AdminClient,
@@ -44,6 +45,7 @@ export async function insertParsedTransaction(
   const existing = await db.from("transactions").select("id").eq(ref.column, ref.id).limit(1);
   if (existing.error) throw existing.error;
 
+  let newIds: string[] = [];
   if (existing.data.length === 0) {
     const common = {
       user_id: input.userId,
@@ -59,6 +61,7 @@ export async function insertParsedTransaction(
     }
     const { data, error } = await db.from("transactions").insert(rows).select("id");
     if (error) throw error;
+    newIds = data.map((row) => row.id);
     if (input.tx.feeCentavos && data.length === 2) {
       const category = await feeCategory(db);
       if (category) await db.from("transactions").update({ category_id: category }).eq("id", data[1].id);
@@ -75,6 +78,11 @@ export async function insertParsedTransaction(
       rawEmailId: input.rawEmailId,
       rawMessageId: input.rawMessageId,
     });
+  }
+
+  if (newIds.length > 0) {
+    const { error } = await db.rpc("auto_confirm_captured", { p_ids: newIds });
+    if (error) throw error;
   }
 }
 

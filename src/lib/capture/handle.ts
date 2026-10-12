@@ -1,7 +1,7 @@
 import "server-only";
 import { after, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { classifyCapture, messageInstitution } from "./classify";
+import { classifyCapture, isOneTimeCode, messageInstitution } from "./classify";
 import { dedupeKey, readCaptureMessage, readEventId } from "./payload";
 import { loadCaptureInstitutions, processPendingMessages } from "./run";
 import { hashCaptureToken, isCaptureToken } from "./token";
@@ -29,10 +29,14 @@ export async function handleCapture(request: Request, token: string | null): Pro
 
   const db = createAdminClient();
   const institutions = await loadCaptureInstitutions(db);
-  const known = messageInstitution(msg, institutions) !== null;
+  const fromKnown = messageInstitution(msg, institutions) !== null;
+  const code = fromKnown && isOneTimeCode(msg);
+  const known = fromKnown && !code;
   const flagNote = known
     ? null
-    : (classifyCapture(msg, new Date().toISOString(), { institutions, accounts: [], parsers: [] }) as { note: string }).note;
+    : code
+      ? "Verification codes aren't kept."
+      : (classifyCapture(msg, new Date().toISOString(), { institutions, accounts: [], parsers: [] }) as { note: string }).note;
 
   const { data, error } = await db.rpc("capture_message", {
     p_token_hash: hashCaptureToken(token),
