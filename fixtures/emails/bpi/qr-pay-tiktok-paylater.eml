@@ -1,0 +1,70 @@
+From: <someone.example@gmail.com>
+To: u_test000000@in.jadebonifacio.dev
+Subject: Fwd: Pay TikTok PayLater Repayment via QR
+Date: Mon, 12 Oct 2026 02:43:01 +0000
+Message-ID: <fixture-fixtures-emails-bpi-qr-pay-tiktok-paylater-eml@budget.test>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="fixture-boundary"
+
+--fixture-boundary
+Content-Type: text/plain; charset=utf-8
+
+---------- Forwarded message ---------
+From: BPI Online <onlinebanking@bpi.com.ph>
+Date: Mon, 12 Oct 2026 02:38:13 +0000
+Subject: Pay TikTok PayLater Repayment via QR
+To: someone.example@gmail.com
+
+Pay To Merchant Confirmation
+
+Dear JUAN,
+
+You have successfully completed your Pay via QR transaction with the
+following details:
+*Pay via QR Details*
+Confirmation Number R1000000000000000001
+Date and Time Monday, Oct 12 2026; 10:38:10 AM (GMT+8)
+Pay From XXXX-XXX-123 (SAVINGS ACCOUNT)
+Pay To TikTok PayLater Repayment
+Amount PHP 378.63
+Transaction Ref No. 000000000000001
+Notes
+
+*Keep using the BPI app to Pay via QR and earn BPI Rewards Points for every
+transaction worth at least Php 400.*
+
+*Earn 100 BPI Points* when you scan a merchant QR Ph code powered by BPI.
+
+*Earn 25 BPI Points* when you scan any other merchant QR Ph code.
+
+Your BPI Points will be credited within 60 days after month-end. Track and
+redeem your BPI Points on VYBE.
+
+To learn more, visit the BPI website and search "Earn with the BPI app."
+
+*Important Reminders:*
+
+• We will never ask for your bank details in exchange for these commonly
+used credit card perks and benefits such as: annual fee waiver, card
+upgrade, rewards points redemption and credit card limit increase.
+
+• Never give your OTP, username, account number, birthdate and credit card
+details such as CVV and expiry date.
+
+• Always check your SMS and email alerts. If you notice any suspicious
+activity, please lock your access or change your password immediately.
+
+If you have any questions about your transaction, please visit the Contact
+Us page on the BPI website or call our 24-hour hotline at (+632)889-10000
+as this email cannot receive replies.
+
+Thank you for choosing BPI!
+
+BPI Digital Channels Team
+
+--fixture-boundary
+Content-Type: text/html; charset=utf-8
+
+<div>---------- Forwarded message ---------<br>From: BPI Online &lt;<a href="mailto:onlinebanking@bpi.com.ph">onlinebanking@bpi.com.ph</a>&gt;<br>Date: Mon, 12 Oct 2026 02:38:13 +0000<br>Subject: Pay TikTok PayLater Repayment via QR<br>To: <a href="mailto:someone.example@gmail.com">someone.example@gmail.com</a></div><br><html><head><title>Pay To Merchant Confirmation</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link href="https://example.com/redacted" rel="stylesheet" type="text/css"><style>body{font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;font-size:12px}body,html{padding:0 100px;line-height:20px}.content{font-size:10pt}.th-title{text-align:center}table{margin:0 auto}table,td,th{border:1.5px solid #000;border-collapse:collapse}td,th{padding:5px;text-align:left}.reminder-section{font-size:10pt}</style></head><body style="margin:0;padding:0"><body><p><span class="">Dear <span>JUAN</span>,</span></p><p>You have successfully completed your Pay via QR transaction with the following details:</p><table class="table-content" style="text-align:center"><tr><th class="th-title" colspan="4" style="text-align:center"><strong>Pay via QR Details</strong></th></tr><tr><td>Confirmation Number</td><td>R1000000000000000001</td></tr><tr><td>Date and Time</td><td>Monday, Oct 12 2026; 10:38:10 AM (GMT+8)</td></tr><tr><td>Pay From</td><td>XXXX-XXX-123 (SAVINGS ACCOUNT)</td></tr><tr><td>Pay To</td><td>TikTok PayLater Repayment</td></tr><tr><td>Amount</td><td>PHP 378.63</td></tr><tr><td>Transaction Ref No.</td><td>000000000000001</td></tr><tr><td>Notes</td><td></td></tr></table><br><p><strong>Keep using the BPI app to Pay via QR and earn BPI Rewards Points for every transaction worth at least Php 400.</strong></p><p><strong>Earn 100 BPI Points</strong> when you scan a merchant QR Ph code powered by BPI.</p><p><strong>Earn 25 BPI Points</strong> when you scan any other merchant QR Ph code.</p><p>Your BPI Points will be credited within 60 days after month-end. Track and redeem your BPI Points on VYBE.</p><p>To learn more, visit the BPI website and search &quot;Earn with the BPI app.&quot;</p><br><center><table><tbody><tr><td class="reminder-section"><b>Important Reminders:</b><br><br>• We will never ask for your bank details in exchange for these commonly used credit card perks and benefits such as: annual fee waiver, card upgrade, rewards points redemption and credit card limit increase.<br><br>• Never give your OTP, username, account number, birthdate and credit card details such as CVV and expiry date.<br><br>• Always check your SMS and email alerts. If you notice any suspicious activity, please lock your access or change your password immediately.</td><tr></tr></tr></tbody></table></center><br><p>If you have any questions about your transaction, please visit the Contact Us page on the BPI website or call our 24-hour hotline at (+632)889-10000 as this email cannot receive replies.</p><p>Thank you for choosing BPI!</p><p>BPI Digital Channels Team</p></body></body></html>
+
+--fixture-boundary--

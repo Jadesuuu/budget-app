@@ -35,6 +35,8 @@ describe("bank email parsers (real, redacted samples)", () => {
     ["gcash/billspay-smart.eml", "acct-gcash", { amountCentavos: -110000, feeCentavos: 700, merchant: "Smart Communications" }],
     ["bpi/instapay-incoming-from-bdo.eml", "acct-bpi-savings", { amountCentavos: 1500000, merchant: "InstaPay from BDO Unibank", last4: "5678", occurredAt: "2026-02-15T15:27:05+08:00" }],
     ["bpi/instapay-incoming-from-gcash.eml", "acct-bpi-savings", { amountCentavos: 311000, merchant: "InstaPay from G-Xchange", occurredAt: "2025-12-17T04:05:59+08:00" }],
+    ["bpi/instapay-outgoing-to-gcash.eml", "acct-bpi-savings", { amountCentavos: -50000, merchant: "Transfer to GCash/G-Xchange", occurredAt: "2026-10-12T10:22:47+08:00" }],
+    ["bpi/qr-pay-tiktok-paylater.eml", "acct-bpi-savings", { amountCentavos: -37863, merchant: "TikTok PayLater Repayment", occurredAt: "2026-10-12T10:38:10+08:00" }],
     ["atome/card-transaction-shopee.eml", "acct-atome", { amountCentavos: -9900, merchant: "SHOPEE PH MANDALUYONG PHL", last4: "4321" }],
     ["atome/card-transaction-steam.eml", "acct-atome", { amountCentavos: -21135, merchant: "STEAMGAMES.COM 4000001 BELLEVUE USA", last4: "4321" }],
     ["atome/card-transaction-qrph.eml", "acct-atome", { amountCentavos: -28400, merchant: "UNCLE JOHNS MONTOJO", last4: null }],

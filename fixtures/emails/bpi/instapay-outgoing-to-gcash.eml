@@ -1,0 +1,65 @@
+From: <someone.example@gmail.com>
+To: u_test000000@in.jadebonifacio.dev
+Subject: Fwd: Interbank Funds Transfer Confirmation
+Date: Mon, 12 Oct 2026 02:33:03 +0000
+Message-ID: <fixture-fixtures-emails-bpi-instapay-outgoing-to-gcash-eml@budget.test>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="fixture-boundary"
+
+--fixture-boundary
+Content-Type: text/plain; charset=utf-8
+
+---------- Forwarded message ---------
+From: BPI Online <onlinebanking@bpi.com.ph>
+Date: Mon, 12 Oct 2026 02:32:22 +0000
+Subject: Interbank Funds Transfer Confirmation
+To: someone.example@gmail.com
+
+Dear JUAN,
+
+You have successfully submitted your InstaPay Funds Transfer request with
+the following details.
+
+
+*Interbank Funds Transfer Transaction Details*
+Confirmation Number 1000000000001
+Transaction Date and Time Monday, Oct 12 2026; 10:22:47 AM (GMT +8)
+Transfer From XXXX-XXXX-123 (SAVINGS ACCOUNT)
+Transfer To DWXXXXX0AAAAA0AAA
+Bank Name GCash/G-Xchange
+Transfer Amount PHP 500.00
+Service Fee PHP 0.00
+Total Amount PHP 500.00
+Transfer Service INSTAPAY
+Transaction Ref No. 100001
+Notes
+*Important Reminders:*
+
+• We will never ask for your bank details in exchange for these commonly
+used credit card perks and benefits such as: annual fee waiver, card
+upgrade, rewards points redemption and credit card limit increase.
+
+• Never give your OTP, username, account number, birthdate and credit card
+details such as CVV and expiry date.
+
+• Always check your SMS and email alerts. If you notice any suspicious
+activity, please lock your access or change your password immediately.
+
+Successful transactions will be credited real time. Should there be any
+delay in the crediting, and the money is not yet credited after 2 banking
+days, please visit the Contact Us page at the BPI website or call our
+24-hour BPI Contact Center at (+632) 889-10000 and provide this
+confirmation number 1000000000001 to the phonebanker.
+
+Thank you for using BPI Online.
+
+BPI Digital Channels Team
+
+*** This is a system generated message. *DO NOT REPLY TO THIS EMAIL*.***
+
+--fixture-boundary
+Content-Type: text/html; charset=utf-8
+
+<div>---------- Forwarded message ---------<br>From: BPI Online &lt;<a href="mailto:onlinebanking@bpi.com.ph">onlinebanking@bpi.com.ph</a>&gt;<br>Date: Mon, 12 Oct 2026 02:32:22 +0000<br>Subject: Interbank Funds Transfer Confirmation<br>To: <a href="mailto:someone.example@gmail.com">someone.example@gmail.com</a></div><br><p style="FONT-SIZE:10pt;color:#000000;font-family:arial">Dear JUAN,<br><br>You have successfully submitted your InstaPay Funds Transfer request with the following details.<br><br><br></p><center><table style="border:1px solid black;border-collapse:collapse"><tbody><tr><td colspan="2" style="border:1px solid black;padding:3px"><center><font color="#000000" face="arial" style="FONT-SIZE:10pt"><b>Interbank Funds Transfer Transaction Details</b></font></center></td></tr><tr><td style="border:1px solid black;padding:3px"><font color="#000000" face="arial" style="FONT-SIZE:10pt">Confirmation Number</font></td><td style="border:1px solid black;padding:3px"><font color="#000000" face="arial" style="FONT-SIZE:10pt">1000000000001</font></td></tr><tr><td style="border:1px solid black;padding:3px"><font color="#000000" face="arial" style="FONT-SIZE:10pt">Transaction Date and Time</font></td><td style="border:1px solid black;padding:3px"><font color="#000000" face="arial" style="FONT-SIZE:10pt">Monday, Oct 12 2026; 10:22:47 AM (GMT +8)</font></td></tr><tr><td style="border:1px solid black;padding:3px"><font color="#000000" face="arial" style="FONT-SIZE:10pt">Transfer From</font></td><td style="border:1px solid black;padding:3px"><font color="#000000" face="arial" style="FONT-SIZE:10pt">XXXX-XXXX-123 (SAVINGS ACCOUNT)</font></td></tr><tr><td style="border:1px solid black;padding:3px"><font color="#000000" face="arial" style="FONT-SIZE:10pt">Transfer To</font></td><td style="border:1px solid black;padding:3px"><font color="#000000" face="arial" style="FONT-SIZE:10pt">DWXXXXX0AAAAA0AAA</font></td></tr><tr><td style="border:1px solid black;padding:3px"><font color="#000000" face="arial" style="FONT-SIZE:10pt">Bank Name</font></td><td style="border:1px solid black;padding:3px"><font color="#000000" face="arial" style="FONT-SIZE:10pt">GCash/G-Xchange</font></td></tr><tr><td style="border:1px solid black;padding:3px"><font color="#000000" face="arial" style="FONT-SIZE:10pt">Transfer Amount</font></td><td style="border:1px solid black;padding:3px"><font color="#000000" face="arial" style="FONT-SIZE:10pt">PHP 500.00</font></td></tr><tr><td style="border:1px solid black;padding:3px"><font color="#000000" face="arial" style="FONT-SIZE:10pt">Service Fee</font></td><td style="border:1px solid black;padding:3px"><font color="#000000" face="arial" style="FONT-SIZE:10pt">PHP 0.00</font></td></tr><tr><td style="border:1px solid black;padding:3px"><font color="#000000" face="arial" style="FONT-SIZE:10pt">Total Amount</font></td><td style="border:1px solid black;padding:3px"><font color="#000000" face="arial" style="FONT-SIZE:10pt">PHP 500.00</font></td></tr><tr><td style="border:1px solid black;padding:3px"><font color="#000000" face="arial" style="FONT-SIZE:10pt">Transfer Service</font></td><td style="border:1px solid black;padding:3px"><font color="#000000" face="arial" style="FONT-SIZE:10pt">INSTAPAY</font></td></tr><tr><td style="border:1px solid black;padding:3px"><font color="#000000" face="arial" style="FONT-SIZE:10pt">Transaction Ref No.</font></td><td style="border:1px solid black;padding:3px"><font color="#000000" face="arial" style="FONT-SIZE:10pt">100001</font></td></tr><tr><td style="border:1px solid black;padding:3px"><font color="#000000" face="arial" style="FONT-SIZE:10pt">Notes</font></td><td style="border:1px solid black;padding:3px"><font color="#000000" face="arial" style="FONT-SIZE:10pt"></font></td></tr></tbody></table></center><br><center><table style="border:1px solid black;border-collapse:collapse"><tbody><tr><td style="border:1px solid black;padding:5px"><font color="#000000" face="arial" style="FONT-SIZE:10pt"><b>Important Reminders:</b><br><br>• We will never ask for your bank details in exchange for these commonly used credit card perks and benefits such as: annual fee waiver, card upgrade, rewards points redemption and credit card limit increase.<br><br>• Never give your OTP, username, account number, birthdate and credit card details such as CVV and expiry date.<br><br>• Always check your SMS and email alerts. If you notice any suspicious activity, please lock your access or change your password immediately.</font></td><tr></tr></tr></tbody></table></center><p style="FONT-SIZE:10pt;color:#000000;font-family:arial">Successful transactions will be credited real time. Should there be any delay in the crediting, and the money is not yet credited after 2 banking days, please visit the Contact Us page at the BPI website or call our 24-hour BPI Contact Center at (+632) 889-10000 and provide this confirmation number 1000000000001 to the phonebanker.<br><br>Thank you for using BPI Online.<br><br>BPI Digital Channels Team<br><br>*** This is a system generated message. <b>DO NOT REPLY TO THIS EMAIL</b>.***<br><br></p><br><br><br>
+
+--fixture-boundary--

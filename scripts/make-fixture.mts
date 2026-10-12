@@ -31,7 +31,7 @@ const mail = await PostalMime.parse(readFileSync(input));
 const fromBox = mail.from && "address" in mail.from ? mail.from : null;
 const boundary = "fixture-boundary";
 const lines = [
-  `From: ${fromBox?.name ? `${redact(fromBox.name)} ` : ""}<${fromBox?.address}>`,
+  `From: ${fromBox?.name ? `${redact(fromBox.name)} ` : ""}<${redact(fromBox?.address ?? "")}>`,
   "To: u_test000000@in.jadebonifacio.dev",
   `Subject: ${redact(mail.subject ?? "")}`,
   `Date: ${mail.date ? new Date(mail.date).toUTCString().replace("GMT", "+0000") : ""}`,
