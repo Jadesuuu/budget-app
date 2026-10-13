@@ -481,14 +481,14 @@ isOneToOne: false
                   ]
                 },"statements": {
                   Row: {
-                    "account_id": string,"amount_paid_centavos": number,"created_at": string,"due_date": string,"id": string,"minimum_due_centavos": number,"period_end": string,"period_start": string | null,"source": string,"statement_balance_centavos": number,"updated_at": string,"user_id": string
+                    "account_id": string,"amount_paid_centavos": number,"created_at": string,"due_date": string,"id": string,"minimum_due_centavos": number,"period_end": string,"period_start": string | null,"source": string,"statement_balance_centavos": number | null,"updated_at": string,"user_id": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "account_id": string,"amount_paid_centavos"?: number,"created_at"?: string,"due_date": string,"id"?: string,"minimum_due_centavos"?: number,"period_end": string,"period_start"?: string | null,"source"?: string,"statement_balance_centavos": number,"updated_at"?: string,"user_id"?: string
+                    "account_id": string,"amount_paid_centavos"?: number,"created_at"?: string,"due_date": string,"id"?: string,"minimum_due_centavos"?: number,"period_end": string,"period_start"?: string | null,"source"?: string,"statement_balance_centavos"?: number | null,"updated_at"?: string,"user_id"?: string
                   }
                   Update: {
-                    "account_id"?: string,"amount_paid_centavos"?: number,"created_at"?: string,"due_date"?: string,"id"?: string,"minimum_due_centavos"?: number,"period_end"?: string,"period_start"?: string | null,"source"?: string,"statement_balance_centavos"?: number,"updated_at"?: string,"user_id"?: string
+                    "account_id"?: string,"amount_paid_centavos"?: number,"created_at"?: string,"due_date"?: string,"id"?: string,"minimum_due_centavos"?: number,"period_end"?: string,"period_start"?: string | null,"source"?: string,"statement_balance_centavos"?: number | null,"updated_at"?: string,"user_id"?: string
                   }
                   Relationships: [
                     {

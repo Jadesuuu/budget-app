@@ -44,7 +44,9 @@ export function computeAlerts(input: AlertInput): Alert[] {
         kind: "bill",
         ref: `${item.key}:${days}`,
         title: days < 0 ? `${item.name} is late` : `${item.name}: ${when === "Tomorrow" ? "due tomorrow" : when.toLowerCase()}`,
-        body: `${item.amountLabel} ${formatPeso(item.amount)}${item.fullAmount > item.amount ? `, ${formatPeso(item.fullAmount)} to pay in full` : ""}.`,
+        body: item.amountKnown
+          ? `${item.amountLabel} ${formatPeso(item.amount)}${item.fullAmount > item.amount ? `, ${formatPeso(item.fullAmount)} to pay in full` : ""}.`
+          : "Check the app for the amount.",
         url: "/",
       });
     }

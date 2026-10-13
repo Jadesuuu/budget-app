@@ -130,7 +130,9 @@ async function AccountView({ id }: { id: string }) {
               {statements.data.map((s) => {
                 const { day, month } = dayAndMonth(s.due_date);
                 const paid =
-                  s.amount_paid_centavos >= s.statement_balance_centavos
+                  s.statement_balance_centavos === null
+                    ? s.amount_paid_centavos > 0 ? "Paid" : "Amount not stated"
+                    : s.amount_paid_centavos >= s.statement_balance_centavos
                     ? "Paid"
                     : s.amount_paid_centavos >= s.minimum_due_centavos && s.amount_paid_centavos > 0
                       ? "Minimum paid"
@@ -149,7 +151,7 @@ async function AccountView({ id }: { id: string }) {
                       </p>
                     </div>
                     <div className="due-amt">
-                      <p className="v"><Private>{formatPeso(s.statement_balance_centavos)}</Private></p>
+                      {s.statement_balance_centavos !== null && <p className="v"><Private>{formatPeso(s.statement_balance_centavos)}</Private></p>}
                       <p className="l">{paid}</p>
                     </div>
                   </li>

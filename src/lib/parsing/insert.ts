@@ -88,7 +88,8 @@ export async function insertParsedTransaction(
 
 /**
  * Records a statement or bill (one per account per due date; later messages update it) and, when the
- * statement date is known, a checkpoint: the account owed the total at the end of that day.
+ * statement date is known, a checkpoint: the account owed the total at the end of that day. A reminder with
+ * no amount only adds the due date; it never clears an amount already recorded for it.
  */
 export async function recordStatement(
   db: AdminClient,
@@ -105,11 +106,11 @@ export async function recordStatement(
       minimum_due_centavos: s.minimumCentavos ?? 0,
       source: input.source,
     },
-    { onConflict: "account_id,due_date" },
+    { onConflict: "account_id,due_date", ignoreDuplicates: s.totalCentavos === null },
   );
   if (error) throw error;
 
-  if (s.statementDate) {
+  if (s.statementDate && s.totalCentavos !== null) {
     await insertCheckpoint(db, {
       userId: input.userId,
       accountId: input.accountId,

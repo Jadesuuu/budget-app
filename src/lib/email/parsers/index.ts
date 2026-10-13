@@ -2,6 +2,7 @@ import { atomeBill, atomeCardTransaction, atomeDueReminder, atomeRefund, tiktokP
 import { bpiInstapayIncoming, bpiInstapayOutgoing, bpiQrPayment } from "./bpi";
 import { eastwestAdvisory, eastwestEsoa } from "./eastwest";
 import { gcashBankTransfer, gcashBillsPayment } from "./gcash";
+import { spaylaterDueReminder } from "./spaylater";
 import type { TemplateParser } from "./types";
 
 /**
@@ -21,4 +22,5 @@ export const TEMPLATE_PARSERS: TemplateParser[] = [
   tiktokPayLaterReminder,
   eastwestEsoa,
   eastwestAdvisory,
+  spaylaterDueReminder,
 ];

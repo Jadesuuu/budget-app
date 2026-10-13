@@ -71,7 +71,8 @@ export function DueList({ today, items, emptyText = "Nothing due in the next 30 
 
 function DueRow({ item, today, pay }: { item: DueItem; today: string; pay: (input: Parameters<typeof markDuePaid>[0]) => Promise<boolean> }) {
   const [open, setOpen] = useState(false);
-  const [other, setOther] = useState(false);
+  // With no amount to offer as "In full", the only choice is typing what was paid.
+  const [other, setOther] = useState(!item.amountKnown);
   const [busy, setBusy] = useState(false);
   const { day, month } = dayAndMonth(item.dueDate);
   const overdue = !item.minimumMet && daysBetween(today, item.dueDate) < 0;
@@ -95,7 +96,7 @@ function DueRow({ item, today, pay }: { item: DueItem; today: string; pay: (inpu
         <p className="due-sub">{item.detail}</p>
       </div>
       <div className="due-amt">
-        <p className="v">{formatPeso(item.amount)}</p>
+        {item.amountKnown && <p className="v">{formatPeso(item.amount)}</p>}
         {overdue ? (
           <p className="overdue-tag">
             <CircleAlert aria-hidden />
@@ -134,10 +135,12 @@ function DueRow({ item, today, pay }: { item: DueItem; today: string; pay: (inpu
               <b>{formatPeso(item.minimumLeft)}</b>
             </button>
           )}
-          <button type="button" className="choice" disabled={busy} onClick={() => commit({ key: item.key, pay: "full" })}>
-            <span>In full</span>
-            <b>{formatPeso(item.fullAmount)}</b>
-          </button>
+          {item.amountKnown && (
+            <button type="button" className="choice" disabled={busy} onClick={() => commit({ key: item.key, pay: "full" })}>
+              <span>In full</span>
+              <b>{formatPeso(item.fullAmount)}</b>
+            </button>
+          )}
           {other ? (
             <span className="choice-other">
               <span className="peso-input">

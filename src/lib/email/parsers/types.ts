@@ -31,8 +31,8 @@ export const parsedStatementSchema = z
     /** The statement (closing) date, when the message states one. Adds a balance checkpoint. */
     statementDate: day.nullable(),
     dueDate: day,
-    /** Amount owed on the statement, positive. */
-    totalCentavos: z.number().int().min(0).max(100_000_000_000),
+    /** Amount owed on the statement, positive. Null when the message gives only the due date (SPayLater reminders). */
+    totalCentavos: z.number().int().min(0).max(100_000_000_000).nullable(),
     minimumCentavos: z.number().int().min(0).max(100_000_000_000).nullable(),
   })
   .refine((s) => !s.statementDate || s.statementDate <= s.dueDate, "statement date after due date");

@@ -11,6 +11,7 @@ const bill = (dueDate: string): DueItem => ({
   dueDate,
   amount: 150000,
   amountLabel: "Minimum",
+  amountKnown: true,
   fullAmount: 1845020,
   minimumMet: false,
   minimumLeft: 150000,

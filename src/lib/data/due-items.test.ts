@@ -30,6 +30,17 @@ describe("mergeDueItems", () => {
     expect(mergeDueItems(paid).some((i) => i.key === "statement:s1")).toBe(false);
   });
 
+  it("keeps a due date with no amount until something is paid on it", () => {
+    const unknown = { ...sources, statements: [{ ...sources.statements[0], balance: null, minimumDue: 0 }] };
+    expect(mergeDueItems(unknown).find((i) => i.key === "statement:s1")).toMatchObject({
+      amountKnown: false,
+      amountLabel: "Amount not stated",
+      fullAmount: 0,
+    });
+    const paid = { ...sources, statements: [{ ...unknown.statements[0], paid: 440647 }] };
+    expect(mergeDueItems(paid).some((i) => i.key === "statement:s1")).toBe(false);
+  });
+
   it("shows the remaining minimum on part-paid statements", () => {
     const s3 = mergeDueItems(sources).find((i) => i.key === "statement:s3");
     expect(s3).toMatchObject({ amount: 30000, amountLabel: "Minimum left" });

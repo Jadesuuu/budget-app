@@ -13,6 +13,7 @@ const ctx: ClassifyContext = {
     { id: "i-atome", slug: "atome", name: "Atome", emailDomains: ["atome.ph"] },
     { id: "i-ew", slug: "eastwest", name: "EastWest", emailDomains: ["eastwestbanker.com"] },
     { id: "i-tiktok", slug: "tiktok-shop", name: "TikTok Shop", emailDomains: [] },
+    { id: "i-spl", slug: "spaylater", name: "SPayLater", emailDomains: ["monee.com.ph"] },
   ],
   accounts: [
     { id: "acct-gcash", institutionId: "i-gcash", type: "ewallet", last4: null, archived: false },
@@ -21,6 +22,7 @@ const ctx: ClassifyContext = {
     { id: "acct-atome", institutionId: "i-atome", type: "bnpl", last4: "4321", archived: false },
     { id: "acct-ew", institutionId: "i-ew", type: "credit", last4: "1234", archived: false },
     { id: "acct-tiktok", institutionId: "i-tiktok", type: "bnpl", last4: null, archived: false },
+    { id: "acct-spl", institutionId: "i-spl", type: "bnpl", last4: null, archived: false },
   ],
   forwardingSources: ["someone.example@gmail.com"],
   parsers: TEMPLATE_PARSERS,
@@ -53,6 +55,7 @@ describe("bank email parsers (real, redacted samples)", () => {
     ["atome/bill-statement.eml", "acct-atome", { statementDate: "2026-09-17", dueDate: "2026-09-27", totalCentavos: 649224 }],
     ["atome/due-reminder.eml", "acct-atome", { statementDate: null, dueDate: "2026-08-27", totalCentavos: 998745 }],
     ["atome/tiktok-paylater-reminder.eml", "acct-tiktok", { institutionSlug: "tiktok-shop", dueDate: "2026-06-15", totalCentavos: 404418 }],
+    ["spaylater/due-reminder.eml", "acct-spl", { statementDate: null, dueDate: "2026-10-15", totalCentavos: null }],
   ])("%s becomes a statement", async (file, accountId, expected) => {
     expect(classify(await load(file), ctx)).toMatchObject({ kind: "statement", accountId, statement: expected });
   });

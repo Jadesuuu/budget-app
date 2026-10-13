@@ -81,6 +81,15 @@ export async function markDuePaid(input: { key: string; pay?: "minimum" | "full"
       .maybeSingle();
     if (row.error || !row.data) return { status: "error", message: "That bill couldn't be found." };
     const { statement_balance_centavos: balance, minimum_due_centavos: minimum, amount_paid_centavos: before } = row.data;
+    if (balance === null) {
+      // A reminder with no amount (SPayLater): whatever was paid settles it.
+      const amount = parsed.data.pay === "other" ? parsePesoInput(parsed.data.amount ?? "") : null;
+      if (amount === null) return { status: "error", message: "Enter what you paid, like 5,000." };
+      const { error } = await supabase.from("statements").update({ amount_paid_centavos: before + amount }).eq("id", id);
+      if (error) return { status: "error", message: "Couldn't update it. Try again." };
+      userDataChanged();
+      return { status: "saved", message: `${formatPeso(amount)} recorded. Marked paid.`, undo: { key: parsed.data.key, previousPaid: before } };
+    }
     let paidNow: number;
     if (parsed.data.pay === "minimum") paidNow = Math.max(0, minimum - before);
     else if (parsed.data.pay === "other") {

@@ -5,12 +5,12 @@ const MONTHS: Record<string, number> = {
 };
 const pad = (n: number) => String(n).padStart(2, "0");
 
-/** "10/21/2026" (MM/DD/YYYY, as PH banks print it) -> "2026-10-21". */
+/** "10/21/2026" or "10-21-2026" (MM/DD/YYYY, as PH banks print it) -> "2026-10-21". */
 export function usDate(text: string): string | null {
-  const m = /\b(\d{1,2})\/(\d{1,2})\/(\d{4})\b/.exec(text);
+  const m = /\b(\d{1,2})([/-])(\d{1,2})\2(\d{4})\b/.exec(text);
   if (!m) return null;
-  const [month, day] = [Number(m[1]), Number(m[2])];
-  return month >= 1 && month <= 12 && day >= 1 && day <= 31 ? `${m[3]}-${pad(month)}-${pad(day)}` : null;
+  const [month, day] = [Number(m[1]), Number(m[3])];
+  return month >= 1 && month <= 12 && day >= 1 && day <= 31 ? `${m[4]}-${pad(month)}-${pad(day)}` : null;
 }
 
 /** "SEP 27 2026" -> "2026-09-27". */
