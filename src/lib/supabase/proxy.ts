@@ -1,6 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import type { Database } from "@/lib/database.types";
+import { DEMO } from "@/lib/demo/mode";
 import { env } from "@/lib/env";
 
 // /api/jobs/ uses a shared secret and /api/capture/ a per-phone secret link, not a user session.
@@ -8,6 +9,8 @@ const PUBLIC_PATHS = ["/login", "/auth/", "/api/jobs/", "/api/capture"];
 
 /** Refreshes the auth session cookie and redirects signed-out visitors to /login. */
 export async function updateSession(request: NextRequest) {
+  // The demo has no accounts: everyone is the demo user, and there is nothing to sign in to.
+  if (DEMO) return request.nextUrl.pathname === "/login" ? redirectKeepingCookies(request, NextResponse.next(), "/") : NextResponse.next();
   let response = NextResponse.next({ request });
 
   const supabase = createServerClient<Database>(env.NEXT_PUBLIC_SUPABASE_URL, env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY, {

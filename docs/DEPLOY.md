@@ -75,3 +75,16 @@ keep working, so it is recreated in Cloudflare before the switch.
 - Settings → Phone capture: create a link, set up the Android forwarder, receive a real bank text.
 - Settings → Set up email: Gmail forwarding code appears, filter download works.
 - `jade@jadebonifacio.dev` still delivers to Gmail.
+
+## Public demo (budgetdemo.jadebonifacio.dev)
+
+The demo is a second Vercel project built from the same repo. It needs no Supabase, Cloudflare or secrets: the
+server runs the migrations in PGlite and seeds synthetic data (`src/lib/demo/`).
+
+1. **You:** vercel.com → Add New Project → import `Jadesuuu/budget-app` again, project name `budget-demo`.
+2. Environment variables (Production): `NEXT_PUBLIC_DEMO_MODE` = `true`. Nothing else.
+3. Deploy, then Settings → Domains → add `budgetdemo.jadebonifacio.dev`.
+4. **You:** in Cloudflare DNS, add the CNAME record Vercel shows for `budgetdemo` (usually `cname.vercel-dns.com`), DNS only (grey cloud).
+
+Every push to `main` redeploys both projects. The demo's first request after a cold start takes a few seconds while
+the migrations run; after that pages answer from memory.

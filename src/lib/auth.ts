@@ -2,6 +2,7 @@ import "server-only";
 import { redirect } from "next/navigation";
 import { cache } from "react";
 import { connection } from "next/server";
+import { DEMO, DEMO_EMAIL, DEMO_USER_ID } from "@/lib/demo/mode";
 import { createClient } from "@/lib/supabase/server";
 
 /**
@@ -11,6 +12,7 @@ import { createClient } from "@/lib/supabase/server";
  */
 export const getSession = cache(async () => {
   const supabase = await createClient();
+  if (DEMO) return { supabase, userId: DEMO_USER_ID, email: DEMO_EMAIL };
   const { data, error } = await supabase.auth.getClaims();
   if (error || !data?.claims?.sub) redirect("/login");
   const userId = data.claims.sub;

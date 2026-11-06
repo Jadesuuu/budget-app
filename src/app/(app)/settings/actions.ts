@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { userDataChanged } from "@/lib/user-data";
 import { z } from "zod";
 import { requireUser } from "@/lib/auth";
+import { DEMO } from "@/lib/demo/mode";
 import { MODE_COOKIE, THEME_COOKIE, modeSchema, themeIdSchema } from "@/lib/themes";
 
 const YEAR = 60 * 60 * 24 * 365;
@@ -46,6 +47,12 @@ export async function saveDisplayName(_prev: NameState, formData: FormData): Pro
 }
 
 export async function signOut() {
+  if (DEMO) {
+    // There is no account to leave: start the demo over instead.
+    await (await import("@/lib/demo/store")).resetDemo();
+    userDataChanged();
+    redirect("/");
+  }
   const { supabase } = await requireUser();
   await supabase.auth.signOut();
   redirect("/login");

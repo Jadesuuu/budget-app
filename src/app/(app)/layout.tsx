@@ -1,10 +1,13 @@
 import { Suspense } from "react";
 import { Rail, RailView, TabBar, TabBarView } from "@/components/nav";
+import { DemoBar } from "@/components/demo-bar";
 import { RefreshOnReturn } from "@/components/refresh-on-return";
+import { DEMO } from "@/lib/demo/mode";
 
 export default function AppLayout({ children }: LayoutProps<"/">) {
   return (
     <div className="app">
+      {DEMO ? <DemoBar /> : null}
       <div className="shell shell-2col">
         <Suspense fallback={<RailView pathname="" />}>
           <Rail />

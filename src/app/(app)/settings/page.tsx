@@ -8,6 +8,7 @@ import { getProfile, getSession } from "@/lib/auth";
 import { env } from "@/lib/env";
 import { modeSchema, themeIdSchema, DEFAULT_MODE, DEFAULT_THEME } from "@/lib/themes";
 import { signOut } from "./actions";
+import { DEMO } from "@/lib/demo/mode";
 import { AppearanceForm } from "./appearance-form";
 import { AlertsForm } from "./alerts/alerts-form";
 import { removeForwardingSource } from "./email-actions";
@@ -122,10 +123,12 @@ async function SettingsContent() {
       <section className="settings-sec" aria-labelledby="profile-h">
         <h2 id="profile-h" className="settings-h">Profile</h2>
         <NameForm initialName={profile.display_name ?? ""} />
-        <p className="settings-p">Signed in as {profile.email}</p>
+        <p className="settings-p">
+          {DEMO ? "This is the demo account. Nothing here is real, and Reset puts it back the way it started." : `Signed in as ${profile.email}`}
+        </p>
         <form action={signOut}>
           <button className="btn" type="submit">
-            Sign out
+            {DEMO ? "Reset demo" : "Sign out"}
           </button>
         </form>
       </section>

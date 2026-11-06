@@ -20,10 +20,13 @@ const schema = z.object({
   VAPID_SUBJECT: z.string().trim().regex(/^(mailto:|https:)/, "VAPID_SUBJECT must be a mailto: or https: URL").optional(),
 });
 
+// The demo build (src/lib/demo) talks to no Supabase project and receives no mail.
+const demo = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
+
 export const env = schema.parse({
-  NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
-  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
-  INBOUND_EMAIL_DOMAIN: process.env.INBOUND_EMAIL_DOMAIN,
+  NEXT_PUBLIC_SUPABASE_URL: demo ? "http://demo.invalid" : process.env.NEXT_PUBLIC_SUPABASE_URL,
+  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: demo ? "demo" : process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
+  INBOUND_EMAIL_DOMAIN: demo ? "in.example.com" : process.env.INBOUND_EMAIL_DOMAIN,
   ALLOWED_SIGNUP_EMAILS: process.env.ALLOWED_SIGNUP_EMAILS,
   SUPABASE_SECRET_KEY: process.env.SUPABASE_SECRET_KEY,
   PARSE_JOB_SECRET: process.env.PARSE_JOB_SECRET,
