@@ -56,7 +56,7 @@ export async function buildDemoDatabase(now = Date.now()) {
     await db.exec(fs.readFileSync(path.join(dir, file), "utf8"));
   }
   await db.query(`insert into auth.users (id, email) values ($1, $2)`, [DEMO_USER_ID, DEMO_EMAIL]);
-  await db.query(`update public.profiles set display_name = 'Sam Reyes' where user_id = $1`, [DEMO_USER_ID]);
+  await db.query(`update public.profiles set display_name = 'Sam Reyes', theme = 'coal' where user_id = $1`, [DEMO_USER_ID]);
   const meta = await loadMeta(db);
   await seedDemoData(clientFor(db, meta), DEMO_USER_ID, now);
   return { db, meta };

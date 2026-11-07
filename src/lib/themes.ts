@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { HIDE_ATTR, HIDE_COOKIE } from "./privacy";
+import { DEMO } from "./demo/mode";
 
 export const THEME_IDS = ["sakura", "strawberry", "bubblegum", "barako", "courtside", "denim", "mono", "coal"] as const;
 export const MODES = ["light", "dark", "system"] as const;
@@ -9,7 +10,8 @@ export const modeSchema = z.enum(MODES);
 export type ThemeId = z.infer<typeof themeIdSchema>;
 export type Mode = z.infer<typeof modeSchema>;
 
-export const DEFAULT_THEME: ThemeId = "sakura";
+// The public demo opens on Coal & Brass; real accounts keep Sakura.
+export const DEFAULT_THEME: ThemeId = DEMO ? "coal" : "sakura";
 export const DEFAULT_MODE: Mode = "system";
 
 /** Non-HttpOnly so the pre-paint script can read them; they only hold display preferences. */
