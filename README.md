@@ -22,7 +22,8 @@ truth: they arrive as pending items, and a few taps a day keep the month accurat
 - **Capture from email and phone.** Gmail filters forward bank emails to a private address; a Cloudflare Email Worker
   stores them and a separate, re-runnable job parses them. Android forwarder apps and iPhone Shortcuts send texts and
   app notifications to a per-phone secret link. Parsers exist for BPI, GCash, Atome, EastWest and SPayLater emails
-  and BPI and GCash texts. When two sources report the same transaction it confirms itself.
+  and BPI and GCash texts. A transfer both banks report, or a text whose stated balance matches, confirms itself
+  and stays labelled so you can send it back to review.
 - **What's due before what's spent.** Card statements, minimum payments, loan amortisation and BNPL installment
   schedules, with web push reminders.
 - **A daily number.** Spending shows what you can spend today so the money lasts until payday, where the month went,
