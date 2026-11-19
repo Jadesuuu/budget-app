@@ -4,9 +4,9 @@ import { PGlite } from "@electric-sql/pglite";
 import { pgcrypto } from "@electric-sql/pglite/contrib/pgcrypto";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/lib/database.types";
-import { DEMO_EMAIL, DEMO_USER_ID } from "./mode";
-import { handle, loadMeta, type Meta } from "./postgrest";
-import { seedDemoData } from "./seed";
+import { DEMO_EMAIL, DEMO_USER_ID } from "./mode.ts";
+import { handle, loadMeta, type Meta } from "./postgrest.ts";
+import { seedDemoData } from "./seed.ts";
 
 export const DEMO_URL = "http://demo.invalid";
 
@@ -60,4 +60,47 @@ export async function buildDemoDatabase(now = Date.now()) {
   const meta = await loadMeta(db);
   await seedDemoData(clientFor(db, meta), DEMO_USER_ID, now);
   return { db, meta };
+}
+
+// Written by `pnpm build` in demo mode (scripts/demo-snapshot.mts), so a cold start skips the migrations and the seed.
+export const SNAPSHOT_FILE = path.join(process.cwd(), ".demo", "base.tar.gz");
+export const SNAPSHOT_TIME_FILE = path.join(process.cwd(), ".demo", "built-at.txt");
+
+const manilaDay = (ms: number) => Date.parse(new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Manila" }).format(ms)) / 86_400_000;
+
+/** Moves every date and timestamp forward by the time since `builtAt`, so the data reads as if seeded at `now`. */
+export async function shiftDates(db: PGlite, builtAt: number, now = Date.now()) {
+  const cols = await db.query<{ tbl: string; col: string; type: string }>(`
+    select format('%I.%I', c.table_schema, c.table_name) as tbl, quote_ident(c.column_name) as col, c.data_type as type
+    from information_schema.columns c
+    join information_schema.tables t using (table_schema, table_name)
+    where c.table_schema in ('public', 'auth') and t.table_type = 'BASE TABLE' and c.is_generated = 'NEVER'
+      and c.data_type in ('date', 'timestamp with time zone', 'timestamp without time zone')`);
+  const ms = Math.round(now - builtAt);
+  const days = Math.round(manilaDay(now) - manilaDay(builtAt)); // seed dates are Manila calendar days
+  const byTable = new Map<string, string[]>();
+  for (const { tbl, col, type } of cols.rows) {
+    const set = type === "date" ? `${col} = ${col} + ${days}` : `${col} = ${col} + interval '${ms} milliseconds'`;
+    byTable.set(tbl, [...(byTable.get(tbl) ?? []), set]);
+  }
+  // Triggers off: this is a clock move, not an edit (no updated_at bumps, no recomputed side effects).
+  await db.exec(
+    "set session_replication_role = replica;\n" +
+      [...byTable].map(([tbl, sets]) => `update ${tbl} set ${sets.join(", ")};`).join("\n") +
+      "\nset session_replication_role = origin;",
+  );
+  // Monthly installments are month arithmetic, not a fixed day count: recompute as build_installment_schedule() does.
+  await db.exec(`
+    update public.installment_payments p set due_date = case l.frequency
+      when 'monthly' then (l.first_due_date + make_interval(months => p.seq - 1))::date
+      else l.first_due_date + 14 * (p.seq - 1) end
+    from public.installment_plans l where l.id = p.plan_id`);
+}
+
+/** The seeded demo database: the build's snapshot moved to `now` in production, else built from scratch. */
+export async function baseDemoDatabase(now = Date.now()) {
+  if (process.env.NODE_ENV !== "production" || !fs.existsSync(SNAPSHOT_FILE)) return buildDemoDatabase(now);
+  const db = await openDemoDatabase(new Blob([fs.readFileSync(SNAPSHOT_FILE)]));
+  await shiftDates(db, Number(fs.readFileSync(SNAPSHOT_TIME_FILE, "utf8")), now);
+  return { db, meta: await loadMeta(db) };
 }

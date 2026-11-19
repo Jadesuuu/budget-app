@@ -47,6 +47,7 @@ in a review inbox.
   `requireUser()` (adds `connection()`), and every write calls `userDataChanged()` (`src/lib/user-data.ts`) or
   other pages show stale data. `RefreshOnReturn` refetches whenever the app returns to the screen and polls
   `/api/changes` every 20s while open, refetching only when the data changed (texts arrive in the background).
+  Not mounted in the demo build: nothing arrives there, and every poll costs Vercel CPU.
 - Hide balances: wrap balance figures in `<Private>`; the eye toggle sets `data-hide-balances` on <html>
   (cookie `bp-hide`, applied by the pre-paint script). Transaction amounts stay visible.
 - Theme/mode live on `profiles` and are mirrored in `bp-theme`/`bp-mode` cookies so the pre-paint

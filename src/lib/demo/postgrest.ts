@@ -55,15 +55,18 @@ export async function loadMeta(db: Sql): Promise<Meta> {
   return { manyToOne, primaryKeys, functions };
 }
 
+// Plain fields, not parameter properties: scripts/demo-snapshot.mts loads this file with Node's type stripping.
 class ApiError extends Error {
-  constructor(
-    readonly status: number,
-    readonly code: string,
-    message: string,
-    readonly details: string | null = null,
-    readonly hint: string | null = null,
-  ) {
+  readonly status: number;
+  readonly code: string;
+  readonly details: string | null;
+  readonly hint: string | null;
+  constructor(status: number, code: string, message: string, details: string | null = null, hint: string | null = null) {
     super(message);
+    this.status = status;
+    this.code = code;
+    this.details = details;
+    this.hint = hint;
   }
 }
 

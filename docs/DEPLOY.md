@@ -86,5 +86,5 @@ server runs the migrations in PGlite and seeds synthetic data (`src/lib/demo/`).
 3. Deploy, then Settings → Domains → add `budgetdemo.jadebonifacio.dev`.
 4. **You:** in Cloudflare DNS, add the CNAME record Vercel shows for `budgetdemo` (usually `cname.vercel-dns.com`), DNS only (grey cloud).
 
-Every push to `main` redeploys both projects. The demo's first request after a cold start takes a few seconds while
-the migrations run; after that pages answer from memory.
+Every push to `main` redeploys both projects. `pnpm build` runs the migrations and the seed
+once and ships the database as `.demo/base.tar.gz`; a cold start loads it and moves its dates to today.

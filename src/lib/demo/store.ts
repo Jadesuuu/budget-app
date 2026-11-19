@@ -4,7 +4,7 @@ import type { PGlite } from "@electric-sql/pglite";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
 import type { Database } from "@/lib/database.types";
-import { buildDemoDatabase, DEMO_URL, openDemoDatabase } from "./database";
+import { baseDemoDatabase, DEMO_URL, openDemoDatabase } from "./database";
 import { handle, type Meta } from "./postgrest";
 
 /*
@@ -27,7 +27,7 @@ const visitors = new Map<string, { db: Promise<PGlite>; ops: string[]; lock: Pro
 
 function snapshot() {
   base ??= (async () => {
-    const { db, meta } = await buildDemoDatabase();
+    const { db, meta } = await baseDemoDatabase();
     const dump = await db.dumpDataDir("none");
     await db.close();
     return { snapshot: dump, meta };

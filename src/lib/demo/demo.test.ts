@@ -3,7 +3,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { z } from "zod";
 import type { Database } from "@/lib/database.types";
-import { buildDemoDatabase, clientFor } from "./database";
+import { buildDemoDatabase, clientFor, openDemoDatabase, shiftDates } from "./database";
 import { DEMO_USER_ID } from "./mode";
 import { parseSelect } from "./postgrest";
 
@@ -129,4 +129,32 @@ describe("demo database", () => {
     const res = await sb.from("accounts").insert({ user_id: DEMO_USER_ID, name: "Bad", type: "credit", institution_id: "00000000-0000-0000-0000-000000000000" });
     expect(res.error).not.toBeNull();
   });
+});
+
+describe("build-time snapshot", () => {
+  it("moved to today, matches a database seeded today", async () => {
+    const now = Date.UTC(2026, 10, 20, 15, 30); // 23:30 in Manila, so the shift also crosses a Manila midnight
+    const builtAt = now - 3 * 86_400_000 - 5 * 3_600_000;
+    const old = await buildDemoDatabase(builtAt);
+    const dump = await old.db.dumpDataDir("gzip");
+    await old.db.close();
+    const shifted = await openDemoDatabase(dump);
+    await shiftDates(shifted, builtAt, now);
+    const fresh = await buildDemoDatabase(now);
+    // created_at/updated_at come from the real clock, not the seed's `now`, so they're left out.
+    const dates = (q: PGlite) =>
+      q.query(`
+        select (select json_agg(t order by id) from (select id, occurred_at, confirmed_at from transactions) t) as tx,
+          (select json_agg(t order by id) from (select id, period_start, period_end, due_date from statements) t) as st,
+          (select json_agg(t order by id) from (select id, due_date, paid_at from installment_payments) t) as ip,
+          (select json_agg(t order by id) from (select id, start_date, first_due_date from loans) t) as ln,
+          (select json_agg(t order by id) from (select id, target_date from savings_goals) t) as sg,
+          (select json_agg(t order by id) from (select id, opening_balance_at from accounts) t) as ac`);
+    try {
+      expect((await dates(shifted)).rows).toEqual((await dates(fresh.db)).rows);
+    } finally {
+      await shifted.close();
+      await fresh.db.close();
+    }
+  }, 120_000);
 });

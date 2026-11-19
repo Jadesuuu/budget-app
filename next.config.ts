@@ -8,9 +8,9 @@ const nextConfig: NextConfig = {
     serverActions: { bodySizeLimit: "6mb" },
   },
   partialPrefetching: true,
-  // Demo build (NEXT_PUBLIC_DEMO_MODE=true): PGlite loads its WebAssembly from node_modules and runs the migrations.
+  // Demo build (NEXT_PUBLIC_DEMO_MODE=true): PGlite loads its WebAssembly from node_modules and the seeded snapshot from .demo/.
   serverExternalPackages: ["@electric-sql/pglite"],
-  outputFileTracingIncludes: { "/**": ["./supabase/migrations/*.sql"] },
+  outputFileTracingIncludes: { "/**": ["./supabase/migrations/*.sql", "./.demo/*"] },
   async headers() {
     return [
       {

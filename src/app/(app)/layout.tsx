@@ -14,7 +14,8 @@ export default function AppLayout({ children }: LayoutProps<"/">) {
         </Suspense>
         <main className="main">{children}</main>
       </div>
-      <RefreshOnReturn />
+      {/* Nothing arrives in the background in the demo, and each poll there is a PGlite query on Vercel CPU. */}
+      {DEMO ? null : <RefreshOnReturn />}
       <Suspense fallback={<TabBarView pathname="" />}>
         <TabBar />
       </Suspense>

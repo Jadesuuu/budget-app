@@ -61,3 +61,6 @@ supabase/production/supabase/.env
 
 # Production Worker secrets, uploaded with `wrangler secret bulk`
 .prod.vars
+
+# demo database snapshot, written by `pnpm build` in demo mode
+/.demo/
